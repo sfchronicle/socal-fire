@@ -5,7 +5,7 @@ var d3 = require('d3');
 if (screen.width <= 480) {
   var sf_lat = 38.2;
   var sf_long = -122.4;
-  var zoom_deg = 9;
+  var zoom_deg = 8;
 
   var offset_top = 900;
   var bottomOffset = 100;
