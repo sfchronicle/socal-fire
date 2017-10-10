@@ -1,0 +1,72 @@
+<!doctype html>
+<html lang="en-US">
+  <head>
+    <title><%= json.project.seo_title %></title>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+    <meta name="__sync_contentCategory" content="meterA">
+    <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css">
+    <link rel="stylesheet" type="text/css" href="../style.css">
+
+    <%= !json.project.embedded ? t.include("partials/_paywall.html") : t.include("partials/_embedframe.html") %>
+
+    <%= t.include("partials/_head.html") %>
+
+  </head>
+
+  <%= !json.project.embedded ? "<body>" : "<body is='responsive-body'>" %>
+
+    <div class="title-container">
+      <div class="author"><%= json.fire_timeline.Author %></div>
+      <div class="date">Last updated: <%= json.fire_timeline.Updated %></div>
+    </div>
+
+    <div class="intro"><%= json.fire_timeline.Intro %></div>
+    <div class="inline-img">
+      <img src="<%= json.fire_timeline.Map %>"></img>
+      <div class="caption"><%=json.fire_timeline.Map_caption%></div>
+    </div>
+
+    <div class="timeline-container">
+    <% json.fire_timeline.timeline.forEach(function(d,didx){ %>
+
+      <% if (didx%2 == 0) { %>
+        <div class="event left">
+          <div class="timestamp-circle right"></div>
+          <div class="timestamp"><%= d.Time %></div>
+          <div class="description"><%= d.Description %></div>
+          <% if (d.Photo) { %>
+            <div class="timeline-img">
+              <img src="<%=d.Photo%>"></img>
+              <div class="caption"><%=d.Credit%></div>
+            </div>
+          <% } %>
+        </div>
+        <div class="event"></div>
+      <% } else { %>
+        <div class="event"></div>
+        <div class="event right">
+          <div class="timestamp-circle left"></div>
+          <div class="timestamp"><%= d.Time %></div>
+          <div class="description"><%= d.Description %></div>
+          <% if (d.Photo) { %>
+            <div class="timeline-img">
+              <img src="<%=d.Photo%>"></img>
+              <div class="caption"><%=d.Credit%></div>
+            </div>
+          <% } %>
+        </div>
+      <% } %>
+
+    <% }) %>
+  </div>
+
+  <div class="credit-container">
+    <div>Development by <a href="mailto:eoneill@sfchronicle.com">Emma O'Neill</a> and <a href="mailto:lvilla@sfchronicle.com">Lucio Villa</a></div>
+  </div>
+
+    <script src="../timeline_app.js" async></script>
+    <%= t.include("partials/_helloSFC.html") %>
+
+  </body>
+</html>

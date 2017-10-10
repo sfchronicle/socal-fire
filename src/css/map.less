@@ -1,0 +1,104 @@
+// html, body {
+//   height: 370px;
+//   padding: 0;
+//   margin: 0;
+//   }
+
+.interactive-container {
+  margin: 50px 0;
+}
+
+.map-container {
+  height: 600px;
+  width: 100%;
+  max-width: 800px;
+  margin: 0 auto 30px auto;
+  position: relative;
+  @media @mobile {
+    margin: 30px auto 20px auto;
+    height: 550px;
+  }
+}
+#map, #map-leaflet {
+ height: 100%;
+ width: 100%;
+ overflow: hidden;
+ // border: thin solid #333;
+}
+
+#map-leaflet {
+  @media @mobile {
+    width: 90%;
+    margin: auto;
+    // margin: 0 20px;
+  }
+}
+
+.credits-box {
+  position: absolute;
+  bottom: 20px;
+  left: 10px;
+  z-index: 1000;
+  background-color: rgba(255,255,255,0.8);
+  padding: 10px 20px;
+}
+
+.source, .credit {
+  max-width: 800px;
+  font-style: italic;
+  margin: auto;
+  font-family: @med-graphics;
+  font-size: 13px;
+  @media @mobile {
+    padding-left: 10px;
+  }
+}
+
+.legend-container {
+  text-align: center;
+  font-size: 14px;
+  img {
+    max-width: 20px;
+  }
+  .legend-element {
+    display: inline-block;
+    width: 200px;
+    img {
+      vertical-align: sub;
+    }
+  }
+  padding: 20px 0;
+  max-width: 600px;
+  margin: auto;
+  vertical-align: center;
+}
+
+.headline {
+  font-family: @bold-graphics;
+  text-align: center;
+  font-size: 20px;
+}
+
+.area-icon {
+  border: 3px solid #3388ff;
+  background: lighten(#3388ff,20%);
+  height: 20px;
+  width: 20px;
+  display: inline-block;
+  margin-bottom: -5px;
+}
+
+.deck {
+  font-family: @med-graphics;
+  text-align: center;
+  font-size: 16px;
+  max-width: 800px;
+  margin: auto;
+  padding-top: 20px;
+  // padding: 10px 0;
+  line-height: 1.4;
+}
+
+// .credit {
+//   padding-bottom: 30px;
+// }

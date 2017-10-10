@@ -25,6 +25,10 @@ body {
   -moz-osx-font-smoothing: grayscale;
 }
 
+img {
+  line-height: 1;
+}
+
 iframe{
   border: none !important;
 }
@@ -37,18 +41,18 @@ main {
 }
 
 a {
-  color: @gray-blue;
-  text-decoration: none;
+  // color: @gray-blue;
+  text-decoration: underline;
   outline: 0 !important;
-  &:hover {
-    color: darken(@gray-blue,10%);
-  }
+  // &:hover {
+  //   color: darken(@gray-blue,10%);
+  // }
   img {
     border: none;
   }
-  :hover {
-    color: darken(@gray-blue,10%);
-  }
+  // :hover {
+  //   color: darken(@gray-blue,10%);
+  // }
 }
 
 hr {
@@ -149,23 +153,23 @@ li {
     margin: 10px;
   }
 }
-.source, .credit {
-  clear: left;
-  padding-top: 10px;
-  font-size: 12px;
-  // color: @white;
-  font-style: italic;
-  font-family: @med-graphics;
-  @media @tablet {
-    padding: 10px 20px;
-  }
-  @media @mobile {
-    padding: 10px;
-  }
-  &.padded {
-    padding-bottom: 40px;
-  }
-}
+// .source, .credit {
+//   clear: left;
+//   padding-top: 10px;
+//   font-size: 12px;
+//   // color: @white;
+//   font-style: italic;
+//   font-family: @med-graphics;
+//   @media @tablet {
+//     padding: 10px 20px;
+//   }
+//   @media @mobile {
+//     padding: 10px;
+//   }
+//   &.padded {
+//     padding-bottom: 40px;
+//   }
+// }
 
 svg {
   display: block;
@@ -192,7 +196,7 @@ text {
 // heading styles ---------------------------------------
 
 .title-container {
-  background-image: url("./assets/photos/test-img.jpg");
+  // background-image: url("./assets/photos/test-img.jpg");
 
   &.top-margin {
     margin-top: 3.5em;
@@ -213,11 +217,12 @@ text {
 
 .title {
   font-family: @title;
-  font-size: 60px;
+  font-size: 50px;
   padding: 0 10px;
   text-align: center;
   margin: 10px auto 0;
   max-width: 835px;
+  line-height: 1.2;
 
   &.long {
     font-size: 50px;
@@ -244,20 +249,10 @@ text {
   right: 0;
 }
 
-.specialhead-top {
-  color: @gray-blue;
-  font-family: @banner;
-  font-size: 18px;
-  text-transform: uppercase;
-  @media @mobile {
-    font-size: 13px;
-    vertical-align: text-top;
-  }
-}
 
 .specialhead {
   text-align: center;
-  text-transform: uppercase;
+  // text-transform: uppercase;
   color: @head-color;
   font-family: @banner;
   font-size: 15px;
@@ -292,7 +287,7 @@ text {
 
   &.special {
     a {
-      color: @gray-blue;
+      color: @highlight;
     }
   }
   &.social {
@@ -300,7 +295,7 @@ text {
     margin: 0 6px;
     padding: 4px 2px;
     a {
-      color: @gray-blue;
+      color: @highlight;
     }
   }
   &.email {
@@ -378,18 +373,18 @@ header {
   text-align: left;
   font-family: @med-graphics;
   font-size: 12px;
-  margin-top: 5px;
-  padding: 0 10px;
+  // margin-top: 5px;
+  // padding: 0 10px;
   max-width: 100%;
   &.landing {
     margin-bottom: 2.5em;
   }
 }
-
-.byline {
-  color: @rename-color;
-  font-style: italic;
-}
+//
+// .byline {
+//   color: @rename-color;
+//   font-style: italic;
+// }
 
 .background-img {
     height: 800px;
@@ -414,15 +409,15 @@ header {
 }
 
 .inline-img {
-  max-width: 730px;
+  max-width: 1600px;
   margin: 2em auto;
+  img {
+    width: 100%;
+  }
 
   .caption{
-    padding:0;
-
-      @media @text-width{
-        padding:0 10px;
-      }
+    padding: 0 10px;
+    margin-top: 0;
   }
 }
 

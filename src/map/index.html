@@ -1,0 +1,72 @@
+<!doctype html>
+<html lang="en-US">
+  <head>
+    <title><%= json.project.seo_title %></title>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+    <meta name="__sync_contentCategory" content="meterA">
+    <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css">
+    <link rel="stylesheet" type="text/css" href="../style.css">
+
+    <%= !json.project.embedded ? t.include("partials/_paywall.html") : t.include("partials/_embedframe.html") %>
+
+    <%= t.include("partials/_head.html") %>
+
+  </head>
+
+  <%= !json.project.embedded ? "<body>" : "<body is='responsive-body'>" %>
+
+    <div class="map-container">
+      <div id="map"></div>
+    </div>
+
+    <div class="source">Data from <a href="http://www.ospo.noaa.gov/Products/land/hms.html" target="_blank">NOAA fire and smoke mapping</a></div>
+    <div class="source">Last updated at 9:33 am on Oct. 9, 2017</div>
+    <div class="credit">Development by <a href="mailto:eoneill@sfchronicle.com">Emma O'Neill</a> and <a href="mailto:lvilla@sfchronicle.com">Lucio Villa</a></div>
+
+    <script>
+
+    var map;
+    var src = "http://projects.sfchronicle.com/2017/maps/fire.kml?v=3";
+    var src_evacuations = "http://projects.sfchronicle.com/2017/maps/evacuation_centers.kml";
+
+    // var src = "https://developers.google.com/maps/documentation/javascript/examples/kml/westcampus.kml";
+
+    var sf_lat = 38.3;
+    var sf_long = -122.4;
+    var zoom_deg = 9;
+
+    function initMap() {
+      map = new google.maps.Map(document.getElementById('map'), {
+        center: new google.maps.LatLng(sf_lat, sf_long),
+        zoom: zoom_deg,
+        mapTypeId: 'terrain'
+      });
+
+      var kmlLayer = new google.maps.KmlLayer(src, {
+        suppressInfoWindows: true,
+        preserveViewport: true,
+        map: map
+      });
+
+      var trafficLayer = new google.maps.TrafficLayer();
+      trafficLayer.setMap(map);
+
+      var kmlLayerCenters = new google.maps.KmlLayer(src_evacuations, {
+        suppressInfoWindows: true,
+        preserveViewport: true,
+        map: map
+      });
+
+    }
+
+    </script>
+
+    <script async defer
+    src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDNdJZhKSlkiIokNz-QmfnIrqJuN_VNmE4&callback=initMap">
+    </script>
+    <script src="../map_app.js" async></script>
+    <%= t.include("partials/_helloSFC.html") %>
+
+  </body>
+</html>
