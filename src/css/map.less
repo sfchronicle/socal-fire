@@ -16,8 +16,8 @@
   margin: 0 auto 30px auto;
   position: relative;
   @media @mobile {
-    margin: 30px auto 20px auto;
-    height: 550px;
+    margin: 20px auto 30px auto;
+    height: 500px;
   }
 }
 #map, #map-leaflet {
@@ -51,6 +51,12 @@
     padding: 20px 10px;
     margin-top: 20px;
     padding-bottom: 50px;
+    width: 320px;
+    margin-bottom: 30px;
+  }
+  @media @mini-mobile {
+    padding: 10px 0;
+    width: 300px;
   }
 }
 
@@ -61,10 +67,16 @@
   font-family: @med-graphics;
   font-size: 12px;
   @media @mobile {
-    padding-left: 10px;
+    padding-left: 0px;
+  }
+  @media @mini-mobile {
+    padding: 0;
   }
   a {
     color: white;
+    @media @mobile {
+      color: black;
+    }
     &:hover {
       color: white;
     }
@@ -79,12 +91,17 @@
   }
   .legend-element {
     display: inline-block;
-    width: 150px;
+    width: 200px;
     @media @mobile {
       width: 150px;
     }
     img {
       vertical-align: sub;
+    }
+    &.death-icon {
+      img {
+        max-width: 12px;
+      }
     }
   }
   padding: 20px 0;
@@ -92,7 +109,7 @@
   margin: auto;
   vertical-align: center;
   @media @mobile {
-    padding-bottom: 10px;
+    padding-bottom: 0px;
   }
 }
 
@@ -100,6 +117,10 @@
   font-family: @bold-graphics;
   text-align: center;
   font-size: 20px;
+  @media @mobile {
+    max-width: 200px;
+    margin: auto;
+  }
 }
 
 .area-icon, .circle-icon {
@@ -118,7 +139,7 @@
   height: 15px;
   width: 15px;
   background: lighten(#FF530D,10%);
-  border-radius: 15px;
+  border-radius: 20px;
   margin-bottom: -2px;
 }
 

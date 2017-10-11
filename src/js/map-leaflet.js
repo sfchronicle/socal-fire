@@ -51,9 +51,19 @@ var MapIcon = L.Icon.extend({
     }
 });
 
+// var deathIcon = new MapIcon({iconUrl: 'leaf-white.png'});
 var fireIcon = new MapIcon({iconUrl: '../assets/graphics/fire_icon.png?'});
 var evacuationIcon = new MapIcon({iconUrl: '../assets/graphics/evacuation_icon.png?'});
 var hospitalsIcon = new MapIcon({iconUrl: '../assets/graphics/hospitalsEvacuated_icon.png?'});
+
+var grayIcon = new L.Icon({
+  iconUrl: 'https://raw.githubusercontent.com/pointhi/leaflet-color-markers/master/img/marker-icon-2x-grey.png',
+  shadowUrl: 'https://cdnjs.cloudflare.com/ajax/libs/leaflet/0.7.7/images/marker-shadow.png?',
+  iconSize: [25, 41],
+  iconAnchor: [12, 41],
+  popupAnchor: [1, -34],
+  shadowSize: [41, 41]
+});
 
 evacuation_data.forEach(function(d){
   // L.marker([d.Lat, d.Lng], {icon: evacuationIcon}).addTo(map);
@@ -65,13 +75,9 @@ evacuation_data.forEach(function(d){
   L.marker([d.Lat, d.Lng], {icon: evacuationIcon}).addTo(map).bindPopup(html_str);
 });
 
-hospitals_data.forEach(function(d){
-  if (d.description) {
-    var html_str = "<b>"+d.Name+"</b><br>"+d.description;
-  } else {
-    var html_str = "<b>"+d.Name+"</b><br>"
-  }
-  L.marker([d.Latitude, d.Longitude], {icon: hospitalsIcon}).addTo(map).bindPopup(html_str);
+deaths_data.forEach(function(d){
+  var html_str = d.Address+"<br>"+d.Count+" death(s)";
+  L.marker([d.Lat, d.Lng],{icon: grayIcon}).addTo(map).bindPopup(html_str);
 });
 
 // var myLayer = L.geoJSON().addTo(map);
@@ -79,7 +85,7 @@ hospitals_data.forEach(function(d){
 
 var fireDataURL = "http://extras.sfgate.com/editorial/wildfires/noaa.csv?v=2";
 
-var timer5minutes = 10000;
+var timer5minutes = 600000;
 var map_timer;
 
 

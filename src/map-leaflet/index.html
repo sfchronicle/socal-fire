@@ -34,6 +34,7 @@
       <div class="legend-element"><div class="circle-icon"></div> Fire area</div>
       <div class="legend-element"><img src="../assets/graphics/evacuation_icon.png"></img> Evacuation center</div>
       <div class="legend-element"><img src="../assets/graphics/hospitalsEvacuated_icon.png"></img> Evacuated hospital</div>
+      <div class="legend-element death-icon"><img src="https://raw.githubusercontent.com/pointhi/leaflet-color-markers/master/img/marker-icon-grey.png"></img> Deaths</div>
     </div>
 
     <div class="map-container">
@@ -52,6 +53,7 @@
 
     <script src="../assets/mapfiles/evacuations.js" type="text/javascript"></script>
     <script>
+      var deaths_data = <%= JSON.stringify(json.DeathLocations) %>
       var evacuation_data = <%= JSON.stringify(json.EvacuationCentersUpdated) %>
       var hospitals_data = <%= JSON.stringify(json.EvacuatedHospitals) %>
     </script>
