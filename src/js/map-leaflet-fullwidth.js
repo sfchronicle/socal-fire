@@ -99,20 +99,53 @@ var oldStyle = {
     "weight": 3,
 };
 
+var sonomaLayer, napaLayer;
+var napa_toggle = 1;
+var sonoma_toggle = 1;
+
 // adding AVAs to map
-var sonomaLayer = L.geoJSON(sonomaGeoJson,
+sonomaLayer = L.geoJSON(sonomaGeoJson,
   {style: sonomaStyle},
   {onEachFeature: function (feature, layer) {
     console.log(feature);
     layer.bindPopup(feature.properties["LABEL_TEXT"]);} }
-).addTo(map).bindPopup();
+).addTo(map);
 
-var napaLayer = L.geoJSON(napaGeoJson,
+napaLayer = L.geoJSON(napaGeoJson,
   {style: napaStyle},
   {onEachFeature: function (feature, layer) {
     console.log(feature);
     layer.bindPopup(feature.properties["AVA_Name"]); } }
-).addTo(map).bindPopup();
+).addTo(map);
+
+document.getElementById("sonomacountyavas").addEventListener("click",function() {
+  if (sonoma_toggle == 1) {
+    map.removeLayer(sonomaLayer);
+    sonoma_toggle = 0;
+  } else {
+    sonomaLayer = L.geoJSON(sonomaGeoJson,
+      {style: sonomaStyle},
+      {onEachFeature: function (feature, layer) {
+        layer.bindPopup(feature.properties["LABEL_TEXT"]);} }
+    ).addTo(map);
+    sonoma_toggle = 1;
+  }
+});
+
+document.getElementById("napacountyavas").addEventListener("click",function() {
+  if (napa_toggle == 1) {
+    map.removeLayer(napaLayer);
+    napa_toggle = 0;
+  } else {
+    napaLayer = L.geoJSON(napaGeoJson,
+      {style: napaStyle},
+      {onEachFeature: function (feature, layer) {
+        console.log(feature);
+        layer.bindPopup(feature.properties["AVA_Name"]); } }
+    ).addTo(map);
+    napa_toggle = 1;
+  }
+});
 
 // adding previous fire locations to map
 var fireLayer = L.geoJSON(oldFire,{style: oldStyle}).addTo(map);
