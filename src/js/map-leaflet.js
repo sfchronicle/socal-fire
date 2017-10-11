@@ -117,7 +117,7 @@ d3.csv(fireDataURL, function(fire_data){
 // draw map with dots on it
 var drawMap = function(fire_data) {
 
-  d3.select("svg").selectAll("circle").remove();
+  d3.select("svg").selectAll("fireDot").remove();
   var svg = d3.select("#map-leaflet").select("svg");
   var g = svg.append("g");
 
@@ -130,7 +130,7 @@ var drawMap = function(fire_data) {
   circles.append("circle")
     .attr("class",function(d) {
       // console.log(d);
-      return "dot";
+      return "dot fireDot";
     })
     .style("opacity", function(d) {
       return 0.8;
@@ -162,6 +162,63 @@ var drawMap = function(fire_data) {
   map.on("zoom",update);
   update();
 }
+
+// draw map with dots on it
+var drawAir = function(air_data) {
+
+  d3.select("svg").selectAll("airDot").remove();
+  var svg = d3.select("#map-leaflet").select("svg");
+  var g = svg.append("g");
+
+  var circles = g.selectAll("g")
+    .data(air_data)
+    .enter()
+    .append("g");
+
+  // adding circles to the map
+  circles.append("circle")
+    .attr("class",function(d) {
+      // console.log(d);
+      return "dot airDot";
+    })
+    .style("opacity", function(d) {
+      return 0.8;
+    })
+    .style("fill", function(d) {
+      return "blue";//"#E32B2B";//"#3C87CF";
+    })
+    // .style("stroke","#696969")
+    .attr("r", function(d) {
+      if (screen.width <= 480) {
+        return 5;
+      } else {
+        return 8;
+      }
+    });
+
+  // function that zooms and pans the data when the map zooms and pans
+  function update() {
+  	circles.attr("transform",
+  	function(d) {
+  		return "translate("+
+  			map.latLngToLayerPoint(d.LatLng).x +","+
+  			map.latLngToLayerPoint(d.LatLng).y +")";
+  		}
+  	)
+  }
+
+  map.on("viewreset", update);
+  map.on("zoom",update);
+  update();
+}
+
+// creating Lat/Lon objects that d3 is expecting
+air_data.forEach(function(d,idx) {
+  d.LatLng = new L.LatLng(d.Latitude,
+              d.Longitude);
+});
+
+drawAir(air_data);
 
 
 // drawMap(fire_data);

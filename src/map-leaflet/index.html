@@ -53,6 +53,7 @@
 
     <script src="../assets/mapfiles/evacuations.js" type="text/javascript"></script>
     <script>
+      var air_data = <%= JSON.stringify(csv.AirNowWildfire) %>
       var deaths_data = <%= JSON.stringify(json.DeathLocations) %>
       var evacuation_data = <%= JSON.stringify(json.EvacuationCentersUpdated) %>
       var hospitals_data = <%= JSON.stringify(json.EvacuatedHospitals) %>

@@ -4,7 +4,11 @@
   font-family: @med-graphics;
   .victim {
     .flex(0 0 48%);
-    margin: 0 auto;
+    @media @mobile {
+      .flex(0 0 100%);
+    }
+    margin: 10px;
+    // margin-bottom: 20px;
     background: lighten(@light-gray,10%);
     padding: 20px;
     .name {
