@@ -177,72 +177,58 @@ var drawMap = function(fire_data) {
 }
 
 // draw map with dots on it
-var drawAir = function(air_data) {
-
-  d3.select("svg").selectAll("airDot").remove();
-  var svg = d3.select("#map-leaflet").select("svg");
-  var g = svg.append("g");
-
-  var circles = g.selectAll("g")
-    .data(air_data)
-    .enter()
-    .append("g");
-
-  // adding circles to the map
-  circles.append("circle")
-    .attr("class",function(d) {
-      // console.log(d);
-      return "dot airDot";
-    })
-    .style("opacity", function(d) {
-      return 0.8;
-    })
-    .style("fill", function(d) {
-      return "blue";//"#E32B2B";//"#3C87CF";
-    })
-    // .style("stroke","#696969")
-    .attr("r", function(d) {
-      if (screen.width <= 480) {
-        return 5;
-      } else {
-        return 8;
-      }
-    });
-
-  // function that zooms and pans the data when the map zooms and pans
-  function update() {
-  	circles.attr("transform",
-  	function(d) {
-  		return "translate("+
-  			map.latLngToLayerPoint(d.LatLng).x +","+
-  			map.latLngToLayerPoint(d.LatLng).y +")";
-  		}
-  	)
-  }
-
-  map.on("viewreset", update);
-  map.on("zoom",update);
-  update();
-}
-
-// creating Lat/Lon objects that d3 is expecting
-air_data.forEach(function(d,idx) {
-  d.LatLng = new L.LatLng(d.Latitude,
-              d.Longitude);
-});
-
-drawAir(air_data);
-
-
-// drawMap(fire_data);
-
-// using togeojson in nodejs
-
-// omnivore.kml("../assets/mapfiles/fire.kml").addTo(map);
-
+// var drawAir = function(air_data) {
 //
-// var kml = new DOMParser().parseFromString(fs.readFileSync('../assets/mapfiles/fire.kml', 'utf8'));
-// var converted = tj.kml(kml);
-// var convertedWithStyles = tj.kml(kml, { styles: true });
+//   d3.select("svg").selectAll("airDot").remove();
+//   var svg = d3.select("#map-leaflet").select("svg");
+//   var g = svg.append("g");
 //
-// console.log(kml);
+//   var circles = g.selectAll("g")
+//     .data(air_data)
+//     .enter()
+//     .append("g");
+//
+//   // adding circles to the map
+//   circles.append("circle")
+//     .attr("class",function(d) {
+//       // console.log(d);
+//       return "dot airDot";
+//     })
+//     .style("opacity", function(d) {
+//       return 0.8;
+//     })
+//     .style("fill", function(d) {
+//       return "blue";//"#E32B2B";//"#3C87CF";
+//     })
+//     // .style("stroke","#696969")
+//     .attr("r", function(d) {
+//       if (screen.width <= 480) {
+//         return 5;
+//       } else {
+//         return 8;
+//       }
+//     });
+//
+//   // function that zooms and pans the data when the map zooms and pans
+//   function update() {
+//   	circles.attr("transform",
+//   	function(d) {
+//   		return "translate("+
+//   			map.latLngToLayerPoint(d.LatLng).x +","+
+//   			map.latLngToLayerPoint(d.LatLng).y +")";
+//   		}
+//   	)
+//   }
+//
+//   map.on("viewreset", update);
+//   map.on("zoom",update);
+//   update();
+// }
+//
+// // creating Lat/Lon objects that d3 is expecting
+// air_data.forEach(function(d,idx) {
+//   d.LatLng = new L.LatLng(d.Latitude,
+//               d.Longitude);
+// });
+//
+// drawAir(air_data);

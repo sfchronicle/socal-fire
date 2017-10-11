@@ -60,7 +60,7 @@ var evacuationIcon = new MapIcon({iconUrl: '../assets/graphics/evacuation_icon.p
 var hospitalsIcon = new MapIcon({iconUrl: '../assets/graphics/hospitalsEvacuated_icon.png?'});
 
 var grayIcon = new L.Icon({
-  iconUrl: 'https://raw.githubusercontent.com/pointhi/leaflet-color-markers/master/img/marker-icon-violet.png',
+  iconUrl: 'https://raw.githubusercontent.com/pointhi/leaflet-color-markers/master/img/marker-icon-yellow.png',
   shadowUrl: 'https://cdnjs.cloudflare.com/ajax/libs/leaflet/0.7.7/images/marker-shadow.png?',
   iconSize: [25, 41],
   iconAnchor: [12, 41],
@@ -80,27 +80,36 @@ evacuation_data.forEach(function(d){
 
 deaths_data.forEach(function(d){
   var html_str = d.Address+"<br>"+d.Count+" death(s)";
+  // L.marker([d.Lat, d.Lng]).addTo(map).bindPopup(html_str);
   L.marker([d.Lat, d.Lng],{icon: grayIcon}).addTo(map).bindPopup(html_str);
 });
 
-var myStyle = {
-    "color": "#7D2E68",
-    "fill-opacity": 0.8,
-    "weight": 1,
-    "opacity": 1
+var sonomaStyle = {
+    "color": "#75165B",
+    "weight": 3,
 };
 
-var myLayer = L.geoJSON(wineriesGeoJson,{style:myStyle}).addTo(map);
-// console.log(wineriesGeoJson);
-// myLayer.addData(wineriesGeoJson);
+var napaStyle = {
+    "color": "#351B77",
+    "weight": 3,
+};
 
-// var polygon = L.polygon(wineries_data["items"][0]["neighborhood_poly"]).addTo(map);
+var oldStyle = {
+    "color": "#C9A54A",//"#351B77",
+    "weight": 3,
+};
 
+// adding AVAs to map
+var sonomaLayer = L.geoJSON(sonomaGeoJson,{style: sonomaStyle}).addTo(map);
+var napaLayer = L.geoJSON(napaGeoJson,{style: napaStyle}).addTo(map);
+
+// adding previous fire locations to map
+var fireLayer = L.geoJSON(oldFire,{style: oldStyle}).addTo(map);
+
+// data for current fire
 var fireDataURL = "http://extras.sfgate.com/editorial/wildfires/noaa.csv?v=2";
-
 var timer5minutes = 600000;
 var map_timer;
-
 
 d3.csv(fireDataURL, function(fire_data){
 
@@ -176,73 +185,59 @@ var drawMap = function(fire_data) {
   update();
 }
 
-// draw map with dots on it
-var drawAir = function(air_data) {
-
-  d3.select("svg").selectAll("airDot").remove();
-  var svg = d3.select("#map-leaflet").select("svg");
-  var g = svg.append("g");
-
-  var circles = g.selectAll("g")
-    .data(air_data)
-    .enter()
-    .append("g");
-
-  // adding circles to the map
-  circles.append("circle")
-    .attr("class",function(d) {
-      // console.log(d);
-      return "dot airDot";
-    })
-    .style("opacity", function(d) {
-      return 0.8;
-    })
-    .style("fill", function(d) {
-      return "blue";//"#E32B2B";//"#3C87CF";
-    })
-    // .style("stroke","#696969")
-    .attr("r", function(d) {
-      if (screen.width <= 480) {
-        return 5;
-      } else {
-        return 8;
-      }
-    });
-
-  // function that zooms and pans the data when the map zooms and pans
-  function update() {
-    circles.attr("transform",
-    function(d) {
-      return "translate("+
-        map.latLngToLayerPoint(d.LatLng).x +","+
-        map.latLngToLayerPoint(d.LatLng).y +")";
-      }
-    )
-  }
-
-  map.on("viewreset", update);
-  map.on("zoom",update);
-  update();
-}
-
-// creating Lat/Lon objects that d3 is expecting
-air_data.forEach(function(d,idx) {
-  d.LatLng = new L.LatLng(d.Latitude,
-              d.Longitude);
-});
-
-drawAir(air_data);
-
-
-// drawMap(fire_data);
-
-// using togeojson in nodejs
-
-// omnivore.kml("../assets/mapfiles/fire.kml").addTo(map);
-
+// // draw map with dots on it
+// var drawAir = function(air_data) {
 //
-// var kml = new DOMParser().parseFromString(fs.readFileSync('../assets/mapfiles/fire.kml', 'utf8'));
-// var converted = tj.kml(kml);
-// var convertedWithStyles = tj.kml(kml, { styles: true });
+//   d3.select("svg").selectAll("airDot").remove();
+//   var svg = d3.select("#map-leaflet").select("svg");
+//   var g = svg.append("g");
 //
-// console.log(kml);
+//   var circles = g.selectAll("g")
+//     .data(air_data)
+//     .enter()
+//     .append("g");
+//
+//   // adding circles to the map
+//   circles.append("circle")
+//     .attr("class",function(d) {
+//       // console.log(d);
+//       return "dot airDot";
+//     })
+//     .style("opacity", function(d) {
+//       return 0.8;
+//     })
+//     .style("fill", function(d) {
+//       return "blue";//"#E32B2B";//"#3C87CF";
+//     })
+//     // .style("stroke","#696969")
+//     .attr("r", function(d) {
+//       if (screen.width <= 480) {
+//         return 5;
+//       } else {
+//         return 8;
+//       }
+//     });
+//
+//   // function that zooms and pans the data when the map zooms and pans
+//   function update() {
+//     circles.attr("transform",
+//     function(d) {
+//       return "translate("+
+//         map.latLngToLayerPoint(d.LatLng).x +","+
+//         map.latLngToLayerPoint(d.LatLng).y +")";
+//       }
+//     )
+//   }
+//
+//   map.on("viewreset", update);
+//   map.on("zoom",update);
+//   update();
+// }
+//
+// // creating Lat/Lon objects that d3 is expecting
+// air_data.forEach(function(d,idx) {
+//   d.LatLng = new L.LatLng(d.Latitude,
+//               d.Longitude);
+// });
+//
+// drawAir(air_data);

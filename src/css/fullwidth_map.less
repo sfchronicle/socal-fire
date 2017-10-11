@@ -4,6 +4,10 @@
 @import "sfchronicle";
 
 
+.dot {
+  z-index: 1000;
+}
+
 .interactive-container {
   padding: 50px 0;
   padding-top: 0;
@@ -35,6 +39,41 @@
   }
 }
 
+@sonoma: #75165B;
+@napa: #351B77;
+
+.button-container {
+  text-align: center;
+  font-family: @block-graphics;
+  padding-bottom: 20px;
+  font-size: 14px;
+  .button {
+    display: inline-block;
+    // width: 220px;
+    padding: 2px 20px;
+
+  }
+  #sonomacountyavas {
+    border: 2px solid @sonoma;
+    border-radius: 5px;
+    color: @sonoma;
+    margin-right: 10px;
+    &.active {
+      background: @sonoma;
+      color: white;
+    }
+  }
+  #napacountyavas {
+    border: 2px solid @napa;
+    border-radius: 5px;
+    color: @napa;
+    &.active {
+      background: @napa;
+      color: white;
+    }
+  }
+}
+
 .credits-box {
   position: absolute;
   bottom: 20px;
@@ -43,7 +82,7 @@
   text-align: left;
   padding: 10px 20px;
   color: #F2F2F2;
-  font-size: 12px;
+  font-size: 14px;
 
   @media @tablet {
     left: 0;
