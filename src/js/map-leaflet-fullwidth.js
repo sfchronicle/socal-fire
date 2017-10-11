@@ -100,8 +100,19 @@ var oldStyle = {
 };
 
 // adding AVAs to map
-var sonomaLayer = L.geoJSON(sonomaGeoJson,{style: sonomaStyle}).addTo(map);
-var napaLayer = L.geoJSON(napaGeoJson,{style: napaStyle}).addTo(map);
+var sonomaLayer = L.geoJSON(sonomaGeoJson,
+  {style: sonomaStyle},
+  {onEachFeature: function (feature, layer) {
+    console.log(feature);
+    layer.bindPopup(feature.properties["LABEL_TEXT"]);} }
+).addTo(map).bindPopup();
+
+var napaLayer = L.geoJSON(napaGeoJson,
+  {style: napaStyle},
+  {onEachFeature: function (feature, layer) {
+    console.log(feature);
+    layer.bindPopup(feature.properties["AVA_Name"]); } }
+).addTo(map).bindPopup();
 
 // adding previous fire locations to map
 var fireLayer = L.geoJSON(oldFire,{style: oldStyle}).addTo(map);
