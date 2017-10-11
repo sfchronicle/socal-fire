@@ -10,20 +10,25 @@
 }
 
 .map-container {
-  height: 600px;
+  // height: 600px;
   width: 100%;
   max-width: 800px;
   margin: 0 auto 30px auto;
   position: relative;
-  @media @mobile {
-    margin: 20px auto 30px auto;
-    height: 500px;
-  }
+  // @media @mobile {
+  //
+  //   height: 500px;
+  // }
 }
 #map, #map-leaflet {
- height: 100%;
+ // height: 100%;
+ height: 600px;
  width: 100%;
  overflow: hidden;
+ @media @mobile {
+   margin: 20px auto 30px auto;
+   height: 500px;
+ }
  // border: thin solid #333;
 }
 
@@ -51,12 +56,12 @@
     padding: 20px 10px;
     margin-top: 20px;
     padding-bottom: 50px;
-    width: 320px;
+    // width: 320px;
     margin-bottom: 30px;
   }
   @media @mini-mobile {
     padding: 10px 0;
-    width: 300px;
+    // width: 300px;
   }
 }
 
@@ -91,10 +96,8 @@
   }
   .legend-element {
     display: inline-block;
-    width: 200px;
-    @media @mobile {
-      width: 150px;
-    }
+    width: auto;
+    padding: 0 10px;
     img {
       vertical-align: sub;
     }
@@ -109,7 +112,7 @@
   margin: auto;
   vertical-align: center;
   @media @mobile {
-    padding-bottom: 0px;
+    padding-top: 10px;
   }
 }
 
@@ -158,7 +161,6 @@
   text-align: center;
   padding-top: 20px;
   font-size: 13px;
-  // color: white;
   font-family: @med-graphics;
   .fa-hand-o-right {
     padding-right: 5px;
@@ -166,12 +168,8 @@
   .fa-angle-double-down {
     font-size: 30px;
   }
-  // background: @dark-gray-blue;
   @media @mobile {
-    // background: rgba(0, 2, 27, 0.8);
-    // // background: rgba(255,255,255,0.9);
-    // padding-top: 10px;
-    // padding-bottom: 20px;
+    padding-top: 10px;
   }
 }
 
