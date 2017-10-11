@@ -1,0 +1,31 @@
+.victim-container {
+  .display-flex;
+  .flex-wrap(wrap);
+  font-family: @med-graphics;
+  .victim {
+    .flex(0 0 48%);
+    margin: 0 auto;
+    background: lighten(@light-gray,10%);
+    padding: 20px;
+    .name {
+      font-family: @bold-graphics;
+      border-bottom: 2px solid @light-gray;
+      // color: @highlight;
+    }
+    .obit {
+      font-size: 16px;
+      line-height: 1.4;
+      padding: 15px 0;
+    }
+  }
+  .read-more {
+    font-size: 16px;
+    font-family: @block-graphics;
+  }
+  a {
+    color: @highlight;
+    &:hover {
+      color: darken(@highlight,10%);
+    }
+  }
+}

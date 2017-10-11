@@ -1,0 +1,52 @@
+<!doctype html>
+<html lang="en-US">
+  <head>
+    <title><%= json.project.seo_title %></title>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+    <meta name="__sync_contentCategory" content="meterA">
+    <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css">
+    <link rel="stylesheet" type="text/css" href="../style.css">
+
+    <%= !json.project.embedded ? t.include("partials/_paywall.html") : t.include("partials/_embedframe.html") %>
+
+    <%= t.include("partials/_head.html") %>
+
+  </head>
+
+  <%= !json.project.embedded ? "<body>" : "<body is='responsive-body'>" %>
+
+    <div class="title-container">
+      <div class="title"><%= json.victims.Title %></div>
+      <div class="author">By Chronicle staff</div>
+      <div class="date">Last updated: <%= json.victims.Updated %></div>
+    </div>
+
+    <div class="victim-container">
+    <% json.victims.dead.forEach(function(d,didx){ %>
+
+      <div class="victim">
+        <% if (d.WCMID) {%>
+        <div class="image">
+          <img src="http://ww2.hdnux.com/photos/61/64/55/<%= d.WCMID %>/3/600x0.jpg">
+        </div>
+        <% } %>
+        <div class="name"><%=d.Name%>, <%=d.Age%></div>
+        <div class="obit"><%=d.Obituary%></div>
+        <div class="read-more"><a href="<%=d.Link%>" target="_blank">Read more</a></div>
+
+      </div>
+
+    <% }) %>
+    </div>
+
+    <!-- <div class="credit-container">
+      <div>Reported by <a href="mailto:pfimrite@sfchronicle.com">Peter Fimrite</a>, <a href="mailto:jtucker@sfchronicle.com">Jill Tucker</a> and <a href="mcabanatuan@sfchronicle.com">Michael Cabanatuan</a></div>
+      <div>Development by <a href="mailto:eoneill@sfchronicle.com">Emma O'Neill</a></div>
+    </div> -->
+
+    <script src="../victims_app.js" async></script>
+    <%= t.include("partials/_helloSFC.html") %>
+
+  </body>
+</html>
