@@ -1,0 +1,180 @@
+@import "values";
+@import "flexbox";
+@import "fonts";
+@import "sfchronicle";
+
+
+.interactive-container {
+  padding: 50px 0;
+  padding-top: 0;
+  @media @mobile {
+    padding: 30px 0;
+  }
+}
+
+.map-container-full {
+  width: 100%;
+  margin: 0 auto;
+  position: relative;
+
+}
+#map, #map-leaflet {
+ height: 700px;
+ width: 100%;
+ overflow: hidden;
+ @media @mobile {
+
+   height: 350px;
+ }
+}
+
+#map-leaflet {
+  @media @mobile {
+    width: 90%;
+    margin: 0 auto;
+  }
+}
+
+.credits-box {
+  position: absolute;
+  bottom: 20px;
+  left: 10px;
+  z-index: 1000;
+  text-align: left;
+  padding: 10px 20px;
+  color: #F2F2F2;
+  font-size: 12px;
+
+  @media @tablet {
+    left: 0;
+    max-width: 250px;
+  }
+
+  @media @mobile {
+    max-width: 100%;
+    position: static;
+    color: black;
+    padding: 20px 10px;
+    margin-top: 20px;
+    padding-bottom: 50px;
+    margin-bottom: 0;
+  }
+
+  @media @mini-mobile {
+    padding: 10px;
+    margin-top: 0;  }
+}
+
+.source, .credit {
+  max-width: 800px;
+  font-style: italic;
+  margin: auto;
+  font-family: @med-graphics;
+  font-size: 12px;
+
+  @media @mobile {
+    padding-left: 0px;
+  }
+
+  @media @mini-mobile {
+    padding: 0;
+  }
+
+  a {
+    color: white;
+
+    @media @mobile {
+      color: black;
+    }
+
+    &:hover {
+      color: white;
+    }
+  }
+}
+
+.legend-container {
+  text-align: center;
+  font-size: 14px;
+
+  img {
+    max-width: 20px;
+  }
+  .legend-element {
+    display: inline-block;
+    width: auto;
+    padding: 0 10px;
+    img {
+      vertical-align: sub;
+    }
+    &.death-icon {
+      img {
+        max-width: 12px;
+      }
+    }
+  }
+  padding: 20px 0;
+  max-width: 600px;
+  margin: auto;
+  vertical-align: center;
+  @media @mobile {
+    padding-top: 10px;
+  }
+}
+
+.headline {
+  font-family: @bold-graphics;
+  text-align: center;
+  font-size: 20px;
+
+  @media @mobile {
+    max-width: 200px;
+    margin: auto;
+  }
+}
+
+.area-icon, .circle-icon {
+  display: inline-block;
+  margin-bottom: -5px;
+}
+
+.area-icon {
+  height: 20px;
+  width: 20px;
+  border: 3px solid #3388ff;
+  background: lighten(#3388ff,20%);
+}
+
+.circle-icon {
+  height: 15px;
+  width: 15px;
+  background: lighten(#FF530D,10%);
+  border-radius: 20px;
+  margin-bottom: -2px;
+}
+
+.deck {
+  font-family: @med-graphics;
+  text-align: center;
+  font-size: 16px;
+  max-width: 800px;
+  margin: auto;
+  padding-top: 20px;
+  line-height: 1.4;
+}
+
+.instructions {
+  text-align: center;
+  padding-top: 20px;
+  font-size: 13px;
+  font-family: @med-graphics;
+  .fa-hand-o-right {
+    padding-right: 5px;
+  }
+  .fa-angle-double-down {
+    font-size: 30px;
+  }
+  @media @mobile {
+    padding-top: 10px;
+  }
+}

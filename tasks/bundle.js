@@ -20,7 +20,8 @@ module.exports = function(grunt) {
       "./src/js/map.js": "build/map_app.js",
       "./src/js/map-leaflet.js": "build/map-leaflet_app.js",
       "./src/js/timeline.js": "build/timeline_app.js",
-      "./src/js/slider.js": "build/slider_app.js"
+      "./src/js/slider.js": "build/slider_app.js",
+      "./src/js/map-leaflet-fullwidth.js": "build/map-leaflet-fullwidth.js"
     };
 
     async.forEachOf(seeds, function(dest, src, c) {
