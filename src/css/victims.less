@@ -1,16 +1,23 @@
 .victim-container {
   .display-flex;
   .flex-wrap(wrap);
+  .justify-content(center);
   font-family: @med-graphics;
   .victim {
-    .flex(0 0 48%);
+    .flex(0 0 31%);
+    @media @tablet {
+      .flex(0 0 47%);
+    }
     @media @mobile {
-      .flex(0 0 100%);
+      .flex(0 0 90%);
+    }
+    img {
+      max-width: 100%;
     }
     margin: 10px;
     // margin-bottom: 20px;
     background: lighten(@light-gray,10%);
-    padding: 20px;
+    padding: 40px 20px;
     .name {
       font-family: @bold-graphics;
       border-bottom: 2px solid @light-gray;
@@ -20,6 +27,10 @@
       font-size: 16px;
       line-height: 1.4;
       padding: 15px 0;
+    }
+    .image {
+      padding-bottom: 10px;
+      text-align: center;
     }
   }
   .read-more {

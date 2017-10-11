@@ -18,6 +18,7 @@
 
     <div class="title-container">
       <div class="title"><%= json.wine_country_fires_fatalities.Title %></div>
+      <div class="deck"><%= json.wine_country_fires_fatalities.Deck %></div>
       <div class="author">By Chronicle staff</div>
       <div class="date">Last updated: <%= json.wine_country_fires_fatalities.Updated %></div>
     </div>
@@ -26,9 +27,10 @@
     <% json.wine_country_fires_fatalities.dead.forEach(function(d,didx){ %>
 
       <div class="victim">
-        <% if (d.WCMID) {%>
+        <% if (d.Photo) {%>
         <div class="image">
-          <img src="http://ww2.hdnux.com/photos/61/64/55/<%= d.WCMID %>/3/600x0.jpg">
+          <img src="http://ww2.hdnux.com/photos/61/64/55/<%= d.Photo %>/3/600x0.jpg">
+          <div class="caption"><%=d.PhotoCredit%></div>
         </div>
         <% } %>
         <div class="name"><%=d.Name%>, <%=d.Age%></div>
@@ -39,9 +41,8 @@
 
     <% }) %>
     </div>
-    
+
     <div class="credit-container">
-      <div>Reported by <a href="mailto:pfimrite@sfchronicle.com">Peter Fimrite</a>, <a href="mailto:jtucker@sfchronicle.com">Jill Tucker</a> and <a href="mcabanatuan@sfchronicle.com">Michael Cabanatuan</a></div>
       <div>Development by <a href="mailto:eoneill@sfchronicle.com">Emma O'Neill</a> and <a href="mailto:lvilla@sfchronicle.com">Lucio Villa</a></div>
     </div>
 
