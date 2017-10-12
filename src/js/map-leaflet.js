@@ -40,7 +40,7 @@ L.svg().addTo(map);
 
 //https://api.mapbox.com/styles/v1/emro/cj4g94j371v732rnptcghibsy/tiles/256/{z}/{x}/{y}?access_token=pk.eyJ1IjoiZW1ybyIsImEiOiJjaXl2dXUzMGQwMDdsMzJuM2s1Nmx1M29yIn0._KtME1k8LIhloMyhMvvCDA
 //https://api.mapbox.com/styles/v1/emro/cj8lviggc6b302rqjyezdqc2m/tiles/256/{z}/{x}/{y}?access_token=pk.eyJ1IjoiZW1ybyIsImEiOiJjaXl2dXUzMGQwMDdsMzJuM2s1Nmx1M29yIn0._KtME1k8LIhloMyhMvvCDA
-var mapLayer = L.tileLayer("https://api.mapbox.com/styles/v1/emro/cj8lviggc6b302rqjyezdqc2m/tiles/256/{z}/{x}/{y}?access_token=pk.eyJ1IjoiZW1ybyIsImEiOiJjaXl2dXUzMGQwMDdsMzJuM2s1Nmx1M29yIn0._KtME1k8LIhloMyhMvvCDA",{attribution: '© <a href="https://www.mapbox.com/map-feedback/">Mapbox</a> © <a href="http://www.openstreetmap.org/copyright">OpenStreetMap</a> <strong><a href="https://www.mapbox.com/map-feedback/" target="_blank">Improve this map</a></strong>'})
+var mapLayer = L.tileLayer("https://api.mapbox.com/styles/v1/emro/cj8oq9bxg8zfu2rs3uw1ot59l/tiles/256/{z}/{x}/{y}?access_token=pk.eyJ1IjoiZW1ybyIsImEiOiJjaXl2dXUzMGQwMDdsMzJuM2s1Nmx1M29yIn0._KtME1k8LIhloMyhMvvCDA",{attribution: '© <a href="https://www.mapbox.com/map-feedback/">Mapbox</a> © <a href="http://www.openstreetmap.org/copyright">OpenStreetMap</a> <strong><a href="https://www.mapbox.com/map-feedback/" target="_blank">Improve this map</a></strong>'})
 mapLayer.addTo(map);
 
 L.control.zoom({
@@ -59,9 +59,18 @@ var fireIcon = new MapIcon({iconUrl: '../assets/graphics/fire_icon.png?'});
 var evacuationIcon = new MapIcon({iconUrl: '../assets/graphics/evacuation_icon.png?'});
 var hospitalsIcon = new MapIcon({iconUrl: '../assets/graphics/hospitalsEvacuated_icon.png?'});
 
-var grayIcon = new L.Icon({
+var purpleIcon = new L.Icon({
   iconUrl: 'https://raw.githubusercontent.com/pointhi/leaflet-color-markers/master/img/marker-icon-violet.png',
-  shadowUrl: 'https://cdnjs.cloudflare.com/ajax/libs/leaflet/0.7.7/images/marker-shadow.png?',
+  shadowUrl: 'https://cdnjs.cloudflare.com/ajax/libs/leaflet/0.7.7/images/marker-shadow.png',
+  iconSize: [25, 41],
+  iconAnchor: [12, 41],
+  popupAnchor: [1, -34],
+  shadowSize: [41, 41]
+});
+
+var greenIcon = new L.Icon({
+  iconUrl: 'https://raw.githubusercontent.com/pointhi/leaflet-color-markers/master/img/marker-icon-green.png',
+  shadowUrl: 'https://cdnjs.cloudflare.com/ajax/libs/leaflet/0.7.7/images/marker-shadow.png',
   iconSize: [25, 41],
   iconAnchor: [12, 41],
   popupAnchor: [1, -34],
@@ -69,18 +78,29 @@ var grayIcon = new L.Icon({
 });
 
 evacuation_data.forEach(function(d){
-  // L.marker([d.Lat, d.Lng], {icon: evacuationIcon}).addTo(map);
-  if (d.description) {
-    var html_str = "<b>"+d.Name+"</b><br>"+d.Address+"<br>"+d["Phone number"]+"<br>"+d.description;
-  } else {
-    var html_str = "<b>"+d.Name+"</b><br>"+d.Address+"<br>"+d["Phone number"];
+  var html_str = "<b>"+d.Name+"</b><br>"+d.Address;
+  if (d["Phone number"]) {
+    html_str += "<br>"+d["Phone number"];
+  }
+  if (d.Notes){
+    html_str += "<br>Note: "+d.Notes;
   }
   L.marker([d.Lat, d.Lng], {icon: evacuationIcon}).addTo(map).bindPopup(html_str);
 });
 
 deaths_data.forEach(function(d){
   var html_str = d.Address+"<br>"+d.Count+" death(s)";
-  L.marker([d.Lat, d.Lng],{icon: grayIcon}).addTo(map).bindPopup(html_str);
+  L.marker([d.Lat, d.Lng],{icon: purpleIcon}).addTo(map).bindPopup(html_str);
+});
+
+winery_data.forEach(function(d){
+  var html_str = "<b>"+d.Name+"</b><br><i>"+d.Address+"</i><br>"+d.Description;
+  L.marker([d.Lat, d.Lng], {icon: greenIcon}).addTo(map).bindPopup(html_str);
+});
+
+hospitals_data.forEach(function(d){
+  var html_str = "<b>"+d.Name+"</b>";
+  L.marker([d.Latitude, d.Longitude], {icon: hospitalsIcon}).addTo(map).bindPopup(html_str);
 });
 
 var myStyle = {
@@ -89,12 +109,6 @@ var myStyle = {
     "weight": 1,
     "opacity": 1
 };
-
-var myLayer = L.geoJSON(wineriesGeoJson,{style:myStyle}).addTo(map);
-// console.log(wineriesGeoJson);
-// myLayer.addData(wineriesGeoJson);
-
-// var polygon = L.polygon(wineries_data["items"][0]["neighborhood_poly"]).addTo(map);
 
 var fireDataURL = "http://extras.sfgate.com/editorial/wildfires/noaa.csv?v=2";
 
@@ -132,6 +146,7 @@ var drawMap = function(fire_data) {
 
   d3.select("svg").selectAll("fireDot").remove();
   var svg = d3.select("#map-leaflet").select("svg");
+  svg.attr("class","dotsSVG")
   var g = svg.append("g");
 
   var circles = g.selectAll("g")
@@ -142,16 +157,14 @@ var drawMap = function(fire_data) {
   // adding circles to the map
   circles.append("circle")
     .attr("class",function(d) {
-      // console.log(d);
       return "dot fireDot";
     })
-    .style("opacity", function(d) {
-      return 0.8;
-    })
-    .style("fill", function(d) {
-      return "#FF530D";//"#E32B2B";//"#3C87CF";
-    })
-    // .style("stroke","#696969")
+    .style("opacity", 0.2)
+    .style("stroke","#8C0000")
+    .style("opacity",1)
+    .style("stroke-width","1")
+    .style("fill-opacity",0.2)
+    .style("fill","#8C0000")
     .attr("r", function(d) {
       if (screen.width <= 480) {
         return 5;

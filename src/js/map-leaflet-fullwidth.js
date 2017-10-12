@@ -235,17 +235,14 @@ var drawMap = function(fire_data) {
   // adding circles to the map
   circles.append("circle")
     .attr("class",function(d) {
-      // console.log(d);
       return "dot fireDot";
     })
     .style("opacity", 0.2)
-    // .style("fill","#FFE07A")
     .style("stroke","#8C0000")
     .style("opacity",1)
     .style("stroke-width","1")
     .style("fill-opacity",0.2)
     .style("fill","#8C0000")
-    // .style("stroke","#696969")
     .attr("r", function(d) {
       if (screen.width <= 480) {
         return 5;
