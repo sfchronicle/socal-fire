@@ -98,6 +98,11 @@ winery_data.forEach(function(d){
   L.marker([d.Lat, d.Lng], {icon: greenIcon}).addTo(map).bindPopup(html_str);
 });
 
+hospitals_data.forEach(function(d){
+  var html_str = "<b>"+d.Name+"</b>";
+  L.marker([d.Latitude, d.Longitude], {icon: hospitalsIcon}).addTo(map).bindPopup(html_str);
+});
+
 var napaStyle = {
     "color": "#351B77",
     "weight": 3,
