@@ -78,18 +78,18 @@ var greenIcon = new L.Icon({
 });
 
 evacuation_data.forEach(function(d){
-  // L.marker([d.Lat, d.Lng], {icon: evacuationIcon}).addTo(map);
-  if (d.description) {
-    var html_str = "<b>"+d.Name+"</b><br>"+d.Address+"<br>"+d["Phone number"]+"<br>"+d.description;
-  } else {
-    var html_str = "<b>"+d.Name+"</b><br>"+d.Address+"<br>"+d["Phone number"];
+  var html_str = "<b>"+d.Name+"</b><br>"+d.Address;
+  if (d["Phone number"]) {
+    html_str += "<br>"+d["Phone number"];
+  }
+  if (d.Notes){
+    html_str += "<br>Note: "+d.Notes;
   }
   L.marker([d.Lat, d.Lng], {icon: evacuationIcon}).addTo(map).bindPopup(html_str);
 });
 
 deaths_data.forEach(function(d){
   var html_str = d.Address+"<br>"+d.Count+" death(s)";
-  // L.marker([d.Lat, d.Lng]).addTo(map).bindPopup(html_str);
   L.marker([d.Lat, d.Lng],{icon: purpleIcon}).addTo(map).bindPopup(html_str);
 });
 
