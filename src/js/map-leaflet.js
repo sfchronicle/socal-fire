@@ -148,8 +148,9 @@ var drawMap = function(fire_data) {
   var svg = d3.select("#map-leaflet").select("svg");
   svg.attr("class","dotsSVG")
   var g = svg.append("g");
+  g.attr("class","dotG")
 
-  var circles = g.selectAll("g")
+  var circles = g.selectAll("dotG")
     .data(fire_data)
     .enter()
     .append("g");
@@ -188,6 +189,44 @@ var drawMap = function(fire_data) {
   map.on("zoom",update);
   update();
 }
+
+// creating Lat/Lon objects that d3 is expecting
+fire_names.forEach(function(d,idx) {
+  d.LatLng = new L.LatLng(d.Lat,
+              d.Lon);
+});
+
+var svg = d3.select("#map-leaflet").select("svg");
+var gLabels = svg.append("g");
+gLabels.attr("class","dotsLABELS")
+
+var labels = gLabels.selectAll("dotsLABELS")
+  .data(fire_names)
+  .enter()
+  .append("g");
+
+// adding circles to the map
+labels.append("text")
+    .style("font-size","18px")
+    .style("fill","#595959")
+    .text(function(d){
+      return d.Name+ " Fire";
+    })
+
+// function that zooms and pans the data when the map zooms and pans
+function updateLabels() {
+  labels.attr("transform",
+  function(d) {
+    return "translate("+
+      map.latLngToLayerPoint(d.LatLng).x +","+
+      map.latLngToLayerPoint(d.LatLng).y +")";
+    }
+  )
+}
+
+map.on("viewreset", updateLabels);
+map.on("zoom",updateLabels);
+updateLabels();
 
 // draw map with dots on it
 // var drawAir = function(air_data) {

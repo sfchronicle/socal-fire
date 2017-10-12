@@ -59,6 +59,7 @@
     <script src="../assets/mapfiles/napas.js" type="text/javascript"></script>
     <script src="../assets/mapfiles/sonoma.js" type="text/javascript"></script>
     <script>
+      var fire_names = <%= JSON.stringify(json.FireNames) %>
       var winery_data = <%= JSON.stringify(json.DamagedWineries) %>
       var deaths_data = <%= JSON.stringify(json.DeathLocations) %>
       var evacuation_data = <%= JSON.stringify(json.EvacuationCentersUpdatedClare) %>

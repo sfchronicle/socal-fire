@@ -287,8 +287,6 @@ var labels = gLabels.selectAll("dotsLABELS")
   .enter()
   .append("g");
 
-console.log(labels);
-
 // adding circles to the map
 labels.append("text")
     .style("font-size","18px")
