@@ -20,7 +20,8 @@ module.exports = function(grunt) {
 
     var seeds = {
       "src/css/seed.less": "build/style.css",
-      "src/css/fullwidth_map.less": "build/fullwidth_style.css"
+      "src/css/fullwidth_map.less": "build/fullwidth_style.css",
+      "src/css/victims.less": "build/victims_style.css"
     };
 
     async.forEachOf(seeds, function(dest, src, c) {

@@ -1,42 +1,82 @@
+@import "values";
+@import "flexbox";
+@import "fonts";
+@import "sfchronicle";
+
+
+.credit-container {
+  padding: 100px 0;
+  text-align: center;
+  font-size: 14px;
+  font-family: @block-graphics;
+  a {
+    color: @highlight;
+    &:hover {
+      color: darken(@highlight,10%);
+    }
+  }
+}
+
 .victim-container {
   .display-flex;
   .flex-wrap(wrap);
-  .justify-content(center);
   font-family: @med-graphics;
+  .justify-content(center);
+
+  @media @tablet {
+    .justify-content(flex-start);
+  }
+
   .victim {
-    .flex(0 0 31%);
+    .flex(0 0 30%);
+    
     @media @tablet {
-      .flex(0 0 47%);
+      .flex(0 0 45%);
     }
+
     @media @mobile {
-      .flex(0 0 90%);
+      .flex(0 1 100%);
     }
+
     img {
       max-width: 100%;
     }
+
     margin: 10px;
-    // margin-bottom: 20px;
     background: lighten(@light-gray,10%);
-    padding: 40px 20px;
+    padding: 25px 20px 30px;
+
     .name {
       font-family: @bold-graphics;
       border-bottom: 2px solid @light-gray;
-      // color: @highlight;
+
+      @media @mobile{
+        font-size:19px;
+      }
     }
+
     .obit {
       font-size: 16px;
       line-height: 1.4;
       padding: 15px 0;
+
+      @media @mobile{
+        font-size:14px;
+        padding:10px 0;
+      }
     }
+
     .image {
       padding-bottom: 10px;
       text-align: center;
     }
   }
+
   .read-more {
     font-size: 16px;
     font-family: @block-graphics;
   }
+
   a {
     color: @highlight;
     &:hover {

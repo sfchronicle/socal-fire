@@ -4,9 +4,7 @@
     <title><%= json.project.seo_title %></title>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width,initial-scale=1">
-    <meta name="__sync_contentCategory" content="meterA">
-    <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css">
-    <link rel="stylesheet" type="text/css" href="../style.css">
+    <link rel="stylesheet" type="text/css" href="../victims_style.css">
 
     <%= !json.project.embedded ? t.include("partials/_paywall.html") : t.include("partials/_embedframe.html") %>
 
@@ -17,9 +15,6 @@
   <%= !json.project.embedded ? "<body>" : "<body is='responsive-body'>" %>
 
     <div class="title-container">
-      <div class="title"><%= json.wine_country_fires_fatalities.Title %></div>
-      <div class="deck"><%= json.wine_country_fires_fatalities.Deck %></div>
-      <div class="author">By Chronicle staff</div>
       <div class="date">Last updated: <%= json.wine_country_fires_fatalities.Updated %></div>
     </div>
 
@@ -47,7 +42,6 @@
     </div>
 
     <script src="../victims_app.js" async></script>
-    <%= t.include("partials/_helloSFC.html") %>
 
   </body>
 </html>
