@@ -11,9 +11,9 @@ if (screen.width <= 480) {
   var bottomOffset = 100;
 
 } else {
-  var sf_lat = 38.7;
-  var sf_long = -122.6;
-  var zoom_deg = 8;
+  var sf_lat = 38.4;
+  var sf_long = -122.9;
+  var zoom_deg = 9;
 
   var offset_top = 900;
   var bottomOffset = 200;
@@ -40,7 +40,7 @@ L.svg().addTo(map);
 
 //https://api.mapbox.com/styles/v1/emro/cj4g94j371v732rnptcghibsy/tiles/256/{z}/{x}/{y}?access_token=pk.eyJ1IjoiZW1ybyIsImEiOiJjaXl2dXUzMGQwMDdsMzJuM2s1Nmx1M29yIn0._KtME1k8LIhloMyhMvvCDA
 //https://api.mapbox.com/styles/v1/emro/cj8lviggc6b302rqjyezdqc2m/tiles/256/{z}/{x}/{y}?access_token=pk.eyJ1IjoiZW1ybyIsImEiOiJjaXl2dXUzMGQwMDdsMzJuM2s1Nmx1M29yIn0._KtME1k8LIhloMyhMvvCDA
-var mapLayer = L.tileLayer("https://api.mapbox.com/styles/v1/emro/cj8lviggc6b302rqjyezdqc2m/tiles/256/{z}/{x}/{y}?access_token=pk.eyJ1IjoiZW1ybyIsImEiOiJjaXl2dXUzMGQwMDdsMzJuM2s1Nmx1M29yIn0._KtME1k8LIhloMyhMvvCDA",{attribution: '© <a href="https://www.mapbox.com/map-feedback/">Mapbox</a> © <a href="http://www.openstreetmap.org/copyright">OpenStreetMap</a> <strong><a href="https://www.mapbox.com/map-feedback/" target="_blank">Improve this map</a></strong>'})
+var mapLayer = L.tileLayer("https://api.mapbox.com/styles/v1/emro/cj8oq9bxg8zfu2rs3uw1ot59l/tiles/256/{z}/{x}/{y}?access_token=pk.eyJ1IjoiZW1ybyIsImEiOiJjaXl2dXUzMGQwMDdsMzJuM2s1Nmx1M29yIn0._KtME1k8LIhloMyhMvvCDA",{attribution: '© <a href="https://www.mapbox.com/map-feedback/">Mapbox</a> © <a href="http://www.openstreetmap.org/copyright">OpenStreetMap</a> <strong><a href="https://www.mapbox.com/map-feedback/" target="_blank">Improve this map</a></strong>'})
 mapLayer.addTo(map);
 
 L.control.zoom({
@@ -59,9 +59,18 @@ var fireIcon = new MapIcon({iconUrl: '../assets/graphics/fire_icon.png?'});
 var evacuationIcon = new MapIcon({iconUrl: '../assets/graphics/evacuation_icon.png?'});
 var hospitalsIcon = new MapIcon({iconUrl: '../assets/graphics/hospitalsEvacuated_icon.png?'});
 
-var grayIcon = new L.Icon({
-  iconUrl: 'https://raw.githubusercontent.com/pointhi/leaflet-color-markers/master/img/marker-icon-yellow.png',
-  shadowUrl: 'https://cdnjs.cloudflare.com/ajax/libs/leaflet/0.7.7/images/marker-shadow.png?',
+var purpleIcon = new L.Icon({
+  iconUrl: 'https://raw.githubusercontent.com/pointhi/leaflet-color-markers/master/img/marker-icon-violet.png',
+  shadowUrl: 'https://cdnjs.cloudflare.com/ajax/libs/leaflet/0.7.7/images/marker-shadow.png',
+  iconSize: [25, 41],
+  iconAnchor: [12, 41],
+  popupAnchor: [1, -34],
+  shadowSize: [41, 41]
+});
+
+var greenIcon = new L.Icon({
+  iconUrl: 'https://raw.githubusercontent.com/pointhi/leaflet-color-markers/master/img/marker-icon-green.png',
+  shadowUrl: 'https://cdnjs.cloudflare.com/ajax/libs/leaflet/0.7.7/images/marker-shadow.png',
   iconSize: [25, 41],
   iconAnchor: [12, 41],
   popupAnchor: [1, -34],
@@ -81,77 +90,107 @@ evacuation_data.forEach(function(d){
 deaths_data.forEach(function(d){
   var html_str = d.Address+"<br>"+d.Count+" death(s)";
   // L.marker([d.Lat, d.Lng]).addTo(map).bindPopup(html_str);
-  L.marker([d.Lat, d.Lng],{icon: grayIcon}).addTo(map).bindPopup(html_str);
+  L.marker([d.Lat, d.Lng],{icon: purpleIcon}).addTo(map).bindPopup(html_str);
 });
 
-var sonomaStyle = {
-    "color": "#75165B",
-    "weight": 3,
-};
+winery_data.forEach(function(d){
+  var html_str = "<b>"+d.Name+"</b><br><i>"+d.Address+"</i><br>"+d.Description;
+  L.marker([d.Lat, d.Lng], {icon: greenIcon}).addTo(map).bindPopup(html_str);
+});
 
 var napaStyle = {
     "color": "#351B77",
     "weight": 3,
 };
 
-var oldStyle = {
-    "color": "#C9A54A",//"#351B77",
+var last12Style = {
+    "color": "#FF6721",//"#351B77",
+    "fill-opacity": 0.8,
     "weight": 3,
 };
 
-var sonomaLayer, napaLayer;
-var napa_toggle = 1;
-var sonoma_toggle = 1;
+var last24Style = {
+    "color": "#C9A54A",//"#351B77",
+    "fill-opacity": 0.8,
+    "weight": 3,
+};
 
-// adding AVAs to map
-sonomaLayer = L.geoJSON(sonomaGeoJson,
-  {style: sonomaStyle},
-  {onEachFeature: function (feature, layer) {
-    console.log(feature);
-    layer.bindPopup(feature.properties["LABEL_TEXT"]);} }
-).addTo(map);
+var last7daysStyle = {
+    "color": "#FFE07A",//"#351B77",
+    "fill-opacity": 0.8,
+    "weight": 3,
+};
 
-napaLayer = L.geoJSON(napaGeoJson,
-  {style: napaStyle},
-  {onEachFeature: function (feature, layer) {
-    console.log(feature);
-    layer.bindPopup(feature.properties["AVA_Name"]); } }
-).addTo(map);
 
-document.getElementById("sonomacountyavas").addEventListener("click",function() {
-  if (sonoma_toggle == 1) {
-    map.removeLayer(sonomaLayer);
-    sonoma_toggle = 0;
-  } else {
-    sonomaLayer = L.geoJSON(sonomaGeoJson,
-      {style: sonomaStyle},
-      {onEachFeature: function (feature, layer) {
-        layer.bindPopup(feature.properties["LABEL_TEXT"]);} }
-    ).addTo(map);
-    sonoma_toggle = 1;
-  }
-});
 
-document.getElementById("napacountyavas").addEventListener("click",function() {
-  if (napa_toggle == 1) {
+var napaLayer, sonomaLayer, fireLayerLast7days, fireLayerLast24, fireLayerLast12;
+var avas_toggle = 0, last7days_toggle = 1, last24_toggle = 1, last12_toggle = 1;
+
+document.getElementById("avas").addEventListener("click",function() {
+  if (avas_toggle == 1) {
     map.removeLayer(napaLayer);
-    napa_toggle = 0;
+    map.removeLayer(sonomaLayer);
+    avas_toggle = 0;
+    this.classList.remove("active");
   } else {
-    napaLayer = L.geoJSON(napaGeoJson,
-      {style: napaStyle},
-      {onEachFeature: function (feature, layer) {
-        console.log(feature);
-        layer.bindPopup(feature.properties["AVA_Name"]); } }
-    ).addTo(map);
-    napa_toggle = 1;
+    sonomaLayer = L.geoJSON(sonomaGeoJson,{style: napaStyle}).addTo(map);
+    napaLayer = L.geoJSON(napaGeoJson,{style: napaStyle}).addTo(map);
+    avas_toggle = 1;
+    this.classList.add("active");
   }
 });
 
 // adding previous fire locations to map
-var fireLayer = L.geoJSON(oldFire,{style: oldStyle}).addTo(map);
+fireLayerLast7days = L.geoJSON(last7daysGeoJson,{style: last7daysStyle}).addTo(map);
+
+// adding previous fire locations to map
+fireLayerLast24 = L.geoJSON(last24GeoJson,{style: last24Style}).addTo(map);
+
+// adding previous fire locations to map
+fireLayerLast12 = L.geoJSON(last12GeoJson,{style: last12Style}).addTo(map);
+
+document.getElementById("last12").addEventListener("click",function() {
+  if (last12_toggle == 1) {
+    map.removeLayer(fireLayerLast12);
+    last12_toggle = 0;
+    this.classList.remove("active");
+  } else {
+    fireLayerLast12 = L.geoJSON(last12GeoJson,{style: last12Style}).addTo(map);
+    last12_toggle = 1;
+    this.classList.add("active");
+  }
+});
+
+document.getElementById("last24").addEventListener("click",function() {
+  if (last24_toggle == 1) {
+    map.removeLayer(fireLayerLast24);
+    last24_toggle = 0;
+    this.classList.remove("active");
+  } else {
+    fireLayerLast24 = L.geoJSON(last24GeoJson,{style: last24Style}).addTo(map);
+    last24_toggle = 1;
+    this.classList.add("active");
+  }
+});
+
+document.getElementById("last7days").addEventListener("click",function() {
+  if (last7days_toggle == 1) {
+    map.removeLayer(fireLayerLast7days);
+    last7days_toggle = 0;
+    this.classList.remove("active");
+  } else {
+    fireLayerLast7days = L.geoJSON(last7daysGeoJson,{style: last7daysStyle}).addTo(map);
+    last7days_toggle = 1;
+    this.classList.add("active");
+  }
+});
+
 
 // data for current fire
 var fireDataURL = "http://extras.sfgate.com/editorial/wildfires/noaa.csv?v=2";
+var nasa12URL = "http://extras.sfgate.com/editorial/wildfires/nasa12.json";
+var nasa24URL = "http://extras.sfgate.com/editorial/wildfires/nasa24.json";
+var nasa7daysURL = "http://extras.sfgate.com/editorial/wildfires/nasa7d.json";
 var timer5minutes = 600000;
 var map_timer;
 
@@ -185,6 +224,7 @@ var drawMap = function(fire_data) {
 
   d3.select("svg").selectAll("fireDot").remove();
   var svg = d3.select("#map-leaflet").select("svg");
+  svg.attr("class","dotsSVG")
   var g = svg.append("g");
 
   var circles = g.selectAll("g")
@@ -198,12 +238,13 @@ var drawMap = function(fire_data) {
       // console.log(d);
       return "dot fireDot";
     })
-    .style("opacity", function(d) {
-      return 0.8;
-    })
-    .style("fill", function(d) {
-      return "#FF530D";//"#E32B2B";//"#3C87CF";
-    })
+    .style("opacity", 0.2)
+    // .style("fill","#FFE07A")
+    .style("stroke","#8C0000")
+    .style("opacity",1)
+    .style("stroke-width","1")
+    .style("fill-opacity",0.2)
+    .style("fill","#8C0000")
     // .style("stroke","#696969")
     .attr("r", function(d) {
       if (screen.width <= 480) {

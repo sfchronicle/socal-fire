@@ -8,13 +8,13 @@
   z-index: 1000;
 }
 
-.interactive-container {
-  padding: 50px 0;
-  padding-top: 0;
-  @media @mobile {
-    padding: 30px 0;
-  }
-}
+// .interactive-container {
+//   padding: 50px 0;
+//   padding-top: 0;
+//   @media @mobile {
+//     padding: 30px 0;
+//   }
+// }
 
 .map-container-full {
   width: 100%;
@@ -23,9 +23,13 @@
 
 }
 #map, #map-leaflet {
- height: 700px;
+ height: 1000px;
  width: 100%;
  overflow: hidden;
+ position: fixed;
+ left: 0;
+ top: 0;
+ z-index: -1;
  @media @mobile {
 
    height: 350px;
@@ -39,60 +43,102 @@
   }
 }
 
+path {
+  cursor: -webkit-grab !important;
+}
+
+@now: #8C0000;
 @sonoma: #75165B;
 @napa: #351B77;
+@hours12: #FF6721;
+@hours24: #C9A54A;
+@days7: #FFE07A;
+
+path {
+  fill-opacity: 0.6 !important;
+}
+
+.dotsSVG {
+  z-index: 1000 !important;
+}
 
 .button-container {
   text-align: center;
   font-family: @block-graphics;
   padding-bottom: 20px;
-  font-size: 14px;
+  font-size: 15px;
   .button {
     display: inline-block;
     // width: 220px;
     padding: 2px 20px;
-
+    margin-bottom: 4px;
+    cursor: pointer;
   }
-  #sonomacountyavas {
-    border: 2px solid @sonoma;
+  #now {
+    border: 2px solid @now;
     border-radius: 5px;
-    color: @sonoma;
-    margin-right: 10px;
+    // color: @now;
+    margin-right: 5px;
     &.active {
-      background: @sonoma;
-      color: white;
+      background: lighten(@now,15%);
+      // color: white;
     }
   }
-  #napacountyavas {
+  #avas {
     border: 2px solid @napa;
     border-radius: 5px;
     color: @napa;
     &.active {
-      background: @napa;
+      background: lighten(@napa,15%);
       color: white;
+    }
+  }
+  #last12 {
+    border: 2px solid @hours12;
+    border-radius: 5px;
+    color: @hours12;
+    &.active {
+      background: lighten(@hours12,5%);
+      color: white;
+    }
+  }
+  #last24 {
+    border: 2px solid @hours24;
+    border-radius: 5px;
+    color: @hours24;
+    &.active {
+      background: lighten(@hours24,5%);
+      color: white;
+    }
+  }
+  #last7days {
+    border: 2px solid @days7;
+    border-radius: 5px;
+    color: darken(@days7,40%);
+    &.active {
+      background: @days7;
+      // color: white;
     }
   }
 }
 
 .credits-box {
-  position: absolute;
-  bottom: 20px;
-  left: 10px;
-  z-index: 1000;
+  // position: absolute;
+  // bottom: 20px;
+  // left: 10px;
+  // z-index: 1000;
+  font-family: @med-graphics;
+  max-width: 100%;
+  // position: static;
   text-align: left;
-  padding: 10px 20px;
-  color: #F2F2F2;
-  font-size: 14px;
-
-  @media @tablet {
-    left: 0;
-    max-width: 250px;
-  }
+  padding: 40px 20px 0px 20px;
+  // background: #595959;
+  // color: white;
+  font-size: 15px;
+  // border-top: 2px solid white;
 
   @media @mobile {
-    max-width: 100%;
-    position: static;
-    color: black;
+    // color: black;
     padding: 20px 10px;
     margin-top: 20px;
     padding-bottom: 50px;
@@ -101,15 +147,19 @@
 
   @media @mini-mobile {
     padding: 10px;
-    margin-top: 0;  }
+    margin-top: 0;
+  }
 }
 
 .source, .credit {
   max-width: 800px;
-  font-style: italic;
+  // font-style: italic;
   margin: auto;
-  font-family: @med-graphics;
-  font-size: 12px;
+  // font-family: @med-graphics;
+  // font-size: 12px;
+  a {
+    font-style: italic;
+  }
 
   @media @mobile {
     padding-left: 0px;
@@ -118,23 +168,36 @@
   @media @mini-mobile {
     padding: 0;
   }
-
   a {
-    color: white;
+    color: @highlight;
+  }
 
-    @media @mobile {
-      color: black;
-    }
+  // a {
+  //   color: white;
+  //
+  //   @media @mobile {
+  //     color: black;
+  //   }
+  //
+  //   &:hover {
+  //     color: white;
+  //   }
+  // }
+}
 
-    &:hover {
-      color: white;
-    }
+.banner-logo {
+  max-width: 150px;
+  padding-bottom: 20px;
+  margin: auto;
+  text-align: center;
+  img {
+    width: 100%;
   }
 }
 
 .legend-container {
   text-align: center;
-  font-size: 14px;
+  font-size: 15px;
 
   img {
     max-width: 20px;
@@ -146,7 +209,7 @@
     img {
       vertical-align: sub;
     }
-    &.death-icon {
+    &.death-icon, &.wineries-icon {
       img {
         max-width: 12px;
       }
@@ -187,8 +250,9 @@
 .circle-icon {
   height: 15px;
   width: 15px;
-  background: lighten(#FF530D,10%);
+  background: rgba(140,0,0,0.2);
   border-radius: 20px;
+  border: 2px solid #8C0000;
   margin-bottom: -2px;
 }
 
@@ -198,8 +262,23 @@
   font-size: 16px;
   max-width: 800px;
   margin: auto;
-  padding-top: 20px;
+  padding: 20px 20px 0 20px;
   line-height: 1.4;
+}
+
+.map-info-box {
+  position: absolute;
+  height: 100vh;
+  top: 0;
+  left: 0px;
+  padding-top: 20px;
+  max-width: 400px;
+  // width: 50%;
+  z-index: 500;
+  background: lighten(@light-gray,10%);
+  border-right: 1px solid @light-gray;
+  // background: rgba(255,255,255,0.9);
+  font-family: @block-graphics;
 }
 
 .instructions {
