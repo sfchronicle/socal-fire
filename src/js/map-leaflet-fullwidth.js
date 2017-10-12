@@ -115,13 +115,13 @@ var last12Style = {
 };
 
 var last24Style = {
-    "color": "#C9A54A",//"#351B77",
+    "color": "#FF8800",//"#351B77",
     "fill-opacity": 0.8,
     "weight": 3,
 };
 
 var last7daysStyle = {
-    "color": "#FFE07A",//"#351B77",
+    "color": "#FFB200",//"#351B77",
     "fill-opacity": 0.8,
     "weight": 3,
 };
