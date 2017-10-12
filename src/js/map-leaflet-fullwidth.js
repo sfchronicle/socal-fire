@@ -89,7 +89,11 @@ evacuation_data.forEach(function(d){
 });
 
 deaths_data.forEach(function(d){
-  var html_str = d.Address+"<br>"+d.Count+" death(s)";
+  if (d.Name) {
+    var html_str = d.Address+"<br>"+d.Count+" death(s): "+d.Name;
+  } else {
+    var html_str = d.Address+"<br>"+d.Count+" death(s)";
+  }
   L.marker([d.Lat, d.Lng],{icon: purpleIcon}).addTo(map).bindPopup(html_str);
 });
 
