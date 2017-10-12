@@ -185,16 +185,9 @@ document.getElementById("last7days").addEventListener("click",function() {
 
 
 // data for current fire
-var fireDataURL = "http://extras.sfgate.com/editorial/wildfires/noaa.csv?v=2";
-var nasa12URL = "http://extras.sfgate.com/editorial/wildfires/nasa12.json";
-var nasa24URL = "http://extras.sfgate.com/editorial/wildfires/nasa24.json";
-var nasa7daysURL = "http://extras.sfgate.com/editorial/wildfires/nasa7d.json";
+var fireDataURL = "http://extras.sfgate.com/editorial/wildfires/noaa.csv";
 var timer5minutes = 600000;
 var map_timer;
-
-d3.json(nasa12URL,function(nasa12_data){
-  console.log(nasa12_data);
-})
 
 d3.csv(fireDataURL, function(fire_data){
 
