@@ -121,8 +121,6 @@ var last7daysStyle = {
     "weight": 3,
 };
 
-
-
 var napaLayer, sonomaLayer, fireLayerLast7days, fireLayerLast24, fireLayerLast12;
 var avas_toggle = 0, last7days_toggle = 1, last24_toggle = 1, last12_toggle = 1;
 
@@ -193,6 +191,10 @@ var nasa24URL = "http://extras.sfgate.com/editorial/wildfires/nasa24.json";
 var nasa7daysURL = "http://extras.sfgate.com/editorial/wildfires/nasa7d.json";
 var timer5minutes = 600000;
 var map_timer;
+
+d3.json(nasa12URL,function(nasa12_data){
+  console.log(nasa12_data);
+})
 
 d3.csv(fireDataURL, function(fire_data){
 

@@ -65,12 +65,18 @@ path {
 .button-container {
   text-align: center;
   font-family: @block-graphics;
-  padding-bottom: 20px;
+  padding-bottom: 10px;
   font-size: 15px;
+  .button-desc {
+    padding-bottom: 5px;
+    font-size: 17px;
+    font-family: @bold-graphics;
+    // font-style: italic;
+  }
   .button {
     display: inline-block;
     // width: 220px;
-    padding: 2px 20px;
+    padding: 2px 10px;
     margin-bottom: 4px;
     cursor: pointer;
   }
@@ -131,10 +137,11 @@ path {
   max-width: 100%;
   // position: static;
   text-align: left;
-  padding: 40px 20px 0px 20px;
+  padding: 20px 20px 0px 20px;
   // background: #595959;
   // color: white;
-  font-size: 15px;
+  font-size: 14px;
+  line-height: 1.4;
   // border-top: 2px solid white;
 
   @media @mobile {
@@ -149,6 +156,10 @@ path {
     padding: 10px;
     margin-top: 0;
   }
+}
+
+a {
+  color: @highlight;
 }
 
 .source, .credit {
@@ -198,6 +209,7 @@ path {
 .legend-container {
   text-align: center;
   font-size: 15px;
+  padding: 0 20px;
 
   img {
     max-width: 20px;
@@ -205,7 +217,7 @@ path {
   .legend-element {
     display: inline-block;
     width: auto;
-    padding: 0 10px;
+    padding: 0 5px;
     img {
       vertical-align: sub;
     }
@@ -259,7 +271,7 @@ path {
 .deck {
   font-family: @med-graphics;
   text-align: center;
-  font-size: 16px;
+  font-size: 15px;
   max-width: 800px;
   margin: auto;
   padding: 20px 20px 0 20px;
@@ -272,7 +284,7 @@ path {
   top: 0;
   left: 0px;
   padding-top: 20px;
-  max-width: 400px;
+  max-width: 470px;
   // width: 50%;
   z-index: 500;
   background: lighten(@light-gray,10%);
@@ -283,9 +295,11 @@ path {
 
 .instructions {
   text-align: center;
-  padding-top: 20px;
+  padding-bottom: 20px;
   font-size: 13px;
   font-family: @med-graphics;
+  max-width: 300px;
+  margin: auto;
   .fa-hand-o-right {
     padding-right: 5px;
   }
