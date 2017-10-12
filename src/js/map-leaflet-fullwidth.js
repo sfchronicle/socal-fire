@@ -54,10 +54,8 @@ var MapIcon = L.Icon.extend({
     }
 });
 
-// var deathIcon = new MapIcon({iconUrl: 'leaf-white.png'});
-var fireIcon = new MapIcon({iconUrl: '../assets/graphics/fire_icon.png?'});
-var evacuationIcon = new MapIcon({iconUrl: '../assets/graphics/evacuation_icon.png?'});
-var hospitalsIcon = new MapIcon({iconUrl: '../assets/graphics/hospitalsEvacuated_icon.png?'});
+var evacuationIcon = new MapIcon({iconUrl: './assets/graphics/evacuation_icon.png?'});
+var hospitalsIcon = new MapIcon({iconUrl: './assets/graphics/hospitalsEvacuated_icon.png?'});
 
 var purpleIcon = new L.Icon({
   iconUrl: 'https://raw.githubusercontent.com/pointhi/leaflet-color-markers/master/img/marker-icon-violet.png',
