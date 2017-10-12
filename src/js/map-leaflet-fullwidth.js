@@ -104,8 +104,8 @@ hospitals_data.forEach(function(d){
 });
 
 var napaStyle = {
-    "color": "#351B77",
-    "weight": 3,
+    "color": "#8470ba",
+    "weight": 1,
 };
 
 var last12Style = {
