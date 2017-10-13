@@ -3,7 +3,7 @@ var d3 = require('d3');
 
 // setting parameters for the center of the map and initial zoom level
 if (screen.width <= 480) {
-  var sf_lat = 38.2;
+  var sf_lat = 38.6;
   var sf_long = -122.4;
   var zoom_deg = 8;
 
@@ -13,7 +13,7 @@ if (screen.width <= 480) {
 } else {
   var sf_lat = 38.4;
   var sf_long = -123;
-  var zoom_deg = 9;
+  var zoom_deg = 8;
 
   var offset_top = 900;
   var bottomOffset = 200;
@@ -88,9 +88,9 @@ evacuation_data.forEach(function(d){
 
 deaths_data.forEach(function(d){
   if (d.Name) {
-    var html_str = d.Address+"<br>"+d.Count+" death(s): "+d.Name;
+    var html_str = d.StreetName+"<br>"+d.Count+" death(s): "+d.Name;
   } else {
-    var html_str = d.Address+"<br>"+d.Count+" death(s)";
+    var html_str = d.StreetName+"<br>"+d.Count+" death(s)";
   }
   L.marker([d.Lat, d.Lng],{icon: purpleIcon}).addTo(map).bindPopup(html_str);
 });
@@ -131,19 +131,19 @@ var last7daysStyle = {
 var napaLayer, sonomaLayer, fireLayerLast7days, fireLayerLast24, fireLayerLast12;
 var avas_toggle = 0, last7days_toggle = 1, last24_toggle = 1, last12_toggle = 1;
 
-document.getElementById("avas").addEventListener("click",function() {
-  if (avas_toggle == 1) {
-    map.removeLayer(napaLayer);
-    map.removeLayer(sonomaLayer);
-    avas_toggle = 0;
-    this.classList.remove("active");
-  } else {
-    sonomaLayer = L.geoJSON(sonomaGeoJson,{style: napaStyle}).addTo(map);
-    napaLayer = L.geoJSON(napaGeoJson,{style: napaStyle}).addTo(map);
-    avas_toggle = 1;
-    this.classList.add("active");
-  }
-});
+// document.getElementById("avas").addEventListener("click",function() {
+//   if (avas_toggle == 1) {
+//     map.removeLayer(napaLayer);
+//     map.removeLayer(sonomaLayer);
+//     avas_toggle = 0;
+//     this.classList.remove("active");
+//   } else {
+//     sonomaLayer = L.geoJSON(sonomaGeoJson,{style: napaStyle}).addTo(map);
+//     napaLayer = L.geoJSON(napaGeoJson,{style: napaStyle}).addTo(map);
+//     avas_toggle = 1;
+//     this.classList.add("active");
+//   }
+// });
 
 // adding previous fire locations to map
 fireLayerLast7days = L.geoJSON(last7daysGeoJson,{style: last7daysStyle}).addTo(map);
@@ -198,6 +198,8 @@ var map_timer;
 
 d3.csv(fireDataURL, function(fire_data){
 
+  console.log("initial data load");
+
   // creating Lat/Lon objects that d3 is expecting
   fire_data.forEach(function(d,idx) {
     d.LatLng = new L.LatLng(d.latitude,
@@ -205,16 +207,28 @@ d3.csv(fireDataURL, function(fire_data){
   });
 
   clearTimeout(map_timer);
-  drawMap(fire_data);
+  drawMap(fire_data,0);
   d3.text('http://extras.sfgate.com/editorial/wildfires/noaatime.txt', function(text) {
-    document.getElementById("updateID").innerHTML = text;
+    if (document.getElementById("updateID")) {
+      document.getElementById("updateID").innerHTML = text;
+    }
+    if (document.getElementById("updateIDmobile")) {
+      document.getElementById("updateIDmobile").innerHTML = text;
+    }
   });
 
   map_timer = setInterval(function() {
 
-    drawMap(fire_data);
+    console.log("at update interval");
+
+    drawMap(fire_data,2);
     d3.text('http://extras.sfgate.com/editorial/wildfires/noaatime.txt', function(text) {
-      document.getElementById("updateID").innerHTML = text;
+      if (document.getElementById("updateID")) {
+        document.getElementById("updateID").innerHTML = text;
+      }
+      if (document.getElementById("updateIDmobile")) {
+        document.getElementById("updateIDmobile").innerHTML = text;
+      }
     });
 
   }, timer5minutes);
@@ -222,15 +236,16 @@ d3.csv(fireDataURL, function(fire_data){
 });
 
 // draw map with dots on it
-var drawMap = function(fire_data) {
+var drawMap = function(fire_data,index) {
 
-  d3.select("svg").selectAll("fireDot").remove();
+  console.log("drawing dots");
+
+  d3.select("svg").selectAll("circle").remove();
   var svg = d3.select("#map-leaflet").select("svg");
   svg.attr("class","dotsSVG")
   var g = svg.append("g");
-  g.attr("class","dotG")
 
-  var circles = g.selectAll("dotG")
+  var circles = g.selectAll("dotsSVG")
     .data(fire_data)
     .enter()
     .append("g");
