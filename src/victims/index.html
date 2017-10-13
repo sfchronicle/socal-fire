@@ -4,30 +4,38 @@
     <title><%= json.project.seo_title %></title>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width,initial-scale=1">
-    <link rel="stylesheet" type="text/css" href="../victims_style.css">
-
-    <%= !json.project.embedded ? t.include("partials/_paywall.html") : t.include("partials/_embedframe.html") %>
-
-    <%= t.include("partials/_head.html") %>
-
+    <link rel="stylesheet" type="text/css" href="../victims_style.css?1">
+    <%= t.include("partials/_embedframe.html") %>
   </head>
 
-  <%= !json.project.embedded ? "<body>" : "<body is='responsive-body'>" %>
-
-    <div class="title-container">
-      <div class="date">Last updated: <%= json.wine_country_fires_fatalities.Updated %></div>
-    </div>
+  <body is='responsive-body'>
 
     <div class="victim-container">
     <% json.wine_country_fires_fatalities.dead.forEach(function(d,didx){ %>
 
       <div class="victim">
-        <% if (d.Photo) {%>
+        <% if (d.Photo == 'blank') {%>
         <div class="image">
-          <img src="http://ww2.hdnux.com/photos/61/64/55/<%= d.Photo %>/3/600x0.jpg">
+          <img src="../assets/photos/victims/blank.jpg">
+        </div>
+    
+        <% } else if (d.Photo == 'sgrant') {%>
+        <div class="image">
+          <img src="../assets/photos/victims/sgrant.jpg">
+          <div class="caption">Courtesy of Trina Grant</div>
+        </div>
+        <% } else if (d.Photo == 'agrant') {%>
+        <div class="image">
+          <img src="../assets/photos/victims/agrant.jpg">
+          <div class="caption">Courtesy of Trina Grant</div>
+        </div>
+        <% } else {%>
+          <div class="image">
+          <img src="http://ww2.hdnux.com/photos/61/64/55/<%= d.Photo %>/2/premium_landscape.jpg">
           <div class="caption"><%=d.PhotoCredit%></div>
         </div>
         <% } %>
+
         <div class="name"><%=d.Name%>, <%=d.Age%></div>
         <div class="obit"><%=d.Obituary%></div>
         <div class="read-more"><a href="<%=d.Link%>" target="_blank">Read more</a></div>
@@ -37,11 +45,10 @@
     <% }) %>
     </div>
 
-    <div class="credit-container">
+   <!--  <div class="credit-container">
       <div>Development by <a href="mailto:eoneill@sfchronicle.com">Emma O'Neill</a> and <a href="mailto:lvilla@sfchronicle.com">Lucio Villa</a></div>
-    </div>
+    </div> -->
 
-    <script src="../victims_app.js" async></script>
 
   </body>
 </html>
