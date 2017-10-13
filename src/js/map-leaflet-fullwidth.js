@@ -86,13 +86,9 @@ evacuation_data.forEach(function(d){
   L.marker([d.Lat, d.Lng], {icon: evacuationIcon}).addTo(map).bindPopup(html_str);
 });
 
-deaths_data.forEach(function(d){
-  if (d.Name) {
-    var html_str = d.StreetName+"<br>"+d.Count+" death(s): "+d.Name;
-  } else {
-    var html_str = d.StreetName+"<br>"+d.Count+" death(s)";
-  }
-  L.marker([d.Lat, d.Lng],{icon: purpleIcon}).addTo(map).bindPopup(html_str);
+hospitals_data.forEach(function(d){
+  var html_str = "<b>"+d.Name+"</b>";
+  L.marker([d.Latitude, d.Longitude], {icon: hospitalsIcon}).addTo(map).bindPopup(html_str);
 });
 
 winery_data.forEach(function(d){
@@ -100,9 +96,13 @@ winery_data.forEach(function(d){
   L.marker([d.Lat, d.Lng], {icon: greenIcon}).addTo(map).bindPopup(html_str);
 });
 
-hospitals_data.forEach(function(d){
-  var html_str = "<b>"+d.Name+"</b>";
-  L.marker([d.Latitude, d.Longitude], {icon: hospitalsIcon}).addTo(map).bindPopup(html_str);
+deaths_data.forEach(function(d){
+  if (d.Name) {
+    var html_str = d.StreetName+"<br>"+d.Count+" death(s): "+d.Name;
+  } else {
+    var html_str = d.StreetName+"<br>"+d.Count+" death(s)";
+  }
+  L.marker([d.Lat, d.Lng],{icon: purpleIcon}).addTo(map).bindPopup(html_str);
 });
 
 var napaStyle = {
