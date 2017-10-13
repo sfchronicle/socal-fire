@@ -3,5 +3,4 @@
   <div class="button" id="avas">Wine regions</div>
 </div>
 
-
-
+<a href="http://sonomacountyopendata-sonomamap.opendata.arcgis.com/datasets/0fe2767e82cc4a9da81fc8b900e8400f_0" target="_blank">Sonoma County</a> and <a href="http://gis.napa.ca.gov/giscatalog/catalog_xml.asp?srch_opt=all&db_name=x&theme=x&sort_order=layer&meta_style=fgdc&submit=Submit" target="_blank">Napa County</a>
