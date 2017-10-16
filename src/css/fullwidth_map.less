@@ -186,6 +186,7 @@ path {
 @hours24: #FF8800;
 @days7: #FFB200;
 @airquality: #1E5896;
+@pins: #408128;
 
 path {
   fill-opacity: 0.6 !important;
@@ -273,6 +274,15 @@ path {
     color: @airquality;
     &.active {
       background: @airquality;
+      color: white;
+    }
+  }
+  #iconsbutton {
+    border: 2px solid @pins;
+    border-radius: 5px;
+    color: @pins;
+    &.active {
+      background: @pins;
       color: white;
     }
   }

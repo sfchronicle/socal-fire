@@ -75,35 +75,46 @@ var greenIcon = new L.Icon({
   // shadowSize: [, 41]
 });
 
-evacuation_data.forEach(function(d){
-  var html_str = "<b>"+d.Name+"</b><br>"+d.Address;
-  if (d["Phone number"]) {
-    html_str += "<br>"+d["Phone number"];
-  }
-  if (d.Notes){
-    html_str += "<br>Note: "+d.Notes;
-  }
-  L.marker([d.Lat, d.Lng], {icon: evacuationIcon}).addTo(map).bindPopup(html_str);
-});
+var markerArray = new Array();
 
-hospitals_data.forEach(function(d){
-  var html_str = "<b>"+d.Name+"</b>";
-  L.marker([d.Latitude, d.Longitude], {icon: hospitalsIcon}).addTo(map).bindPopup(html_str);
-});
 
-winery_data.forEach(function(d){
-  var html_str = "<b>"+d.Name+"</b><br><i>"+d.Address+"</i><br>"+d.Description;
-  L.marker([d.Lat, d.Lng], {icon: greenIcon}).addTo(map).bindPopup(html_str);
-});
+var drawIcons = function() {
+  evacuation_data.forEach(function(d){
+    var html_str = "<b>"+d.Name+"</b><br>"+d.Address;
+    if (d["Phone number"]) {
+      html_str += "<br>"+d["Phone number"];
+    }
+    if (d.Notes){
+      html_str += "<br>Note: "+d.Notes;
+    }
+    var tempmarker = L.marker([d.Lat, d.Lng], {icon: evacuationIcon}).addTo(map).bindPopup(html_str);
+    markerArray.push(tempmarker);
+  });
 
-deaths_data.forEach(function(d){
-  if (d.Name) {
-    var html_str = d.StreetName+"<br>"+d.Count+" death(s): "+d.Name;
-  } else {
-    var html_str = d.StreetName+"<br>"+d.Count+" death(s)";
-  }
-  L.marker([d.Lat, d.Lng],{icon: purpleIcon}).addTo(map).bindPopup(html_str);
-});
+  hospitals_data.forEach(function(d){
+    var html_str = "<b>"+d.Name+"</b>";
+    var tempmarker = L.marker([d.Latitude, d.Longitude], {icon: hospitalsIcon}).addTo(map).bindPopup(html_str);
+    markerArray.push(tempmarker);
+  });
+
+  winery_data.forEach(function(d){
+    var html_str = "<b>"+d.Name+"</b><br><i>"+d.Address+"</i><br>"+d.Description;
+    var tempmarker = L.marker([d.Lat, d.Lng], {icon: greenIcon}).addTo(map).bindPopup(html_str);
+    markerArray.push(tempmarker);
+  });
+
+  deaths_data.forEach(function(d){
+    if (d.Name) {
+      var html_str = d.StreetName+"<br>"+d.Count+" death(s): "+d.Name;
+    } else {
+      var html_str = d.StreetName+"<br>"+d.Count+" death(s)";
+    }
+    var tempmarker = L.marker([d.Lat, d.Lng],{icon: purpleIcon}).addTo(map).bindPopup(html_str);
+    markerArray.push(tempmarker);
+  });
+}
+
+drawIcons();
 
 var napaStyle = {
     "color": "#8470ba",
@@ -130,6 +141,7 @@ var last7daysStyle = {
 
 var napaLayer, sonomaLayer, fireLayerLast7days, fireLayerLast24, fireLayerLast12, pollutionLayer, contourLayer;
 var avas_toggle = 0, last7days_toggle = 1, last24_toggle = 1, last12_toggle = 1, pollution_toggle;
+var pins_toggle = 1;
 
 // document.getElementById("avas").addEventListener("click",function() {
 //   if (avas_toggle == 1) {
@@ -144,6 +156,25 @@ var avas_toggle = 0, last7days_toggle = 1, last24_toggle = 1, last12_toggle = 1,
 //     this.classList.add("active");
 //   }
 // });
+
+document.getElementById("iconsbutton").addEventListener("click",function() {
+  if (pins_toggle == 1) {
+    for (var i = 0; i < markerArray.length; i++) {
+      map.removeLayer(markerArray[i]);
+    }
+    this.classList.add("active");
+    // document.getElementById("iconsbutton-text").innerHTML = "Show";
+    pins_toggle = 0;
+  } else {
+    for (var i = 0; i < markerArray.length; i++) {
+      map.addLayer(markerArray[i]);
+    }
+    // drawIcons();
+    this.classList.remove("active");
+    // document.getElementById("iconsbutton-text").innerHTML = "Hide";
+    pins_toggle = 1;
+  }
+});
 
 document.getElementById("aboutthedata").addEventListener("click",function() {
   document.getElementById("aboutthedata-box").classList.add("active");

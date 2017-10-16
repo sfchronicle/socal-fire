@@ -5,7 +5,7 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width,initial-scale=1">
     <meta name="__sync_contentCategory" content="free">
-    <link rel="stylesheet" type="text/css" href="./fullwidth_style.css?v=12">
+    <link rel="stylesheet" type="text/css" href="./fullwidth_style.css?v=13">
     <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css">
     <script src="https://unpkg.com/leaflet@1.0.3/dist/leaflet.js"
     integrity="sha512-A7vV8IFfih/D732iSSKi20u/ooOfj/AGehOKq0f4vLT1Zr2Y+RX7C+w8A1gaSasGtRUZpF/NZgzSAu4/Gc41Lg=="
@@ -28,6 +28,10 @@
         <div class="source">Air quality data is from <a href="http://berkeleyearth.org/air-pollution-overview/" target="_blank">Berkeley Earth</a>.</div>
         <div class="source">Evacuation centers data are from <a href="http://www.caloes.ca.gov/ICESite/Pages/October-2017-Northern-California-Fires.aspx" target="_blank">Cal OES</a> and <a href="http://sonomacounty.ca.gov/Public-Safety/News/Evacuation-Shelters/" target="_blank">Sonoma County Public Safety</a>.</div>
         <div class="source">Information collected from Sonoma, Napa, Mendocino and Yuba counties.</div>
+        <div class="smallbreak"></div>
+        <div class="credit">Graphics by John Blanchard</div>
+        <div class="credit">Research by Esther Mobley, Sarah Fritsche, Clare Varellas, Drew Costley, Annie Vainshtein, Richard Geiger, Paolo Lucchesi, and Graph Massara</div>
+
       </div>
     </div>
 
@@ -73,15 +77,16 @@
           <div class="button" id="airquality">See up-to-date air quality</div>
         </div>
 
+        <div class="button-container">
+          <div class="button" id="iconsbutton"><span id="iconsbutton-text">Hide</span> pins</div>
+        </div>
+
         <div class="credits-box">
           <div class="credit">Fire hot spots last updated on <span id="updateID"></span></div>
           <div class="credit"><span id="airDate"></span></div>
           <div class="credit">Information about evacuation centers, damaged wineries, and deaths updated on Oct. 15</div>
+          <div class="credit">Development by <a href="mailto:eoneill@sfchronicle.com">Emma O'Neill</a>, <a href="mailto:cwirtanen@sfchronicle.com">Clint Wirtanen</a> and Lucio Villa</div>
           <div id="aboutthedata"><i class="fa fa-hand-o-right" aria-hidden="true"></i>Read about the data</div>
-          <div class="credit">Development by <a href="mailto:eoneill@sfchronicle.com">Emma O'Neill</a>, <a href="mailto:cwirtanen@sfchronicle.com">Clint Wirtanen</a> and <a href="mailto:lvilla@sfchronicle.com">Lucio Villa</a></div>
-          <div class="smallbreak"></div>
-          <div class="credit">Graphics by <a href="mailto:jblanchard@sfchronicle.com">John Blanchard</a></div>
-          <div class="credit">Research by <a href="mailto:emobley@sfchronicle.com">Esther Mobley</a>, <a href="mailto:sfritsche@sfchronicle.com">Sarah Fritsche</a>, <a href="mailto:cvarellas@sfchronicle.com">Clare Varellas</a>, <a href="mailto:dcostley@sfchronicle.com">Drew Costley</a>, <a href="mailto:avainshtein@sfchronicle.com">Annie Vainshtein</a> and Richard Geiger</div>
         </div>
       </div>
 
@@ -100,10 +105,10 @@
       <div class="source">Evacuation centers data are from <a href="http://www.caloes.ca.gov/ICESite/Pages/October-2017-Northern-California-Fires.aspx" target="_blank">Cal OES</a> and <a href="http://sonomacounty.ca.gov/Public-Safety/News/Evacuation-Shelters/" target="_blank">Sonoma County Public Safety</a>.</div>
       <div class="source">Information collected from Sonoma, Napa, Mendocino and Yuba counties.</div>
       <div class="smallbreak"></div>
-      <div class="credit">Development by <a href="mailto:eoneill@sfchronicle.com">Emma O'Neill</a>, <a href="mailto:cwirtanen@sfchronicle.com">Clint Wirtanen</a> and <a href="mailto:lvilla@sfchronicle.com">Lucio Villa</a></div>
+      <div class="credit">Development by <a href="mailto:eoneill@sfchronicle.com">Emma O'Neill</a>, <a href="mailto:cwirtanen@sfchronicle.com">Clint Wirtanen</a> and Lucio Villa</div>
       <div class="smallbreak"></div>
-      <div class="credit">Graphics by <a href="mailto:jblanchard@sfchronicle.com">John Blanchard</a></div>
-      <div class="credit">Research by <a href="mailto:emobley@sfchronicle.com">Esther Mobley</a>, <a href="mailto:sfritsche@sfchronicle.com">Sarah Fritsche</a>, <a href="mailto:cvarellas@sfchronicle.com">Clare Varellas</a>, <a href="mailto:dcostley@sfchronicle.com">Drew Costley</a>, <a href="mailto:avainshtein@sfchronicle.com">Annie Vainshtein</a> and Richard Geiger</div>
+      <div class="credit">Graphics by John Blanchard</div>
+      <div class="credit">Research by Esther Mobley, Sarah Fritsche, Clare Varellas, Drew Costley, Annie Vainshtein, Richard Geiger, Paolo Lucchesi, and Graph Massara</div>
     </div>
 
     <div class="air-legend-container" id="airquallegend">
@@ -136,6 +141,6 @@
       var hospitals_data = <%= JSON.stringify(json.EvacuatedHospitals) %>
     </script>
 
-    <script src="./map-leaflet-fullwidth.js?v=12" async></script>
+    <script src="./map-leaflet-fullwidth.js?v=13" async></script>
   </body>
 </html>
