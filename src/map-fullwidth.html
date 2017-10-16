@@ -4,7 +4,8 @@
     <title>Interactive Map: Wine Country Fires</title>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width,initial-scale=1">
-    <link rel="stylesheet" type="text/css" href="./fullwidth_style.css?v=4">
+    <meta name="__sync_contentCategory" content="free">
+    <link rel="stylesheet" type="text/css" href="./fullwidth_style.css?v=12">
     <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css">
     <script src="https://unpkg.com/leaflet@1.0.3/dist/leaflet.js"
     integrity="sha512-A7vV8IFfih/D732iSSKi20u/ooOfj/AGehOKq0f4vLT1Zr2Y+RX7C+w8A1gaSasGtRUZpF/NZgzSAu4/Gc41Lg=="
@@ -18,6 +19,18 @@
 
   <body>
 
+    <div class="overlay-aboutthedata" id="aboutthedata-overlay">
+      <div class="aboutthedata-box" id="aboutthedata-box">
+        <div class="close-button" id="close-data-box"><i class="fa fa-times" aria-hidden="true"></i></div>
+        <div class="source">Hot spots are locations identified by satellite analysts from <a href="https://www.geomac.gov/viewer/help/hms.html" target="_blank">NOAA</a> based on various types of imaging.</div>
+        <div class="source">Fire areas are based on infrared and thermal imaging from NASA satellites, <a href="https://www.geomac.gov/viewer/help/modis_active.html" target="_blank">MODIS</a> and <a href="https://www.geomac.gov/viewer/help/viirs_active.html" target="_blank">VIIRS</a>.</div>
+        <div class="source">Hot spots and fire perimeters are an approximation and do not include all areas affected by fire nor indicate with certainty an area was affected.</div>
+        <div class="source">Air quality data is from <a href="http://berkeleyearth.org/air-pollution-overview/" target="_blank">Berkeley Earth</a>.</div>
+        <div class="source">Evacuation centers data are from <a href="http://www.caloes.ca.gov/ICESite/Pages/October-2017-Northern-California-Fires.aspx" target="_blank">Cal OES</a> and <a href="http://sonomacounty.ca.gov/Public-Safety/News/Evacuation-Shelters/" target="_blank">Sonoma County Public Safety</a>.</div>
+        <div class="source">Information collected from Sonoma, Napa, Mendocino and Yuba counties.</div>
+      </div>
+    </div>
+
     <div class="interactive-container">
 
     <div class="map-container-full">
@@ -30,7 +43,7 @@
           </a>
         </div>
 
-        <div class="headline">Interactive map: Wine Country fires</div>
+        <div class="headline">Interactive map:<div> Wine Country fires</div></div>
         <%= t.include("partials/_fullwidthmap-social.html") %>
         <div class="deck">Here you can see how the fires grew and where they’re spreading. This map will be updated as information becomes available.</div>
 
@@ -40,11 +53,11 @@
         </div>
 
         <div class="legend-container">
-          <div class="legend-element"><div class="circle-icon"></div> Current hot spots</div>
+          <div class="legend-element"><div class="circle-icon"></div> Current hot spot</div>
           <div class="legend-element"><img src="./assets/graphics/evacuation_icon.png"></img> Evacuation center</div>
           <div class="legend-element"><img src="./assets/graphics/hospitalsEvacuated_icon.png"></img> Evacuated hospital</div>
-          <div class="legend-element death-icon"><img src="https://raw.githubusercontent.com/pointhi/leaflet-color-markers/master/img/marker-icon-violet.png"></img> Deaths</div>
-          <div class="legend-element wineries-icon"><img src="https://raw.githubusercontent.com/pointhi/leaflet-color-markers/master/img/marker-icon-green.png"></img> Damaged wineries</div>
+          <div class="legend-element death-icon"><img src="https://raw.githubusercontent.com/pointhi/leaflet-color-markers/master/img/marker-icon-violet.png"></img> Death</div>
+          <div class="legend-element wineries-icon"><img src="https://raw.githubusercontent.com/pointhi/leaflet-color-markers/master/img/marker-icon-green.png"></img> Damaged winery</div>
         </div>
 
         <div class="instructions"><i class="fa fa-hand-o-right" aria-hidden="true"></i>Click on the icons and explore the buttons below for more information.</div>
@@ -56,25 +69,56 @@
           <div class="button active" id="last7days">Last 1 - 7 days</div>
         </div>
 
+        <div class="button-container">
+          <div class="button" id="airquality">See up-to-date air quality</div>
+        </div>
+
         <div class="credits-box">
           <div class="credit">Fire hot spots last updated on <span id="updateID"></span></div>
-          <div class="credit">Data updated on Oct. 13.</div>
-          <div class="source">Data from <a href="http://www.ospo.noaa.gov/Products/land/hms.html" target="_blank">NOAA</a>, <a href="http://www.caloes.ca.gov/ICESite/Pages/October-2017-Northern-California-Fires.aspx" target="_blank">Cal OES</a>, <a href="http://sonomacounty.ca.gov/Public-Safety/News/Evacuation-Shelters/" target="_blank">Sonoma County Public Safety</a> and Sonoma County Coroner’s Office</div>
-          <div class="credit">Development by <a href="mailto:eoneill@sfchronicle.com">Emma O'Neill</a>, <a href="mailto:lvilla@sfchronicle.com">Lucio Villa</a> and <a href="mailto:cwirtanen@sfchronicle.com">Clint Wirtanen</a></div>
+          <div class="credit"><span id="airDate"></span></div>
+          <div class="credit">Information about evacuation centers, damaged wineries, and deaths updated on Oct. 15</div>
+          <div id="aboutthedata"><i class="fa fa-hand-o-right" aria-hidden="true"></i>Read about the data</div>
+          <div class="credit">Development by <a href="mailto:eoneill@sfchronicle.com">Emma O'Neill</a>, <a href="mailto:cwirtanen@sfchronicle.com">Clint Wirtanen</a> and <a href="mailto:lvilla@sfchronicle.com">Lucio Villa</a></div>
+          <div class="smallbreak"></div>
           <div class="credit">Graphics by <a href="mailto:jblanchard@sfchronicle.com">John Blanchard</a></div>
-          <div class="credit">Research by <a href="mailto:emobley@sfchronicle.com">Esther Mobley</a>, <a href="mailto:sfritsche@sfchronicle.com">Sarah Fritsche</a>, <a href="mailto:cvarellas@sfchronicle.com">Clare Varellas</a> and Richard Geiger</div>
+          <div class="credit">Research by <a href="mailto:emobley@sfchronicle.com">Esther Mobley</a>, <a href="mailto:sfritsche@sfchronicle.com">Sarah Fritsche</a>, <a href="mailto:cvarellas@sfchronicle.com">Clare Varellas</a>, <a href="mailto:dcostley@sfchronicle.com">Drew Costley</a>, <a href="mailto:avainshtein@sfchronicle.com">Annie Vainshtein</a> and Richard Geiger</div>
         </div>
       </div>
 
       <div id="map-leaflet"></div>
+
     </div>
     <div class="credits-box mobile">
       <div class="credit">Fire hot spots last updated on <span id="updateIDmobile"></span></div>
-      <div class="credit">Data updated on Oct. 13.</div>
-      <div class="source">Data from <a href="http://www.ospo.noaa.gov/Products/land/hms.html" target="_blank">NOAA</a>, <a href="http://www.caloes.ca.gov/ICESite/Pages/October-2017-Northern-California-Fires.aspx" target="_blank">Cal OES</a>, <a href="http://sonomacounty.ca.gov/Public-Safety/News/Evacuation-Shelters/" target="_blank">Sonoma County Public Safety</a> and Sonoma County Coroner’s Office</div>
-      <div class="credit">Development by <a href="mailto:eoneill@sfchronicle.com">Emma O'Neill</a>, <a href="mailto:lvilla@sfchronicle.com">Lucio Villa</a> and <a href="mailto:cwirtanen@sfchronicle.com">Clint Wirtanen</a></div>
+      <div class="credit"><span id="airDatemobile"></span></div>
+      <div class="credit">Information about evacuation centers, damaged wineries, and deaths updated on Oct. 15</div>
+      <div class="smallbreak"></div>
+      <div class="source">Hot spots are locations identified by satellite analysts from <a href="https://www.geomac.gov/viewer/help/hms.html" target="_blank">NOAA</a> based on various types of imaging.</div>
+      <div class="source">Fire areas are based on infrared and thermal imaging from NASA satellites, <a href="https://www.geomac.gov/viewer/help/modis_active.html" target="_blank">MODIS</a> and <a href="https://www.geomac.gov/viewer/help/viirs_active.html" target="_blank">VIIRS</a>.</div>
+      <div class="source">Hot spots and fire perimeters are an approximation and do not include all areas affected by fire nor indicate with certainty an area was affected.</div>
+      <div class="source">Air quality data is from <a href="http://berkeleyearth.org/air-pollution-overview/" target="_blank">Berkeley Earth</a>.</div>
+      <div class="source">Evacuation centers data are from <a href="http://www.caloes.ca.gov/ICESite/Pages/October-2017-Northern-California-Fires.aspx" target="_blank">Cal OES</a> and <a href="http://sonomacounty.ca.gov/Public-Safety/News/Evacuation-Shelters/" target="_blank">Sonoma County Public Safety</a>.</div>
+      <div class="source">Information collected from Sonoma, Napa, Mendocino and Yuba counties.</div>
+      <div class="smallbreak"></div>
+      <div class="credit">Development by <a href="mailto:eoneill@sfchronicle.com">Emma O'Neill</a>, <a href="mailto:cwirtanen@sfchronicle.com">Clint Wirtanen</a> and <a href="mailto:lvilla@sfchronicle.com">Lucio Villa</a></div>
+      <div class="smallbreak"></div>
       <div class="credit">Graphics by <a href="mailto:jblanchard@sfchronicle.com">John Blanchard</a></div>
-      <div class="credit">Research by <a href="mailto:emobley@sfchronicle.com">Esther Mobley</a>, <a href="mailto:sfritsche@sfchronicle.com">Sarah Fritsche</a>, <a href="mailto:cvarellas@sfchronicle.com">Clare Varellas</a> and Richard Geiger</div>
+      <div class="credit">Research by <a href="mailto:emobley@sfchronicle.com">Esther Mobley</a>, <a href="mailto:sfritsche@sfchronicle.com">Sarah Fritsche</a>, <a href="mailto:cvarellas@sfchronicle.com">Clare Varellas</a>, <a href="mailto:dcostley@sfchronicle.com">Drew Costley</a>, <a href="mailto:avainshtein@sfchronicle.com">Annie Vainshtein</a> and Richard Geiger</div>
+    </div>
+
+    <div class="air-legend-container" id="airquallegend">
+      <div class="swath-text left">Good</div>
+      <div class="swath blue-swath0"></div>
+      <div class="swath blue-swath1"></div>
+      <div class="swath blue-swath2"></div>
+      <div class="swath blue-swath3"></div>
+      <div class="swath blue-swath4"></div>
+      <div class="swath red-swath4"></div>
+      <div class="swath red-swath3"></div>
+      <div class="swath red-swath2"></div>
+      <div class="swath red-swath1"></div>
+      <div class="swath red-swath0"></div>
+      <div class="swath-text right">Hazardous</div>
     </div>
 
     </div>
@@ -92,6 +136,6 @@
       var hospitals_data = <%= JSON.stringify(json.EvacuatedHospitals) %>
     </script>
 
-    <script src="./map-leaflet-fullwidth.js?v=4" async></script>
+    <script src="./map-leaflet-fullwidth.js?v=12" async></script>
   </body>
 </html>

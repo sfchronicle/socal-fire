@@ -59,20 +59,20 @@ var hospitalsIcon = new MapIcon({iconUrl: './assets/graphics/hospitalsEvacuated_
 
 var purpleIcon = new L.Icon({
   iconUrl: 'https://raw.githubusercontent.com/pointhi/leaflet-color-markers/master/img/marker-icon-violet.png',
-  shadowUrl: 'https://cdnjs.cloudflare.com/ajax/libs/leaflet/0.7.7/images/marker-shadow.png',
-  iconSize: [25, 41],
-  iconAnchor: [12, 41],
-  popupAnchor: [1, -34],
-  shadowSize: [41, 41]
+  // shadowUrl: 'https://cdnjs.cloudflare.com/ajax/libs/leaflet/0.7.7/images/marker-shadow.png',
+  iconSize: [20, 32],
+  iconAnchor: [12, 32],
+  popupAnchor: [-2, -30],
+  // shadowSize: [, 41]
 });
 
 var greenIcon = new L.Icon({
   iconUrl: 'https://raw.githubusercontent.com/pointhi/leaflet-color-markers/master/img/marker-icon-green.png',
-  shadowUrl: 'https://cdnjs.cloudflare.com/ajax/libs/leaflet/0.7.7/images/marker-shadow.png',
-  iconSize: [25, 41],
-  iconAnchor: [12, 41],
-  popupAnchor: [1, -34],
-  shadowSize: [41, 41]
+  // shadowUrl: 'https://cdnjs.cloudflare.com/ajax/libs/leaflet/0.7.7/images/marker-shadow.png',
+  iconSize: [20, 32],
+  iconAnchor: [12, 32],
+  popupAnchor: [-2, -30],
+  // shadowSize: [, 41]
 });
 
 evacuation_data.forEach(function(d){
@@ -128,8 +128,8 @@ var last7daysStyle = {
     "weight": 3,
 };
 
-var napaLayer, sonomaLayer, fireLayerLast7days, fireLayerLast24, fireLayerLast12;
-var avas_toggle = 0, last7days_toggle = 1, last24_toggle = 1, last12_toggle = 1;
+var napaLayer, sonomaLayer, fireLayerLast7days, fireLayerLast24, fireLayerLast12, pollutionLayer, contourLayer;
+var avas_toggle = 0, last7days_toggle = 1, last24_toggle = 1, last12_toggle = 1, pollution_toggle;
 
 // document.getElementById("avas").addEventListener("click",function() {
 //   if (avas_toggle == 1) {
@@ -144,6 +144,17 @@ var avas_toggle = 0, last7days_toggle = 1, last24_toggle = 1, last12_toggle = 1;
 //     this.classList.add("active");
 //   }
 // });
+
+document.getElementById("aboutthedata").addEventListener("click",function() {
+  document.getElementById("aboutthedata-box").classList.add("active");
+  document.getElementById("aboutthedata-overlay").classList.add("active");
+});
+
+document.getElementById("close-data-box").addEventListener("click",function() {
+  document.getElementById("aboutthedata-box").classList.remove("active");
+  document.getElementById("aboutthedata-overlay").classList.remove("active");
+});
+
 
 // adding previous fire locations to map
 fireLayerLast7days = L.geoJSON(last7daysGeoJson,{style: last7daysStyle}).addTo(map);
@@ -190,6 +201,42 @@ document.getElementById("last7days").addEventListener("click",function() {
   }
 });
 
+document.getElementById("airquality").addEventListener("click",function() {
+  if (pollution_toggle == 1) {
+    map.removeLayer(pollutionLayer);
+    map.removeLayer(contourLayer);
+    pollution_toggle = 0;
+    this.classList.remove("active");
+    document.getElementById("airquallegend").classList.remove("active");
+  } else {
+    // getting current date
+
+    this.classList.add("active");
+
+    d3.text('http://extras.sfgate.com/editorial/wildfires/airquality_date.txt?', function(text) {
+      var urlpathPollution = "http://berkeleyearth.lbl.gov/air-quality/maps/hour/"+text.substring(0,6)+"/"+text+"/tiles/health/{z}/{x}/{y}.png";
+      var urlpathContours = "http://berkeleyearth.lbl.gov/air-quality/maps/hour/"+text.substring(0,6)+"/"+text+"/tiles/contour/{z}/{x}/{y}.png";
+
+      console.log(urlpathPollution);
+
+      pollutionLayer = L.tileLayer(urlpathPollution,{transparent: true,opacity: 0.7})
+      pollutionLayer.addTo(map);
+      contourLayer = L.tileLayer(urlpathContours,{transparent: true,opacity: 0.7})
+      contourLayer.addTo(map);
+      pollution_toggle = 1;
+
+      document.getElementById("airquallegend").classList.add("active");
+
+      if (document.getElementById("airDate")) {
+        document.getElementById("airDate").innerHTML = "Air quality data last updated on "+text.substring(4,6)+"/"+text.substring(6,8)+"/"+text.substring(0,4)+" at "+text.substring(8,10)+":00 UTC";
+      }
+      if (document.getElementById("airDatemobile")) {
+        document.getElementById("airDatemobile").innerHTML = "Air quality data last updated on "+text.substring(4,6)+"/"+text.substring(6,8)+"/"+text.substring(0,4)+" at "+text.substring(8,10)+":00 UTC";
+      }
+    });
+  }
+});
+
 
 // data for current fire
 var fireDataURL = "http://extras.sfgate.com/editorial/wildfires/noaa.csv";
@@ -207,7 +254,7 @@ d3.csv(fireDataURL, function(fire_data){
   });
 
   clearTimeout(map_timer);
-  drawMap(fire_data,0);
+  drawMap(fire_data);
   d3.text('http://extras.sfgate.com/editorial/wildfires/noaatime.txt', function(text) {
     if (document.getElementById("updateID")) {
       document.getElementById("updateID").innerHTML = text;
@@ -221,7 +268,7 @@ d3.csv(fireDataURL, function(fire_data){
 
     console.log("at update interval");
 
-    drawMap(fire_data,2);
+    drawMap(fire_data);
     d3.text('http://extras.sfgate.com/editorial/wildfires/noaatime.txt', function(text) {
       if (document.getElementById("updateID")) {
         document.getElementById("updateID").innerHTML = text;
@@ -236,7 +283,7 @@ d3.csv(fireDataURL, function(fire_data){
 });
 
 // draw map with dots on it
-var drawMap = function(fire_data,index) {
+var drawMap = function(fire_data) {
 
   console.log("drawing dots");
 

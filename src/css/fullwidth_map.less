@@ -3,6 +3,132 @@
 @import "fonts";
 @import "sfchronicle";
 
+.smallbreak {
+  height: 5px;
+  @media @mobile {
+    height: 12px;
+  }
+}
+
+.overlay-aboutthedata {
+  background: rgba(178, 178, 178, 0.4);
+  width: 100%;
+  height: 100%;
+  position: fixed;
+  z-index: 1999;
+  display: none;
+  &.active {
+    display: block;
+  }
+}
+
+#aboutthedata-box {
+  position: absolute;
+  top: 10%;
+  left: 0;
+  right: 0;
+  text-align: left;
+  background: white;
+  padding: 20px;
+  border: 1px solid @dark-gray;
+  z-index: 2000;
+  margin:auto;
+  max-width: 600px;
+  line-height: 1.4;
+  font-size: 16px;
+  font-family: @med-graphics;
+  .source {
+    padding-bottom: 10px;
+  }
+  display: none;
+  &.active {
+    display: block;
+  }
+  .close-button {
+    width: 100%;
+    height: 20px;
+    cursor: pointer;
+  }
+  .fa-times {
+    float: right;
+    font-size: 20px;
+    padding-bottom: 20px;
+  }
+}
+
+#aboutthedata {
+  cursor: pointer;
+  color: @highlight;
+  font-family: @bold-graphics;
+  padding: 5px 0;
+  .fa {
+    padding-right: 5px;
+  }
+}
+
+.air-legend-container {
+  position: absolute;
+  background: rgba(255,255,255,0.5);
+  padding: 5px 10px;
+  bottom: 20px;
+  right: 10px;
+  font-size: 11px;
+  font-family: @block-graphics;
+  // padding-top: 10px;
+  text-align: center;
+  // @media @mobile {
+  //   padding-top: 10px;
+  // }
+  margin: auto;
+  display: none;
+  &.active {
+    display: block;
+  }
+  .swath {
+    vertical-align: middle;
+  }
+  .swath  {
+    height: 16px;
+    width: 10px;
+    display: inline-block;
+    font-size: 0;
+    margin-right: -4px;
+    @media @mobile {
+      width: 7px;
+    }
+    @media @mini-mobile {
+      width: 3px;
+    }
+  }
+  .swath-text {
+    display: inline-block;
+    font-size: 12px;
+    // margin-top: -4px;
+    &.left {
+      padding-right: 10px;
+      @media @mobile {
+        padding-right: 5px;
+      }
+    }
+    &.right {
+      padding-left: 10px;
+      @media @mobile {
+        padding-left: 5px;
+      }
+    }
+  }
+  .red-swath0 {background: darken(#D77092,20%);}
+  .red-swath1 {background: darken(#D77092,10%);}
+  .red-swath2 {background: #D77092;}
+  .red-swath3 {background: lighten(#D77092,10%);}
+  .red-swath4 {background: #F2DF8A;}
+  .blue-swath0 {background: darken(#65A775,20%);}
+  .blue-swath1 {background: darken(#65A775,10%);}
+  .blue-swath2 {background: #65A775;}
+  .blue-swath3 {background: lighten(#65A775,10%);}
+  .blue-swath4 {background: #D8C77B;}
+}
+
 
 .recirculate-links {
   font-size: 14px;
@@ -59,6 +185,7 @@ path {
 @hours12: #FF6721;
 @hours24: #FF8800;
 @days7: #FFB200;
+@airquality: #1E5896;
 
 path {
   fill-opacity: 0.6 !important;
@@ -140,6 +267,15 @@ path {
       // color: white;
     }
   }
+  #airquality {
+    border: 2px solid @airquality;
+    border-radius: 5px;
+    color: @airquality;
+    &.active {
+      background: @airquality;
+      color: white;
+    }
+  }
 }
 
 .credits-box {
@@ -147,7 +283,7 @@ path {
   font-family: @med-graphics;
   max-width: 100%;
   text-align: left;
-  padding: 20px 20px 0px 20px;
+  padding: 10px 20px 10px 20px;
   font-size: 14px;
   line-height: 1.4;
 
@@ -160,13 +296,16 @@ path {
 
     @media @map-width{
       display:block;
+      font-size:14px;
+    }
+    @media @mini-mobile {
       font-size:12px;
     }
   }
 
   @media @mobile {
     padding: 20px 10px;
-    margin-top: 20px;
+    margin-top: 0;
     padding-bottom: 50px;
     margin-bottom: 0;
   }
@@ -218,7 +357,7 @@ a {
 
 .banner-logo {
   max-width: 150px;
-  padding-bottom: 20px;
+  // padding-bottom: 5px;
   margin: auto;
   text-align: center;
   img {
@@ -227,6 +366,9 @@ a {
 
   @media @map-width{
     padding-bottom:0px;
+  }
+  @media @mobile {
+    padding-bottom: 3px;
   }
 }
 
@@ -272,6 +414,7 @@ a {
   text-align: center;
   padding:0 10px 10px;
   font-size: 25px;
+  line-height: 1.3;
 
   @media @map-width{
     max-width:250px;
@@ -328,6 +471,7 @@ a {
   background: #fff;
   box-shadow:1px 2px 2px 0px #ccc;
   font-family: @block-graphics;
+  overflow: scroll;
 
   @media @map-width{
     position: static;
@@ -340,7 +484,7 @@ a {
 
 .instructions {
   text-align: center;
-  padding-bottom: 20px;
+  padding-bottom: 14px;
   font-size: 13px;
   font-family: @med-graphics;
   max-width: 300px;
