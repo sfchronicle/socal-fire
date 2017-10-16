@@ -29,6 +29,26 @@
           <img src="../assets/photos/victims/agrant.jpg">
           <div class="caption">Courtesy of Trina Grant</div>
         </div>
+        <% } else if (d.Photo == 'bowman') {%>
+        <div class="image">
+          <img src="../assets/photos/victims/bowman.jpg">
+          <div class="caption"><%=d.PhotoCredit%></div>
+        </div>
+        <% } else if (d.Photo == 'robinson') {%>
+        <div class="image">
+          <img src="../assets/photos/victims/srobinson.jpg">
+          <div class="caption"><%=d.PhotoCredit%></div>
+        </div>
+        <% } else if (d.Photo == 'dhalbur') {%>
+        <div class="image">
+          <img src="../assets/photos/victims/dhalbur.jpg">
+          <div class="caption"><%=d.PhotoCredit%></div>
+        </div>
+        <% } else if (d.Photo == 'lhalbur') {%>
+        <div class="image">
+          <img src="../assets/photos/victims/lhalbur.jpg">
+          <div class="caption"><%=d.PhotoCredit%></div>
+        </div>
         <% } else {%>
           <div class="image">
           <img src="http://ww2.hdnux.com/photos/61/64/55/<%= d.Photo %>/2/premium_landscape.jpg">
@@ -45,9 +65,9 @@
     <% }) %>
     </div>
 
-   <!--  <div class="credit-container">
+    <div class="credit-container">
       <div>Development by <a href="mailto:eoneill@sfchronicle.com">Emma O'Neill</a> and <a href="mailto:lvilla@sfchronicle.com">Lucio Villa</a></div>
-    </div> -->
+    </div>
 
 
   </body>
