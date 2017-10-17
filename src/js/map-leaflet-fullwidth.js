@@ -147,10 +147,13 @@ var day1style = {"color": "#FFCC1A","fill-opacity": 0.3,"weight": 3};
 var day2style = {"color": "#FFBF0D","fill-opacity": 0.3,"weight": 3};
 var day3style = {"color": "#FFB200","fill-opacity": 0.3,"weight": 3};
 var day4style = {"color": "#F2A500","fill-opacity": 0.3,"weight": 3};
-var day5style = {"color": "#FF8800","fill-opacity": 0.3,"weight": 3};
-var day6style = {"color": "#F27B00","fill-opacity": 0.3,"weight": 3};
-var day7style = {"color": "#FF6721","fill-opacity": 0.3,"weight": 3};
-var day8style = {"color": "#F25A14","fill-opacity": 0.3,"weight": 3};
+var day5style = {"color": "#E59800","fill-opacity": 0.3,"weight": 3};
+var day6style = {"color": "#FF8800","fill-opacity": 0.3,"weight": 3};
+var day7style = {"color": "#F27B00","fill-opacity": 0.3,"weight": 3};
+var day8style = {"color": "#FF6721","fill-opacity": 0.3,"weight": 3};
+var day9style = {"color": "#F25A14","fill-opacity": 0.3,"weight": 3};
+var day10style = {"color": "#D94100","fill-opacity": 0.3,"weight": 3};//#E54D07
+var day11style = {"color": "#D94100","fill-opacity": 0.3,"weight": 3};
 
 // we're not actually using any of this so we should delete it
 // var napaLayer, sonomaLayer, fireLayerLast7days, fireLayerLast24, fireLayerLast12;
@@ -161,8 +164,8 @@ var pins_toggle = 1, pollution_toggle = 0;
 var pollutionLayer, contourLayer;
 
 // these are all the layers for the fire perimeters and their toggles
-var fireLayerDay1, fireLayerDay2, fireLayerDay3, fireLayerDay4, fireLayerDay5, fireLayerDay6, fireLayerDay7;
-var day1_toggle = 1, day2_toggle = 1, day3_toggle = 1, day4_toggle = 1, day5_toggle = 1, day6_toggle = 1, day7_toggle = 1, day8_toggle;
+var fireLayerDay1, fireLayerDay2, fireLayerDay3, fireLayerDay4, fireLayerDay5, fireLayerDay6, fireLayerDay7, fireLayerDay8, fireLayerDay9, fireLayerDay10;
+var day1_toggle = 1, day2_toggle = 1, day3_toggle = 1, day4_toggle = 1, day5_toggle = 1, day6_toggle = 1, day7_toggle = 1, day8_toggle = 1, day9_toggle = 1, day10_toggle = 1;
 
 // document.getElementById("avas").addEventListener("click",function() {
 //   if (avas_toggle == 1) {
@@ -218,8 +221,10 @@ fireLayerDay4 = L.geoJSON(Day4,{style: day4style}).addTo(map);
 fireLayerDay5 = L.geoJSON(Day5,{style: day5style}).addTo(map);
 fireLayerDay6 = L.geoJSON(Day6,{style: day6style}).addTo(map);
 fireLayerDay7 = L.geoJSON(Day7,{style: day7style}).addTo(map);
-// ADD THIS IN
-// fireLayerDay8 = L.geoJSON(Day8,{style: day8style}).addTo(map);
+fireLayerDay8 = L.geoJSON(Day8,{style: day8style}).addTo(map);
+fireLayerDay9 = L.geoJSON(Day9,{style: day9style}).addTo(map);
+fireLayerDay10 = L.geoJSON(Day10,{style: day10style}).addTo(map);
+
 
 document.getElementById("day1button").addEventListener("click",function() {
   if (day1_toggle == 1) {
@@ -306,17 +311,41 @@ document.getElementById("day7button").addEventListener("click",function() {
 });
 
 // ADD THIS IN
-// document.getElementById("day8button").addEventListener("click",function() {
-//   if (day8_toggle == 1) {
-//     map.removeLayer(fireLayerDay8);
-//     day8_toggle = 0;
-//     this.classList.remove("active");
-//   } else {
-//     fireLayerDay8 = L.geoJSON(Day8,{style: day8style}).addTo(map);
-//     day8_toggle = 1;
-//     this.classList.add("active");
-//   }
-// });
+document.getElementById("day8button").addEventListener("click",function() {
+  if (day8_toggle == 1) {
+    map.removeLayer(fireLayerDay8);
+    day8_toggle = 0;
+    this.classList.remove("active");
+  } else {
+    fireLayerDay8 = L.geoJSON(Day8,{style: day8style}).addTo(map);
+    day8_toggle = 1;
+    this.classList.add("active");
+  }
+});
+
+document.getElementById("day9button").addEventListener("click",function() {
+  if (day9_toggle == 1) {
+    map.removeLayer(fireLayerDay9);
+    day9_toggle = 0;
+    this.classList.remove("active");
+  } else {
+    fireLayerDay9 = L.geoJSON(Day9,{style: day9style}).addTo(map);
+    day9_toggle = 1;
+    this.classList.add("active");
+  }
+});
+
+document.getElementById("day10button").addEventListener("click",function() {
+  if (day10_toggle == 1) {
+    map.removeLayer(fireLayerDay10);
+    day10_toggle = 0;
+    this.classList.remove("active");
+  } else {
+    fireLayerDay10 = L.geoJSON(Day10,{style: day10style}).addTo(map);
+    day10_toggle = 1;
+    this.classList.add("active");
+  }
+});
 
 // TRYING TO GET THIS TO WORK AS A LOOP BUT COULD NOT
 // var td;

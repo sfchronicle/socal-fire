@@ -5,7 +5,7 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width,initial-scale=1">
     <meta name="__sync_contentCategory" content="free">
-    <link rel="stylesheet" type="text/css" href="./fullwidth_style.css?v=14">
+    <link rel="stylesheet" type="text/css" href="./fullwidth_style.css?v=17">
     <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css">
     <script src="https://unpkg.com/leaflet@1.0.3/dist/leaflet.js"
     integrity="sha512-A7vV8IFfih/D732iSSKi20u/ooOfj/AGehOKq0f4vLT1Zr2Y+RX7C+w8A1gaSasGtRUZpF/NZgzSAu4/Gc41Lg=="
@@ -30,7 +30,7 @@
         <div class="source">Information collected from Sonoma, Napa, Mendocino and Yuba counties.</div>
         <div class="smallbreak"></div>
         <div class="credit">Graphics by John Blanchard</div>
-        <div class="credit">Research by Esther Mobley, Sarah Fritsche, Clare Varellas, Drew Costley, Annie Vainshtein, Richard Geiger, Paolo Lucchesi, and Graph Massara</div>
+        <div class="credit">Research by Esther Mobley, Sarah Fritsche, Clare Varellas, Drew Costley, Annie Vainshtein, Richard Geiger, Paolo Lucchesi, Barry Hodge and Graph Massara</div>
 
       </div>
     </div>
@@ -68,10 +68,10 @@
 
         <div class="button-container">
           <div class="button-desc">How the fires spread:</div>
-          <% for (var i=1; i<7; i++){ %>
+          <% for (var i=1; i<10; i++){ %>
             <div class="day<%=i%> button active" id="day<%=i%>button">Day <%=i%></div>
           <% } %>
-          <div class="day7 button active" id="day7button">Today</div>
+          <div class="day10 button active" id="day10button">Today</div>
         </div>
 
         <div class="button-container">
@@ -85,7 +85,7 @@
         <div class="credits-box">
           <div class="credit">Fire hot spots last updated on <span id="updateID"></span></div>
           <div class="credit"><span id="airDate"></span></div>
-          <div class="credit">Information about evacuation centers, damaged wineries and deaths updated on Oct. 16</div>
+          <div class="credit">Information about evacuation centers, damaged wineries and deaths updated on Oct. 17</div>
           <div class="credit">Development by <a href="mailto:eoneill@sfchronicle.com">Emma O'Neill</a>, <a href="mailto:cwirtanen@sfchronicle.com">Clint Wirtanen</a> and Lucio Villa</div>
           <div id="aboutthedata"><i class="fa fa-hand-o-right" aria-hidden="true"></i>Read about the data</div>
         </div>
@@ -93,11 +93,26 @@
 
       <div id="map-leaflet"></div>
 
+      <div class="air-legend-container" id="airquallegend">
+        <div class="swath-text left">Good</div>
+        <div class="swath blue-swath0"></div>
+        <div class="swath blue-swath1"></div>
+        <div class="swath blue-swath2"></div>
+        <div class="swath blue-swath3"></div>
+        <div class="swath blue-swath4"></div>
+        <div class="swath red-swath4"></div>
+        <div class="swath red-swath3"></div>
+        <div class="swath red-swath2"></div>
+        <div class="swath red-swath1"></div>
+        <div class="swath red-swath0"></div>
+        <div class="swath-text right">Hazardous</div>
+      </div>
+
     </div>
     <div class="credits-box mobile">
       <div class="credit">Fire hot spots last updated on <span id="updateIDmobile"></span></div>
       <div class="credit"><span id="airDatemobile"></span></div>
-      <div class="credit">Information about evacuation centers, damaged wineries and deaths updated on Oct. 16</div>
+      <div class="credit">Information about evacuation centers, damaged wineries and deaths updated on Oct. 17</div>
       <div class="smallbreak"></div>
       <div class="source">Hot spots are locations identified by satellite analysts from <a href="https://www.geomac.gov/viewer/help/hms.html" target="_blank">NOAA</a> based on various types of imaging.</div>
       <div class="source">Fire areas are based on infrared and thermal imaging from NASA satellites, <a href="https://www.geomac.gov/viewer/help/modis_active.html" target="_blank">MODIS</a> and <a href="https://www.geomac.gov/viewer/help/viirs_active.html" target="_blank">VIIRS</a>.</div>
@@ -109,22 +124,7 @@
       <div class="credit">Development by <a href="mailto:eoneill@sfchronicle.com">Emma O'Neill</a>, <a href="mailto:cwirtanen@sfchronicle.com">Clint Wirtanen</a> and Lucio Villa</div>
       <div class="smallbreak"></div>
       <div class="credit">Graphics by John Blanchard</div>
-      <div class="credit">Research by Esther Mobley, Sarah Fritsche, Clare Varellas, Drew Costley, Annie Vainshtein, Richard Geiger, Paolo Lucchesi, and Graph Massara</div>
-    </div>
-
-    <div class="air-legend-container" id="airquallegend">
-      <div class="swath-text left">Good</div>
-      <div class="swath blue-swath0"></div>
-      <div class="swath blue-swath1"></div>
-      <div class="swath blue-swath2"></div>
-      <div class="swath blue-swath3"></div>
-      <div class="swath blue-swath4"></div>
-      <div class="swath red-swath4"></div>
-      <div class="swath red-swath3"></div>
-      <div class="swath red-swath2"></div>
-      <div class="swath red-swath1"></div>
-      <div class="swath red-swath0"></div>
-      <div class="swath-text right">Hazardous</div>
+      <div class="credit">Research by Esther Mobley, Sarah Fritsche, Clare Varellas, Drew Costley, Annie Vainshtein, Richard Geiger, Paolo Lucchesi, Barry Hodge and Graph Massara</div>
     </div>
 
     </div>
@@ -138,10 +138,7 @@
     <script src="http://extras.sfgate.com/editorial/wildfires/overtime/2017-10-14.json?v"></script>
     <script src="http://extras.sfgate.com/editorial/wildfires/overtime/2017-10-15.json?v"></script>
     <script src="http://extras.sfgate.com/editorial/wildfires/overtime/2017-10-16.json?v"></script>
-
-    <script src="http://extras.sfgate.com/editorial/wildfires/nasa12.json"></script>
-    <script src="http://extras.sfgate.com/editorial/wildfires/nasa24.json"></script>
-    <script src="http://extras.sfgate.com/editorial/wildfires/nasa7d.json"></script>
+    <script src="http://extras.sfgate.com/editorial/wildfires/overtime/2017-10-17.json?v"></script>
 
     <script>
       var fire_names = <%= JSON.stringify(json.FireNames) %>
@@ -151,6 +148,6 @@
       var hospitals_data = <%= JSON.stringify(json.EvacuatedHospitals) %>
     </script>
 
-    <script src="./map-leaflet-fullwidth.js?v=14" async></script>
+    <script src="./map-leaflet-fullwidth.js?v=16" async></script>
   </body>
 </html>

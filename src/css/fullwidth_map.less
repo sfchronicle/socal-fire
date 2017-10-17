@@ -67,7 +67,7 @@
 }
 
 .air-legend-container {
-  position: absolute;
+  position: fixed;
   background: rgba(255,255,255,0.5);
   padding: 5px 10px;
   bottom: 20px;
@@ -127,6 +127,15 @@
   .blue-swath2 {background: #65A775;}
   .blue-swath3 {background: lighten(#65A775,10%);}
   .blue-swath4 {background: #D8C77B;}
+  @media @map-width {
+    position: absolute;
+    z-index: 3000;
+    bottom: 20px;
+    right: 45px;
+  }
+  @media @mobile {
+    right: 25px;
+  }
 }
 
 
@@ -187,13 +196,17 @@ path {
 @days7: #FFB200;
 @airquality: #1E5896;
 @pins: #408128;
+
 @day1: #FFCC1A;
 @day2: #FFBF0D;
 @day3: #FFB200;
 @day4: #F2A500;
-@day5: #FF8800;
-@day6: #F27B00;
-@day7: #FF6721;
+@day5: #E59800;
+@day6: #FF8800;
+@day7: #F27B00;
+@day8: #FF6721;
+@day9: #F25A14;
+@day10: #D94100;
 
 path {
   fill-opacity: 0.6 !important;
@@ -317,6 +330,33 @@ path {
     color: @day7;
     &.active {
       background: lighten(@day7,5%);
+      color: white;
+    }
+  }
+  #day8button {
+    border: 2px solid @day8;
+    border-radius: 5px;
+    color: @day8;
+    &.active {
+      background: lighten(@day8,5%);
+      color: white;
+    }
+  }
+  #day9button {
+    border: 2px solid @day9;
+    border-radius: 5px;
+    color: @day9;
+    &.active {
+      background: lighten(@day9,5%);
+      color: white;
+    }
+  }
+  #day10button {
+    border: 2px solid @day10;
+    border-radius: 5px;
+    color: @day10;
+    &.active {
+      background: lighten(@day10,5%);
       color: white;
     }
   }
@@ -546,7 +586,7 @@ a {
   top: 0;
   left: 0px;
   padding-top: 10px;
-  max-width: 480px;
+  max-width: 470px;
   z-index: 500;
   background: #fff;
   box-shadow:1px 2px 2px 0px #ccc;
