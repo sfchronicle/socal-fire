@@ -139,9 +139,20 @@ var last7daysStyle = {
     "weight": 3,
 };
 
+var day1style = {"color": "#FFCC1A","fill-opacity": 0.3,"weight": 3};
+var day2style = {"color": "#FFBF0D","fill-opacity": 0.3,"weight": 3};
+var day3style = {"color": "#FFB200","fill-opacity": 0.3,"weight": 3};
+var day4style = {"color": "#F2A500","fill-opacity": 0.3,"weight": 3};
+var day5style = {"color": "#FF8800","fill-opacity": 0.3,"weight": 3};
+var day6style = {"color": "#F27B00","fill-opacity": 0.3,"weight": 3};
+var day7style = {"color": "#FF6721","fill-opacity": 0.3,"weight": 3};
+
 var napaLayer, sonomaLayer, fireLayerLast7days, fireLayerLast24, fireLayerLast12, pollutionLayer, contourLayer;
 var avas_toggle = 0, last7days_toggle = 1, last24_toggle = 1, last12_toggle = 1, pollution_toggle;
 var pins_toggle = 1;
+
+var fireLayerDay1, fireLayerDay2, fireLayerDay3, fireLayerDay4, fireLayerDay5, fireLayerDay6, fireLayerDay7;
+var day1_toggle = 1, day2_toggle = 1, day3_toggle = 1, day4_toggle = 1, day5_toggle = 1, day6_toggle = 1, day7_toggle = 1;
 
 // document.getElementById("avas").addEventListener("click",function() {
 //   if (avas_toggle == 1) {
@@ -163,7 +174,6 @@ document.getElementById("iconsbutton").addEventListener("click",function() {
       map.removeLayer(markerArray[i]);
     }
     this.classList.add("active");
-    // document.getElementById("iconsbutton-text").innerHTML = "Show";
     pins_toggle = 0;
   } else {
     for (var i = 0; i < markerArray.length; i++) {
@@ -171,7 +181,6 @@ document.getElementById("iconsbutton").addEventListener("click",function() {
     }
     // drawIcons();
     this.classList.remove("active");
-    // document.getElementById("iconsbutton-text").innerHTML = "Hide";
     pins_toggle = 1;
   }
 });
@@ -186,51 +195,126 @@ document.getElementById("close-data-box").addEventListener("click",function() {
   document.getElementById("aboutthedata-overlay").classList.remove("active");
 });
 
+// adding a layer for every day
+fireLayerDay1 = L.geoJSON(Day1,{style: day1style}).addTo(map);
+fireLayerDay2 = L.geoJSON(Day2,{style: day2style}).addTo(map);
+fireLayerDay3 = L.geoJSON(Day3,{style: day3style}).addTo(map);
+fireLayerDay4 = L.geoJSON(Day4,{style: day4style}).addTo(map);
+fireLayerDay5 = L.geoJSON(Day5,{style: day5style}).addTo(map);
+fireLayerDay6 = L.geoJSON(Day6,{style: day6style}).addTo(map);
+fireLayerDay7 = L.geoJSON(Day7,{style: day7style}).addTo(map);
 
-// adding previous fire locations to map
-fireLayerLast7days = L.geoJSON(last7daysGeoJson,{style: last7daysStyle}).addTo(map);
-
-// adding previous fire locations to map
-fireLayerLast24 = L.geoJSON(last24GeoJson,{style: last24Style}).addTo(map);
-
-// adding previous fire locations to map
-fireLayerLast12 = L.geoJSON(last12GeoJson,{style: last12Style}).addTo(map);
-
-document.getElementById("last12").addEventListener("click",function() {
-  if (last12_toggle == 1) {
-    map.removeLayer(fireLayerLast12);
-    last12_toggle = 0;
+document.getElementById("day1button").addEventListener("click",function() {
+  if (day1_toggle == 1) {
+    map.removeLayer(fireLayerDay1);
+    day1_toggle = 0;
     this.classList.remove("active");
   } else {
-    fireLayerLast12 = L.geoJSON(last12GeoJson,{style: last12Style}).addTo(map);
-    last12_toggle = 1;
+    fireLayerDay1 = L.geoJSON(Day1,{style: day1style}).addTo(map);
+    day1_toggle = 1;
     this.classList.add("active");
   }
 });
 
-document.getElementById("last24").addEventListener("click",function() {
-  if (last24_toggle == 1) {
-    map.removeLayer(fireLayerLast24);
-    last24_toggle = 0;
+document.getElementById("day2button").addEventListener("click",function() {
+  if (day2_toggle == 1) {
+    map.removeLayer(fireLayerDay2);
+    day2_toggle = 0;
     this.classList.remove("active");
   } else {
-    fireLayerLast24 = L.geoJSON(last24GeoJson,{style: last24Style}).addTo(map);
-    last24_toggle = 1;
+    fireLayerDay2 = L.geoJSON(Day2,{style: day2style}).addTo(map);
+    day2_toggle = 1;
     this.classList.add("active");
   }
 });
 
-document.getElementById("last7days").addEventListener("click",function() {
-  if (last7days_toggle == 1) {
-    map.removeLayer(fireLayerLast7days);
-    last7days_toggle = 0;
+document.getElementById("day3button").addEventListener("click",function() {
+  if (day3_toggle == 1) {
+    map.removeLayer(fireLayerDay3);
+    day3_toggle = 0;
     this.classList.remove("active");
   } else {
-    fireLayerLast7days = L.geoJSON(last7daysGeoJson,{style: last7daysStyle}).addTo(map);
-    last7days_toggle = 1;
+    fireLayerDay3 = L.geoJSON(Day3,{style: day3style}).addTo(map);
+    day3_toggle = 1;
     this.classList.add("active");
   }
 });
+
+document.getElementById("day4button").addEventListener("click",function() {
+  if (day4_toggle == 1) {
+    map.removeLayer(fireLayerDay4);
+    day4_toggle = 0;
+    this.classList.remove("active");
+  } else {
+    fireLayerDay4 = L.geoJSON(Day4,{style: day4style}).addTo(map);
+    day4_toggle = 1;
+    this.classList.add("active");
+  }
+});
+
+document.getElementById("day5button").addEventListener("click",function() {
+  if (day5_toggle == 1) {
+    map.removeLayer(fireLayerDay5);
+    day5_toggle = 0;
+    this.classList.remove("active");
+  } else {
+    fireLayerDay5 = L.geoJSON(Day5,{style: day5style}).addTo(map);
+    day5_toggle = 1;
+    this.classList.add("active");
+  }
+});
+
+document.getElementById("day6button").addEventListener("click",function() {
+  if (day6_toggle == 1) {
+    map.removeLayer(fireLayerDay6);
+    day6_toggle = 0;
+    this.classList.remove("active");
+  } else {
+    fireLayerDay6 = L.geoJSON(Day6,{style: day6style}).addTo(map);
+    day6_toggle = 1;
+    this.classList.add("active");
+  }
+});
+
+document.getElementById("day7button").addEventListener("click",function() {
+  if (day7_toggle == 1) {
+    map.removeLayer(fireLayerDay7);
+    day7_toggle = 0;
+    this.classList.remove("active");
+  } else {
+    fireLayerDay7 = L.geoJSON(Day7,{style: day7style}).addTo(map);
+    day7_toggle = 1;
+    this.classList.add("active");
+  }
+});
+
+// var td;
+// for (var t = 1; t < 8; t++){
+//     td = document.getElementById("day"+t+"button");
+//     if (typeof window.addEventListener === 'function'){
+//         (function (_td) {
+//             td.addEventListener('click', function(){
+//                 // addLayerFunction(eval("day"+_td+"_toggle"),eval("fireLayerDay"+_td),eval("day"+_td+"style"),this);
+//                 var IDX = _td.classList[0].split("day")[1];
+//                 addLayerFunction(eval("day"+IDX+"_toggle"),eval("Day"+IDX),eval("fireLayerDay"+IDX),eval("day"+IDX+"style"),this);
+//             });
+//         })(td);
+//     }
+// }
+//
+// var addLayerFunction = function(toggle,layer,layerName,layerStyle,button){
+//   console.log(toggle);
+//   if (toggle == 1) {
+//     map.removeLayer(layerName);
+//     toggle = 0;
+//     button.classList.remove("active");
+//   } else {
+//     console.log(layer);
+//     layerName = L.geoJSON(layer,{style: layerStyle}).addTo(map);
+//     toggle = 1;
+//     button.classList.add("active");
+//   }
+// }
 
 document.getElementById("airquality").addEventListener("click",function() {
   if (pollution_toggle == 1) {
