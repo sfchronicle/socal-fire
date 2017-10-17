@@ -37,26 +37,26 @@ map.scrollWheelZoom.disable();
 L.svg().addTo(map);
 
 // add tiles to the map
-
-//https://api.mapbox.com/styles/v1/emro/cj4g94j371v732rnptcghibsy/tiles/256/{z}/{x}/{y}?access_token=pk.eyJ1IjoiZW1ybyIsImEiOiJjaXl2dXUzMGQwMDdsMzJuM2s1Nmx1M29yIn0._KtME1k8LIhloMyhMvvCDA
-//https://api.mapbox.com/styles/v1/emro/cj8lviggc6b302rqjyezdqc2m/tiles/256/{z}/{x}/{y}?access_token=pk.eyJ1IjoiZW1ybyIsImEiOiJjaXl2dXUzMGQwMDdsMzJuM2s1Nmx1M29yIn0._KtME1k8LIhloMyhMvvCDA
 var mapLayer = L.tileLayer("https://api.mapbox.com/styles/v1/emro/cj8oq9bxg8zfu2rs3uw1ot59l/tiles/256/{z}/{x}/{y}?access_token=pk.eyJ1IjoiZW1ybyIsImEiOiJjaXl2dXUzMGQwMDdsMzJuM2s1Nmx1M29yIn0._KtME1k8LIhloMyhMvvCDA",{attribution: '© <a href="https://www.mapbox.com/map-feedback/">Mapbox</a> © <a href="http://www.openstreetmap.org/copyright">OpenStreetMap</a> <strong><a href="https://www.mapbox.com/map-feedback/" target="_blank">Improve this map</a></strong>'})
 mapLayer.addTo(map);
 
+// zoom control is on top right
 L.control.zoom({
      position:'topright'
 }).addTo(map);
 
+// sizing evacuation and hospital icons
 var MapIcon = L.Icon.extend({
     options: {
         iconSize:     [20,20],
         iconAnchor:   [10,10],
     }
 });
-
+// adding images for evacuations and hospitals
 var evacuationIcon = new MapIcon({iconUrl: './assets/graphics/evacuation_icon.png?'});
 var hospitalsIcon = new MapIcon({iconUrl: './assets/graphics/hospitalsEvacuated_icon.png?'});
 
+// icon for deaths
 var purpleIcon = new L.Icon({
   iconUrl: 'https://raw.githubusercontent.com/pointhi/leaflet-color-markers/master/img/marker-icon-violet.png',
   // shadowUrl: 'https://cdnjs.cloudflare.com/ajax/libs/leaflet/0.7.7/images/marker-shadow.png',
@@ -66,6 +66,7 @@ var purpleIcon = new L.Icon({
   // shadowSize: [, 41]
 });
 
+// icon for damaged wineries
 var greenIcon = new L.Icon({
   iconUrl: 'https://raw.githubusercontent.com/pointhi/leaflet-color-markers/master/img/marker-icon-green.png',
   // shadowUrl: 'https://cdnjs.cloudflare.com/ajax/libs/leaflet/0.7.7/images/marker-shadow.png',
@@ -75,9 +76,10 @@ var greenIcon = new L.Icon({
   // shadowSize: [, 41]
 });
 
+// we are going to list all the markers here so we can easily turn them all off and on
 var markerArray = new Array();
 
-
+// function to draw markers
 var drawIcons = function() {
   evacuation_data.forEach(function(d){
     var html_str = "<b>"+d.Name+"</b><br>"+d.Address;
@@ -114,30 +116,32 @@ var drawIcons = function() {
   });
 }
 
+// load all the icons (evacuations, hospitals, wineries, deaths)
 drawIcons();
 
-var napaStyle = {
-    "color": "#8470ba",
-    "weight": 1,
-};
-
-var last12Style = {
-    "color": "#FF6721",//"#351B77",
-    "fill-opacity": 0.8,
-    "weight": 3,
-};
-
-var last24Style = {
-    "color": "#FF8800",//"#351B77",
-    "fill-opacity": 0.8,
-    "weight": 3,
-};
-
-var last7daysStyle = {
-    "color": "#FFB200",//"#351B77",
-    "fill-opacity": 0.8,
-    "weight": 3,
-};
+// not using any of this
+// var napaStyle = {
+//     "color": "#8470ba",
+//     "weight": 1,
+// };
+//
+// var last12Style = {
+//     "color": "#FF6721",//"#351B77",
+//     "fill-opacity": 0.8,
+//     "weight": 3,
+// };
+//
+// var last24Style = {
+//     "color": "#FF8800",//"#351B77",
+//     "fill-opacity": 0.8,
+//     "weight": 3,
+// };
+//
+// var last7daysStyle = {
+//     "color": "#FFB200",//"#351B77",
+//     "fill-opacity": 0.8,
+//     "weight": 3,
+// };
 
 var day1style = {"color": "#FFCC1A","fill-opacity": 0.3,"weight": 3};
 var day2style = {"color": "#FFBF0D","fill-opacity": 0.3,"weight": 3};
@@ -146,13 +150,19 @@ var day4style = {"color": "#F2A500","fill-opacity": 0.3,"weight": 3};
 var day5style = {"color": "#FF8800","fill-opacity": 0.3,"weight": 3};
 var day6style = {"color": "#F27B00","fill-opacity": 0.3,"weight": 3};
 var day7style = {"color": "#FF6721","fill-opacity": 0.3,"weight": 3};
+var day8style = {"color": "#F25A14","fill-opacity": 0.3,"weight": 3};
 
-var napaLayer, sonomaLayer, fireLayerLast7days, fireLayerLast24, fireLayerLast12, pollutionLayer, contourLayer;
-var avas_toggle = 0, last7days_toggle = 1, last24_toggle = 1, last12_toggle = 1, pollution_toggle;
-var pins_toggle = 1;
+// we're not actually using any of this so we should delete it
+// var napaLayer, sonomaLayer, fireLayerLast7days, fireLayerLast24, fireLayerLast12;
+// var avas_toggle = 0, last7days_toggle = 1, last24_toggle = 1, last12_toggle = 1;
 
+// these are variables for if we are showing the icons and the airquality layers
+var pins_toggle = 1, pollution_toggle = 0;
+var pollutionLayer, contourLayer;
+
+// these are all the layers for the fire perimeters and their toggles
 var fireLayerDay1, fireLayerDay2, fireLayerDay3, fireLayerDay4, fireLayerDay5, fireLayerDay6, fireLayerDay7;
-var day1_toggle = 1, day2_toggle = 1, day3_toggle = 1, day4_toggle = 1, day5_toggle = 1, day6_toggle = 1, day7_toggle = 1;
+var day1_toggle = 1, day2_toggle = 1, day3_toggle = 1, day4_toggle = 1, day5_toggle = 1, day6_toggle = 1, day7_toggle = 1, day8_toggle;
 
 // document.getElementById("avas").addEventListener("click",function() {
 //   if (avas_toggle == 1) {
@@ -168,13 +178,16 @@ var day1_toggle = 1, day2_toggle = 1, day3_toggle = 1, day4_toggle = 1, day5_tog
 //   }
 // });
 
+// hide and show icons based on button click
 document.getElementById("iconsbutton").addEventListener("click",function() {
+  // hide icons
   if (pins_toggle == 1) {
     for (var i = 0; i < markerArray.length; i++) {
       map.removeLayer(markerArray[i]);
     }
     this.classList.add("active");
     pins_toggle = 0;
+  // show icons
   } else {
     for (var i = 0; i < markerArray.length; i++) {
       map.addLayer(markerArray[i]);
@@ -185,11 +198,13 @@ document.getElementById("iconsbutton").addEventListener("click",function() {
   }
 });
 
+// show the about the data box
 document.getElementById("aboutthedata").addEventListener("click",function() {
   document.getElementById("aboutthedata-box").classList.add("active");
   document.getElementById("aboutthedata-overlay").classList.add("active");
 });
 
+// hide the about the data box
 document.getElementById("close-data-box").addEventListener("click",function() {
   document.getElementById("aboutthedata-box").classList.remove("active");
   document.getElementById("aboutthedata-overlay").classList.remove("active");
@@ -203,6 +218,8 @@ fireLayerDay4 = L.geoJSON(Day4,{style: day4style}).addTo(map);
 fireLayerDay5 = L.geoJSON(Day5,{style: day5style}).addTo(map);
 fireLayerDay6 = L.geoJSON(Day6,{style: day6style}).addTo(map);
 fireLayerDay7 = L.geoJSON(Day7,{style: day7style}).addTo(map);
+// ADD THIS IN
+// fireLayerDay8 = L.geoJSON(Day8,{style: day8style}).addTo(map);
 
 document.getElementById("day1button").addEventListener("click",function() {
   if (day1_toggle == 1) {
@@ -288,6 +305,20 @@ document.getElementById("day7button").addEventListener("click",function() {
   }
 });
 
+// ADD THIS IN
+// document.getElementById("day8button").addEventListener("click",function() {
+//   if (day8_toggle == 1) {
+//     map.removeLayer(fireLayerDay8);
+//     day8_toggle = 0;
+//     this.classList.remove("active");
+//   } else {
+//     fireLayerDay8 = L.geoJSON(Day8,{style: day8style}).addTo(map);
+//     day8_toggle = 1;
+//     this.classList.add("active");
+//   }
+// });
+
+// TRYING TO GET THIS TO WORK AS A LOOP BUT COULD NOT
 // var td;
 // for (var t = 1; t < 8; t++){
 //     td = document.getElementById("day"+t+"button");
@@ -316,32 +347,39 @@ document.getElementById("day7button").addEventListener("click",function() {
 //   }
 // }
 
+
+// adding and removing the air quality layer on button click
 document.getElementById("airquality").addEventListener("click",function() {
+  // remove air quality layer
   if (pollution_toggle == 1) {
     map.removeLayer(pollutionLayer);
     map.removeLayer(contourLayer);
     pollution_toggle = 0;
     this.classList.remove("active");
     document.getElementById("airquallegend").classList.remove("active");
+  // add air quality layer
   } else {
-    // getting current date
-
     this.classList.add("active");
 
+    // obtain most recent dataset based on file on server
     d3.text('http://extras.sfgate.com/editorial/wildfires/airquality_date.txt?', function(text) {
       var urlpathPollution = "http://berkeleyearth.lbl.gov/air-quality/maps/hour/"+text.substring(0,6)+"/"+text+"/tiles/health/{z}/{x}/{y}.png";
       var urlpathContours = "http://berkeleyearth.lbl.gov/air-quality/maps/hour/"+text.substring(0,6)+"/"+text+"/tiles/contour/{z}/{x}/{y}.png";
 
       console.log(urlpathPollution);
 
+      // add layer with colors
       pollutionLayer = L.tileLayer(urlpathPollution,{transparent: true,opacity: 0.7})
       pollutionLayer.addTo(map);
+      // add layer with contour lines
       contourLayer = L.tileLayer(urlpathContours,{transparent: true,opacity: 0.7})
       contourLayer.addTo(map);
+      // now we are showing the air quality layer
       pollution_toggle = 1;
 
       document.getElementById("airquallegend").classList.add("active");
 
+      // fill in when data was last updated
       if (document.getElementById("airDate")) {
         document.getElementById("airDate").innerHTML = "Air quality data last updated on "+text.substring(4,6)+"/"+text.substring(6,8)+"/"+text.substring(0,4)+" at "+text.substring(8,10)+":00 UTC";
       }
@@ -358,6 +396,7 @@ var fireDataURL = "http://extras.sfgate.com/editorial/wildfires/noaa.csv";
 var timer5minutes = 600000;
 var map_timer;
 
+// read in fire data and create timers for re-loading it
 d3.csv(fireDataURL, function(fire_data){
 
   console.log("initial data load");
@@ -447,16 +486,18 @@ var drawMap = function(fire_data) {
   update();
 }
 
-// creating Lat/Lon objects that d3 is expecting
+// creating Lat/Lon objects that d3 is expecting for map labels
 fire_names.forEach(function(d,idx) {
   d.LatLng = new L.LatLng(d.Lat,
               d.Lon);
 });
 
+// appending labels layer to map
 var svg = d3.select("#map-leaflet").select("svg");
 var gLabels = svg.append("g");
 gLabels.attr("class","dotsLABELS")
 
+// creating the labels
 var labels = gLabels.selectAll("dotsLABELS")
   .data(fire_names)
   .enter()
@@ -484,60 +525,3 @@ function updateLabels() {
 map.on("viewreset", updateLabels);
 map.on("zoom",updateLabels);
 updateLabels();
-
-// // draw map with dots on it
-// var drawAir = function(air_data) {
-//
-//   d3.select("svg").selectAll("airDot").remove();
-//   var svg = d3.select("#map-leaflet").select("svg");
-//   var g = svg.append("g");
-//
-//   var circles = g.selectAll("g")
-//     .data(air_data)
-//     .enter()
-//     .append("g");
-//
-//   // adding circles to the map
-//   circles.append("circle")
-//     .attr("class",function(d) {
-//       // console.log(d);
-//       return "dot airDot";
-//     })
-//     .style("opacity", function(d) {
-//       return 0.8;
-//     })
-//     .style("fill", function(d) {
-//       return "blue";//"#E32B2B";//"#3C87CF";
-//     })
-//     // .style("stroke","#696969")
-//     .attr("r", function(d) {
-//       if (screen.width <= 480) {
-//         return 5;
-//       } else {
-//         return 8;
-//       }
-//     });
-//
-//   // function that zooms and pans the data when the map zooms and pans
-//   function update() {
-//     circles.attr("transform",
-//     function(d) {
-//       return "translate("+
-//         map.latLngToLayerPoint(d.LatLng).x +","+
-//         map.latLngToLayerPoint(d.LatLng).y +")";
-//       }
-//     )
-//   }
-//
-//   map.on("viewreset", update);
-//   map.on("zoom",update);
-//   update();
-// }
-//
-// // creating Lat/Lon objects that d3 is expecting
-// air_data.forEach(function(d,idx) {
-//   d.LatLng = new L.LatLng(d.Latitude,
-//               d.Longitude);
-// });
-//
-// drawAir(air_data);
