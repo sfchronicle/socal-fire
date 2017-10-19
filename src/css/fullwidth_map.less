@@ -206,14 +206,21 @@ path {
 @day7: #F27B00;
 @day8: #FF6721;
 @day9: #F25A14;
-@day10: #D94100;
+@day10: #E54D07;
+@day11: #D94100;
+@day12: #CC3400;
 
 path {
-  fill-opacity: 0.6 !important;
+  fill-opacity: 0.4 !important;
 }
 
 .dotsSVG {
   z-index: 1000 !important;
+}
+
+#button-collection {
+  max-width: 400px;
+  margin: auto;
 }
 
 .button-container {
@@ -241,6 +248,7 @@ path {
     padding: 2px 10px;
     margin-bottom: 4px;
     cursor: pointer;
+    margin-right: 4px;
   }
   #now {
     border: 2px solid @now;
@@ -261,43 +269,7 @@ path {
       color: white;
     }
   }
-  #last12 {
-    border: 2px solid @hours12;
-    border-radius: 5px;
-    color: @hours12;
-    &.active {
-      background: lighten(@hours12,5%);
-      color: white;
-    }
-  }
-  #day1button {
-    border: 2px solid @day1;
-    border-radius: 5px;
-    color: @day1;
-    &.active {
-      background: lighten(@day1,5%);
-      color: white;
-    }
-  }
-  #day2button {
-    border: 2px solid @day2;
-    border-radius: 5px;
-    color: @day2;
-    &.active {
-      background: lighten(@day2,5%);
-      color: white;
-    }
-  }
-  #day3button {
-    border: 2px solid @day3;
-    border-radius: 5px;
-    color: @day3;
-    &.active {
-      background: lighten(@day3,5%);
-      color: white;
-    }
-  }
-  #day4button {
+  .calendarbutton {
     border: 2px solid @day4;
     border-radius: 5px;
     color: @day4;
@@ -306,76 +278,13 @@ path {
       color: white;
     }
   }
-  #day5button {
-    border: 2px solid @day5;
+  .nowbutton {
+    border: 2px solid @day11;
     border-radius: 5px;
-    color: @day5;
+    color: @day11;
     &.active {
-      background: lighten(@day5,5%);
+      background: lighten(@day11,5%);
       color: white;
-    }
-  }
-  #day6button {
-    border: 2px solid @day6;
-    border-radius: 5px;
-    color: @day6;
-    &.active {
-      background: lighten(@day6,5%);
-      color: white;
-    }
-  }
-  #day7button {
-    border: 2px solid @day7;
-    border-radius: 5px;
-    color: @day7;
-    &.active {
-      background: lighten(@day7,5%);
-      color: white;
-    }
-  }
-  #day8button {
-    border: 2px solid @day8;
-    border-radius: 5px;
-    color: @day8;
-    &.active {
-      background: lighten(@day8,5%);
-      color: white;
-    }
-  }
-  #day9button {
-    border: 2px solid @day9;
-    border-radius: 5px;
-    color: @day9;
-    &.active {
-      background: lighten(@day9,5%);
-      color: white;
-    }
-  }
-  #day10button {
-    border: 2px solid @day10;
-    border-radius: 5px;
-    color: @day10;
-    &.active {
-      background: lighten(@day10,5%);
-      color: white;
-    }
-  }
-  #last24 {
-    border: 2px solid @hours24;
-    border-radius: 5px;
-    color: @hours24;
-    &.active {
-      background: lighten(@hours24,5%);
-      color: white;
-    }
-  }
-  #last7days {
-    border: 2px solid @days7;
-    border-radius: 5px;
-    color: darken(@days7,40%);
-    &.active {
-      background: @days7;
-      // color: white;
     }
   }
   #airquality {
@@ -586,7 +495,7 @@ a {
   top: 0;
   left: 0px;
   padding-top: 10px;
-  max-width: 470px;
+  max-width: 480px;
   z-index: 500;
   background: #fff;
   box-shadow:1px 2px 2px 0px #ccc;

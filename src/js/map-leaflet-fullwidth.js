@@ -119,67 +119,74 @@ var drawIcons = function() {
 // load all the icons (evacuations, hospitals, wineries, deaths)
 drawIcons();
 
-// not using any of this
-// var napaStyle = {
-//     "color": "#8470ba",
-//     "weight": 1,
-// };
-//
-// var last12Style = {
-//     "color": "#FF6721",//"#351B77",
-//     "fill-opacity": 0.8,
-//     "weight": 3,
-// };
-//
-// var last24Style = {
-//     "color": "#FF8800",//"#351B77",
-//     "fill-opacity": 0.8,
-//     "weight": 3,
-// };
-//
-// var last7daysStyle = {
-//     "color": "#FFB200",//"#351B77",
-//     "fill-opacity": 0.8,
-//     "weight": 3,
-// };
+var buttonSTR = "Oct. ";
+var size = Object.keys(FireData).length;
+var dateList = Object.keys(FireData);
+dateList.sort();
 
-var day1style = {"color": "#FFCC1A","fill-opacity": 0.3,"weight": 3};
-var day2style = {"color": "#FFBF0D","fill-opacity": 0.3,"weight": 3};
-var day3style = {"color": "#FFB200","fill-opacity": 0.3,"weight": 3};
-var day4style = {"color": "#F2A500","fill-opacity": 0.3,"weight": 3};
-var day5style = {"color": "#E59800","fill-opacity": 0.3,"weight": 3};
-var day6style = {"color": "#FF8800","fill-opacity": 0.3,"weight": 3};
-var day7style = {"color": "#F27B00","fill-opacity": 0.3,"weight": 3};
-var day8style = {"color": "#FF6721","fill-opacity": 0.3,"weight": 3};
-var day9style = {"color": "#F25A14","fill-opacity": 0.3,"weight": 3};
-var day10style = {"color": "#D94100","fill-opacity": 0.3,"weight": 3};//#E54D07
-var day11style = {"color": "#D94100","fill-opacity": 0.3,"weight": 3};
+var sortedFireData = [];
+for (i = 0; i < size; i++) {
+  var element = {};
+  var k = dateList[i];
+  element.key = k;
+  element.json = FireData[k];
+  sortedFireData.push(element);
+}
 
-// we're not actually using any of this so we should delete it
-// var napaLayer, sonomaLayer, fireLayerLast7days, fireLayerLast24, fireLayerLast12;
-// var avas_toggle = 0, last7days_toggle = 1, last24_toggle = 1, last12_toggle = 1;
+for (var i=0; i<(size); i++){
+  if (i == (size-1)) {
+    buttonSTR += "<div class='day"+i+" button clickbutton nowbutton active' id='day"+i+"button'>Today</div>";
+  } else {
+    buttonSTR += "<div class='day"+i+" button clickbutton calendarbutton active' id='day"+i+"button'>"+dateList[i].split("-")[2]+"</div>";
+  }
+}
+document.getElementById("button-collection").innerHTML = buttonSTR;
+
+//calendar style
+var daystyle = {"color": "#F2A500","fill-opacity": 0.4,"weight": 3};
+var nowstyle = {"color": "#D94100","fill-opacity": 0.8,"weight": 3}
+
+// adding a layer for every day
+var layers = [];
+var layerstoggle = [];
+for (var i=0; i<(size); i++){
+  if (i == (size-1)){
+    layers[i] = L.geoJSON(JSON.parse(sortedFireData[i]["json"]),{style: nowstyle}).addTo(map);
+  } else {
+    layers[i] = L.geoJSON(JSON.parse(sortedFireData[i]["json"]),{style: daystyle}).addTo(map);
+  }
+  layerstoggle.push(1);
+}
+
+// TRYING TO GET THIS TO WORK AS A LOOP BUT COULD NOT
+var td;
+for (var t = 0; t < size; t++){
+  td = document.getElementById("day"+t+"button");
+  if (typeof window.addEventListener === 'function'){
+    (function (_td) {
+      td.addEventListener('click', function(){
+        var IDX = _td.classList[0].split("day")[1];
+        if (layerstoggle[IDX] == 1) {
+          map.removeLayer(layers[IDX]);
+          layerstoggle[IDX] = 0;
+          _td.classList.remove("active");
+        } else {
+          if (IDX == (size-1)){
+            layers[IDX] = L.geoJSON(JSON.parse(sortedFireData[IDX]["json"]),{style: nowstyle}).addTo(map);
+          } else {
+            layers[IDX] = L.geoJSON(JSON.parse(sortedFireData[IDX]["json"]),{style: daystyle}).addTo(map);
+          }
+          layerstoggle[IDX] = 1;
+          _td.classList.add("active");
+        }
+      });
+    })(td);
+  };
+}
 
 // these are variables for if we are showing the icons and the airquality layers
 var pins_toggle = 1, pollution_toggle = 0;
 var pollutionLayer, contourLayer;
-
-// these are all the layers for the fire perimeters and their toggles
-var fireLayerDay1, fireLayerDay2, fireLayerDay3, fireLayerDay4, fireLayerDay5, fireLayerDay6, fireLayerDay7, fireLayerDay8, fireLayerDay9, fireLayerDay10;
-var day1_toggle = 1, day2_toggle = 1, day3_toggle = 1, day4_toggle = 1, day5_toggle = 1, day6_toggle = 1, day7_toggle = 1, day8_toggle = 1, day9_toggle = 1, day10_toggle = 1;
-
-// document.getElementById("avas").addEventListener("click",function() {
-//   if (avas_toggle == 1) {
-//     map.removeLayer(napaLayer);
-//     map.removeLayer(sonomaLayer);
-//     avas_toggle = 0;
-//     this.classList.remove("active");
-//   } else {
-//     sonomaLayer = L.geoJSON(sonomaGeoJson,{style: napaStyle}).addTo(map);
-//     napaLayer = L.geoJSON(napaGeoJson,{style: napaStyle}).addTo(map);
-//     avas_toggle = 1;
-//     this.classList.add("active");
-//   }
-// });
 
 // hide and show icons based on button click
 document.getElementById("iconsbutton").addEventListener("click",function() {
@@ -212,170 +219,6 @@ document.getElementById("close-data-box").addEventListener("click",function() {
   document.getElementById("aboutthedata-box").classList.remove("active");
   document.getElementById("aboutthedata-overlay").classList.remove("active");
 });
-
-// adding a layer for every day
-fireLayerDay1 = L.geoJSON(Day1,{style: day1style}).addTo(map);
-fireLayerDay2 = L.geoJSON(Day2,{style: day2style}).addTo(map);
-fireLayerDay3 = L.geoJSON(Day3,{style: day3style}).addTo(map);
-fireLayerDay4 = L.geoJSON(Day4,{style: day4style}).addTo(map);
-fireLayerDay5 = L.geoJSON(Day5,{style: day5style}).addTo(map);
-fireLayerDay6 = L.geoJSON(Day6,{style: day6style}).addTo(map);
-fireLayerDay7 = L.geoJSON(Day7,{style: day7style}).addTo(map);
-fireLayerDay8 = L.geoJSON(Day8,{style: day8style}).addTo(map);
-fireLayerDay9 = L.geoJSON(Day9,{style: day9style}).addTo(map);
-fireLayerDay10 = L.geoJSON(Day10,{style: day10style}).addTo(map);
-
-
-document.getElementById("day1button").addEventListener("click",function() {
-  if (day1_toggle == 1) {
-    map.removeLayer(fireLayerDay1);
-    day1_toggle = 0;
-    this.classList.remove("active");
-  } else {
-    fireLayerDay1 = L.geoJSON(Day1,{style: day1style}).addTo(map);
-    day1_toggle = 1;
-    this.classList.add("active");
-  }
-});
-
-document.getElementById("day2button").addEventListener("click",function() {
-  if (day2_toggle == 1) {
-    map.removeLayer(fireLayerDay2);
-    day2_toggle = 0;
-    this.classList.remove("active");
-  } else {
-    fireLayerDay2 = L.geoJSON(Day2,{style: day2style}).addTo(map);
-    day2_toggle = 1;
-    this.classList.add("active");
-  }
-});
-
-document.getElementById("day3button").addEventListener("click",function() {
-  if (day3_toggle == 1) {
-    map.removeLayer(fireLayerDay3);
-    day3_toggle = 0;
-    this.classList.remove("active");
-  } else {
-    fireLayerDay3 = L.geoJSON(Day3,{style: day3style}).addTo(map);
-    day3_toggle = 1;
-    this.classList.add("active");
-  }
-});
-
-document.getElementById("day4button").addEventListener("click",function() {
-  if (day4_toggle == 1) {
-    map.removeLayer(fireLayerDay4);
-    day4_toggle = 0;
-    this.classList.remove("active");
-  } else {
-    fireLayerDay4 = L.geoJSON(Day4,{style: day4style}).addTo(map);
-    day4_toggle = 1;
-    this.classList.add("active");
-  }
-});
-
-document.getElementById("day5button").addEventListener("click",function() {
-  if (day5_toggle == 1) {
-    map.removeLayer(fireLayerDay5);
-    day5_toggle = 0;
-    this.classList.remove("active");
-  } else {
-    fireLayerDay5 = L.geoJSON(Day5,{style: day5style}).addTo(map);
-    day5_toggle = 1;
-    this.classList.add("active");
-  }
-});
-
-document.getElementById("day6button").addEventListener("click",function() {
-  if (day6_toggle == 1) {
-    map.removeLayer(fireLayerDay6);
-    day6_toggle = 0;
-    this.classList.remove("active");
-  } else {
-    fireLayerDay6 = L.geoJSON(Day6,{style: day6style}).addTo(map);
-    day6_toggle = 1;
-    this.classList.add("active");
-  }
-});
-
-document.getElementById("day7button").addEventListener("click",function() {
-  if (day7_toggle == 1) {
-    map.removeLayer(fireLayerDay7);
-    day7_toggle = 0;
-    this.classList.remove("active");
-  } else {
-    fireLayerDay7 = L.geoJSON(Day7,{style: day7style}).addTo(map);
-    day7_toggle = 1;
-    this.classList.add("active");
-  }
-});
-
-// ADD THIS IN
-document.getElementById("day8button").addEventListener("click",function() {
-  if (day8_toggle == 1) {
-    map.removeLayer(fireLayerDay8);
-    day8_toggle = 0;
-    this.classList.remove("active");
-  } else {
-    fireLayerDay8 = L.geoJSON(Day8,{style: day8style}).addTo(map);
-    day8_toggle = 1;
-    this.classList.add("active");
-  }
-});
-
-document.getElementById("day9button").addEventListener("click",function() {
-  if (day9_toggle == 1) {
-    map.removeLayer(fireLayerDay9);
-    day9_toggle = 0;
-    this.classList.remove("active");
-  } else {
-    fireLayerDay9 = L.geoJSON(Day9,{style: day9style}).addTo(map);
-    day9_toggle = 1;
-    this.classList.add("active");
-  }
-});
-
-document.getElementById("day10button").addEventListener("click",function() {
-  if (day10_toggle == 1) {
-    map.removeLayer(fireLayerDay10);
-    day10_toggle = 0;
-    this.classList.remove("active");
-  } else {
-    fireLayerDay10 = L.geoJSON(Day10,{style: day10style}).addTo(map);
-    day10_toggle = 1;
-    this.classList.add("active");
-  }
-});
-
-// TRYING TO GET THIS TO WORK AS A LOOP BUT COULD NOT
-// var td;
-// for (var t = 1; t < 8; t++){
-//     td = document.getElementById("day"+t+"button");
-//     if (typeof window.addEventListener === 'function'){
-//         (function (_td) {
-//             td.addEventListener('click', function(){
-//                 // addLayerFunction(eval("day"+_td+"_toggle"),eval("fireLayerDay"+_td),eval("day"+_td+"style"),this);
-//                 var IDX = _td.classList[0].split("day")[1];
-//                 addLayerFunction(eval("day"+IDX+"_toggle"),eval("Day"+IDX),eval("fireLayerDay"+IDX),eval("day"+IDX+"style"),this);
-//             });
-//         })(td);
-//     }
-// }
-//
-// var addLayerFunction = function(toggle,layer,layerName,layerStyle,button){
-//   console.log(toggle);
-//   if (toggle == 1) {
-//     map.removeLayer(layerName);
-//     toggle = 0;
-//     button.classList.remove("active");
-//   } else {
-//     console.log(layer);
-//     layerName = L.geoJSON(layer,{style: layerStyle}).addTo(map);
-//     toggle = 1;
-//     button.classList.add("active");
-//   }
-// }
-
 
 // adding and removing the air quality layer on button click
 document.getElementById("airquality").addEventListener("click",function() {
