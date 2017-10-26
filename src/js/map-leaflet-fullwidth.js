@@ -1,6 +1,8 @@
 require("./lib/social"); //Do not delete
 var d3 = require('d3');
 
+var formatthousands = d3.format(",");
+
 // setting parameters for the center of the map and initial zoom level
 if (screen.width <= 480) {
   var sf_lat = 38.6;
@@ -13,7 +15,7 @@ if (screen.width <= 480) {
 } else {
   var sf_lat = 38.4;
   var sf_long = -123;
-  var zoom_deg = 8;
+  var zoom_deg = 10;
 
   var offset_top = 900;
   var bottomOffset = 200;
@@ -37,8 +39,15 @@ map.scrollWheelZoom.disable();
 L.svg().addTo(map);
 
 // add tiles to the map
-var mapLayer = L.tileLayer("https://api.mapbox.com/styles/v1/emro/cj8oq9bxg8zfu2rs3uw1ot59l/tiles/256/{z}/{x}/{y}?access_token=pk.eyJ1IjoiZW1ybyIsImEiOiJjaXl2dXUzMGQwMDdsMzJuM2s1Nmx1M29yIn0._KtME1k8LIhloMyhMvvCDA",{attribution: '© <a href="https://www.mapbox.com/map-feedback/">Mapbox</a> © <a href="http://www.openstreetmap.org/copyright">OpenStreetMap</a> <strong><a href="https://www.mapbox.com/map-feedback/" target="_blank">Improve this map</a></strong>'})
-mapLayer.addTo(map);
+// var gl = L.mapboxGL({
+//     accessToken: 'pk.eyJ1IjoiZW1ybyIsImEiOiJjaXl2dXUzMGQwMDdsMzJuM2s1Nmx1M29yIn0._KtME1k8LIhloMyhMvvCDA',
+//     style: 'mapbox://styles/emro/cj8oq9bxg8zfu2rs3uw1ot59l',
+//     attribution: '© <a href="https://www.mapbox.com/map-feedback/">Mapbox</a>'
+// }).addTo(map);
+
+L.mapbox.accessToken = 'pk.eyJ1IjoiZW1ybyIsImEiOiJjaXl2dXUzMGQwMDdsMzJuM2s1Nmx1M29yIn0._KtME1k8LIhloMyhMvvCDA';
+var styleLayer = L.mapbox.styleLayer('mapbox://styles/emro/cj8oq9bxg8zfu2rs3uw1ot59l')
+    .addTo(map);
 
 // zoom control is on top right
 L.control.zoom({
@@ -52,9 +61,17 @@ var MapIcon = L.Icon.extend({
         iconAnchor:   [10,10],
     }
 });
+// sizing evacuation and hospital icons
+var TallMapIcon = L.Icon.extend({
+    options: {
+        iconSize:     [25,40],
+        iconAnchor:   [10,10],
+    }
+});
 // adding images for evacuations and hospitals
 var evacuationIcon = new MapIcon({iconUrl: './assets/graphics/evacuation_icon.png?'});
 var hospitalsIcon = new MapIcon({iconUrl: './assets/graphics/hospitalsEvacuated_icon.png?'});
+var fireIcon = new TallMapIcon({iconUrl: './assets/graphics/fire_icon2.png?'});
 
 // icon for deaths
 var purpleIcon = new L.Icon({
@@ -100,7 +117,7 @@ var drawIcons = function() {
   });
 
   winery_data.forEach(function(d){
-    var html_str = "<b>"+d.Name+"</b><br><i>"+d.Address+"</i><br>"+d.Description;
+    var html_str = "<b>"+d.Name+"</b><br><i>"+d.Address+"</i><br><br>"+d.Description;
     var tempmarker = L.marker([d.Lat, d.Lng], {icon: greenIcon}).addTo(map).bindPopup(html_str);
     markerArray.push(tempmarker);
   });
@@ -112,6 +129,12 @@ var drawIcons = function() {
       var html_str = d.StreetName+"<br>"+d.Count+" death(s)";
     }
     var tempmarker = L.marker([d.Lat, d.Lng],{icon: purpleIcon}).addTo(map).bindPopup(html_str);
+    markerArray.push(tempmarker);
+  });
+
+  origins_data.forEach(function(d){
+    var html_str = "<b>"+d.Fire+"</b><br><em>Started at "+d.TimeStarted+"</em><br><em>Burned <b>"+formatthousands(d.Acreage)+"</b> acres</em><br><em>Killed <b>"+d.Victims+"</b></em><br><br>"+d.Description;
+    var tempmarker = L.marker([d.Lat, d.Lon], {icon: fireIcon}).addTo(map).bindPopup(html_str);
     markerArray.push(tempmarker);
   });
 }
