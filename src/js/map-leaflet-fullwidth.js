@@ -1,7 +1,20 @@
 require("./lib/social"); //Do not delete
 var d3 = require('d3');
 
+// format numbers
 var formatthousands = d3.format(",");
+
+// format dates
+function formatDate(date,monSTR) {
+  var hours = date.getHours();
+  var minutes = date.getMinutes();
+  var ampm = hours >= 12 ? 'pm PDT' : 'am PDT';
+  hours = hours % 12;
+  hours = hours ? hours : 12; // the hour '0' should be '12'
+  minutes = minutes < 10 ? '0'+minutes : minutes;
+  var strTime = hours + ':' + minutes + ' ' + ampm;
+  return monSTR + ". " + date.getDate() + ", " + date.getFullYear() + " at " + strTime;
+}
 
 // setting parameters for the center of the map and initial zoom level
 if (screen.width <= 480) {
@@ -15,7 +28,7 @@ if (screen.width <= 480) {
 } else {
   var sf_lat = 38.4;
   var sf_long = -123;
-  var zoom_deg = 10;
+  var zoom_deg = 8;
 
   var offset_top = 900;
   var bottomOffset = 200;
@@ -143,7 +156,10 @@ var drawIcons = function() {
 drawIcons();
 
 var buttonSTR = "Oct. ";
-var size = Object.keys(FireData).length;
+// when we have a variable number of days, use this ---->
+// var size = Object.keys(FireData).length;
+// when we cut off the days, use this ---->
+var size = 11;
 var dateList = Object.keys(FireData);
 dateList.sort();
 
@@ -158,7 +174,10 @@ for (i = 0; i < size; i++) {
 
 for (var i=0; i<(size); i++){
   if (i == (size-1)) {
-    buttonSTR += "<div class='day"+i+" button clickbutton nowbutton active' id='day"+i+"button'>Today</div>";
+    // when we have a variable number of days, use this ---->
+    // buttonSTR += "<div class='day"+i+" button clickbutton nowbutton active' id='day"+i+"button'>Today</div>";
+    // when we cut off the days, use this ---->
+    buttonSTR += "<div class='day"+i+" button clickbutton calendarbutton active' id='day"+i+"button'>"+dateList[i].split("-")[2]+"</div>";
   } else {
     buttonSTR += "<div class='day"+i+" button clickbutton calendarbutton active' id='day"+i+"button'>"+dateList[i].split("-")[2]+"</div>";
   }
@@ -166,22 +185,33 @@ for (var i=0; i<(size); i++){
 document.getElementById("button-collection").innerHTML = buttonSTR;
 
 //calendar style
+// when we have a variable number of days, use this ---->
 var daystyle = {"color": "#F2A500","fill-opacity": 0.4,"weight": 3};
-var nowstyle = {"color": "#D94100","fill-opacity": 0.8,"weight": 3}
+var nowstyle = {"color": "#D94100","fill-opacity": 0.8,"weight": 3};
+// when we cut off the days, use this ---->
+var tempstyle;
+var colorsList = ["#FFCC1A","#FFBF0D","#FFB200","#F2A500","#E59800","#FF8800","#F27B00","#FF6721","#F25A14","#E54D07","#CC3400"]//"#D94100",
 
 // adding a layer for every day
 var layers = [];
 var layerstoggle = [];
 for (var i=0; i<(size); i++){
+  tempstyle = {"color": colorsList[i],"fill-opacity": 0.8,"weight": 3};
   if (i == (size-1)){
-    layers[i] = L.geoJSON(JSON.parse(sortedFireData[i]["json"]),{style: nowstyle}).addTo(map);
+    // when we have a variable number of days, use this ---->
+    // layers[i] = L.geoJSON(JSON.parse(sortedFireData[i]["json"]),{style: nowstyle}).addTo(map);
+    // when we cut off the days, use this ---->
+    layers[i] = L.geoJSON(JSON.parse(sortedFireData[i]["json"]),{style: tempstyle}).addTo(map);
   } else {
-    layers[i] = L.geoJSON(JSON.parse(sortedFireData[i]["json"]),{style: daystyle}).addTo(map);
+    // when we have a variable number of days, use this ---->
+    // layers[i] = L.geoJSON(JSON.parse(sortedFireData[i]["json"]),{style: daystyle}).addTo(map);
+    // when we cut off the days, use this ---->
+    layers[i] = L.geoJSON(JSON.parse(sortedFireData[i]["json"]),{style: tempstyle}).addTo(map);
   }
   layerstoggle.push(1);
 }
 
-// TRYING TO GET THIS TO WORK AS A LOOP BUT COULD NOT
+// writing layers onto map for each day
 var td;
 for (var t = 0; t < size; t++){
   td = document.getElementById("day"+t+"button");
@@ -195,9 +225,17 @@ for (var t = 0; t < size; t++){
           _td.classList.remove("active");
         } else {
           if (IDX == (size-1)){
-            layers[IDX] = L.geoJSON(JSON.parse(sortedFireData[IDX]["json"]),{style: nowstyle}).addTo(map);
+            // when we have a variable number of days, use this ---->
+            // layers[IDX] = L.geoJSON(JSON.parse(sortedFireData[IDX]["json"]),{style: nowstyle}).addTo(map);
+            // when we cut off the days, use this ---->
+            tempstyle = {"color": colorsList[IDX],"fill-opacity": 0.8,"weight": 3};
+            layers[IDX] = L.geoJSON(JSON.parse(sortedFireData[IDX]["json"]),{style: tempstyle}).addTo(map);
           } else {
-            layers[IDX] = L.geoJSON(JSON.parse(sortedFireData[IDX]["json"]),{style: daystyle}).addTo(map);
+            // when we have a variable number of days, use this ---->
+            // layers[IDX] = L.geoJSON(JSON.parse(sortedFireData[IDX]["json"]),{style: daystyle}).addTo(map);
+            // when we cut off the days, use this ---->
+            tempstyle = {"color": colorsList[IDX],"fill-opacity": 0.8,"weight": 3};
+            layers[IDX] = L.geoJSON(JSON.parse(sortedFireData[IDX]["json"]),{style: tempstyle}).addTo(map);
           }
           layerstoggle[IDX] = 1;
           _td.classList.add("active");
@@ -274,12 +312,18 @@ document.getElementById("airquality").addEventListener("click",function() {
 
       document.getElementById("airquallegend").classList.add("active");
 
+      var airSTR = text.substring(4,6)+"/"+text.substring(6,8)+"/"+text.substring(0,4)+" "+text.substring(8,10)+":00 UTC";
+      var date = new Date(airSTR);
+      var PDTdate = date.toString();
+      console.log(PDTdate);
+      var eAIR = formatDate(date,PDTdate.split(" ")[1]);
+
       // fill in when data was last updated
       if (document.getElementById("airDate")) {
-        document.getElementById("airDate").innerHTML = "Air quality data last updated on "+text.substring(4,6)+"/"+text.substring(6,8)+"/"+text.substring(0,4)+" at "+text.substring(8,10)+":00 UTC";
+        document.getElementById("airDate").innerHTML = "Air quality data updated on " + eAIR;
       }
       if (document.getElementById("airDatemobile")) {
-        document.getElementById("airDatemobile").innerHTML = "Air quality data last updated on "+text.substring(4,6)+"/"+text.substring(6,8)+"/"+text.substring(0,4)+" at "+text.substring(8,10)+":00 UTC";
+        document.getElementById("airDatemobile").innerHTML = "Air quality data updated on " + eAIR;
       }
     });
   }
@@ -305,11 +349,15 @@ d3.csv(fireDataURL, function(fire_data){
   clearTimeout(map_timer);
   drawMap(fire_data);
   d3.text('http://extras.sfgate.com/editorial/wildfires/noaatime.txt', function(text) {
+
+    var d = new Date(text);
+    var e = formatDate(d,text.split(" ")[2]);
+
     if (document.getElementById("updateID")) {
-      document.getElementById("updateID").innerHTML = text;
+      document.getElementById("updateID").innerHTML = e;
     }
     if (document.getElementById("updateIDmobile")) {
-      document.getElementById("updateIDmobile").innerHTML = text;
+      document.getElementById("updateIDmobile").innerHTML = e;
     }
   });
 
@@ -319,11 +367,15 @@ d3.csv(fireDataURL, function(fire_data){
 
     drawMap(fire_data);
     d3.text('http://extras.sfgate.com/editorial/wildfires/noaatime.txt', function(text) {
+
+      var d = new Date(text);
+      var e = formatDate(d,text.split(" ")[2]);
+
       if (document.getElementById("updateID")) {
-        document.getElementById("updateID").innerHTML = text;
+        document.getElementById("updateID").innerHTML = e;
       }
       if (document.getElementById("updateIDmobile")) {
-        document.getElementById("updateIDmobile").innerHTML = text;
+        document.getElementById("updateIDmobile").innerHTML = e;
       }
     });
 
