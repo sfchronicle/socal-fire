@@ -21,6 +21,8 @@ if (screen.width <= 480) {
   var sf_lat = 38.6;
   var sf_long = -122.4;
   var zoom_deg = 8;
+  var max_zoom_deg = 8;//16
+  var min_zoom_deg = 8;//7
 
   var offset_top = 900;
   var bottomOffset = 100;
@@ -29,6 +31,8 @@ if (screen.width <= 480) {
   var sf_lat = 38.4;
   var sf_long = -123;
   var zoom_deg = 8;
+  var max_zoom_deg = 8;//16
+  var min_zoom_deg = 8;//7
 
   var offset_top = 900;
   var bottomOffset = 200;
@@ -36,8 +40,8 @@ if (screen.width <= 480) {
 
 // initialize map with center position and zoom levels
 var map = L.map("map-leaflet", {
-  minZoom: 7,
-  maxZoom: 16,
+  minZoom: min_zoom_deg,
+  maxZoom: max_zoom_deg,
   zoomControl: false,
 }).setView([sf_lat,sf_long], zoom_deg);
 
