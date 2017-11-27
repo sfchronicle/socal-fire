@@ -17,6 +17,7 @@ function formatDate(date,monSTR) {
 }
 
 // setting parameters for the center of the map and initial zoom level
+// FIX THIS UP WHEN ADD BACK ZOOMING!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
 if (screen.width <= 480) {
   var sf_lat = 38.6;
   var sf_long = -122.4;
@@ -67,9 +68,10 @@ var styleLayer = L.mapbox.styleLayer('mapbox://styles/emro/cj8oq9bxg8zfu2rs3uw1o
     .addTo(map);
 
 // zoom control is on top right
-L.control.zoom({
-     position:'topright'
-}).addTo(map);
+// ADD THIS BACK WHEN ADD BACK ZOOMING!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+// L.control.zoom({
+//      position:'topright'
+// }).addTo(map);
 
 // sizing evacuation and hospital icons
 var MapIcon = L.Icon.extend({
