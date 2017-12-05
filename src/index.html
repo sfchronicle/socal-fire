@@ -1,0 +1,111 @@
+<!doctype html>
+<html lang="en-US">
+  <head>
+    <title>Interactive Map: Wine Country Fires</title>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+    <meta name="__sync_contentCategory" content="free">
+    <!-- <meta http-equiv="refresh" content="7200"> -->
+    <link rel="stylesheet" type="text/css" href="./fullwidth_style.css">
+    <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css">
+
+    <script src='https://api.mapbox.com/mapbox.js/v3.1.1/mapbox.js'></script>
+    <link href='https://api.mapbox.com/mapbox.js/v3.1.1/mapbox.css' rel='stylesheet' />
+
+    <%= t.include("partials/_paywall.html") %>
+    <%= t.include("partials/_head.html") %>
+  </head>
+
+  <body>
+
+    <div class="overlay-aboutthedata" id="aboutthedata-overlay">
+      <div class="aboutthedata-box" id="aboutthedata-box">
+        <div class="close-button" id="close-data-box"><i class="fa fa-times" aria-hidden="true"></i></div>
+        <div class="source">Hot spots are locations identified by satellite analysts from <a href="https://www.geomac.gov/viewer/help/hms.html" target="_blank">NOAA</a> based on various types of imaging.</div>
+        <!-- <div class="source">Fire areas are based on infrared and thermal imaging from NASA satellites, <a href="https://www.geomac.gov/viewer/help/modis_active.html" target="_blank">MODIS</a> and <a href="https://www.geomac.gov/viewer/help/viirs_active.html" target="_blank">VIIRS</a>.</div> -->
+        <div class="source">Hot spots are an approximation and do not include all areas affected by fire nor indicate with certainty an area was affected.</div>
+        <div class="source">Air quality data is from <a href="http://berkeleyearth.org/air-pollution-overview/" target="_blank">Berkeley Earth</a>.</div>
+      </div>
+    </div>
+
+    <div class="interactive-container">
+
+    <div class="map-container-full">
+
+      <div class="map-info-box">
+
+        <div class="banner-logo">
+          <a href="http://www.sfchronicle.com" target="_blank">
+              <img src="./assets/logos/sf_logo_black.png"></img>
+          </a>
+        </div>
+
+        <div class="headline">Interactive map:<div> Southern California wildfires</div></div>
+        <%= t.include("partials/_fullwidthmap-social.html") %>
+        <div class="deck">Pushed by the Santa Ana winds, a ferocious Ventura County wildfire spread rapidly Tuesday, while another blaze burned near Los Angeles city limits. See current hot spots and air quality.</div>
+
+        <div class="recirculate-links">
+          <div class="re-link"><a href="http://www.sfchronicle.com/bayarea/article/Wildfire-in-Ventura-County-spreads-to-31-000-12406675.php" target="_blank"><i class="fa fa-external-link" aria-hidden="true"></i> Complete coverage</a></div>
+        </div>
+
+        <div class="legend-container">
+          <div class="legend-element"><div class="circle-icon"></div> Current hot spot</div>
+        </div>
+
+        <div class="button-container">
+          <div class="button" id="airquality">See up-to-date air quality</div>
+        </div>
+
+        <div class="credits-box">
+          <div class="credit">Fire hot spots updated on <span id="updateID"></span></div>
+          <div class="credit"><span id="airDate"></span></div>
+          <div class="credit">Development by <a href="mailto:eoneill@sfchronicle.com">Emma O'Neill</a> and <a href="mailto:cwirtanen@sfchronicle.com">Clint Wirtanen</a></div>
+          <div id="aboutthedata"><i class="fa fa-hand-o-right" aria-hidden="true"></i>Read about the data</div>
+        </div>
+      </div>
+
+      <div id="map-leaflet"></div>
+
+      <div class="air-legend-container" id="airquallegend">
+        <div class="swath-text left">Good</div>
+        <div class="swath blue-swath0"></div>
+        <div class="swath blue-swath1"></div>
+        <div class="swath blue-swath2"></div>
+        <div class="swath blue-swath3"></div>
+        <div class="swath blue-swath4"></div>
+        <div class="swath red-swath4"></div>
+        <div class="swath red-swath3"></div>
+        <div class="swath red-swath2"></div>
+        <div class="swath red-swath1"></div>
+        <div class="swath red-swath0"></div>
+        <div class="swath-text right">Hazardous</div>
+      </div>
+
+    </div>
+    <div class="credits-box mobile">
+      <div class="credit">Fire hot spots updated on <span id="updateIDmobile"></span></div>
+      <div class="credit"><span id="airDatemobile"></span></div>
+      <div class="source">Hot spots are locations identified by satellite analysts from <a href="https://www.geomac.gov/viewer/help/hms.html" target="_blank">NOAA</a> based on various types of imaging.</div>
+      <!-- <div class="source">Fire areas are based on infrared and thermal imaging from NASA satellites, <a href="https://www.geomac.gov/viewer/help/modis_active.html" target="_blank">MODIS</a> and <a href="https://www.geomac.gov/viewer/help/viirs_active.html" target="_blank">VIIRS</a>.</div> -->
+      <div class="source">Hot spots are an approximation and do not include all areas affected by fire nor indicate with certainty an area was affected.</div>
+      <div class="source">Air quality data is from <a href="http://berkeleyearth.org/air-pollution-overview/" target="_blank">Berkeley Earth</a>.</div>
+      <div class="smallbreak"></div>
+      <div class="credit">Development by <a href="mailto:eoneill@sfchronicle.com">Emma O'Neill</a> and <a href="mailto:cwirtanen@sfchronicle.com">Clint Wirtanen</a></div>
+    </div>
+
+    </div>
+
+    <script src="http://extras.sfgate.com/editorial/wildfires/overtime/data.json?3"></script>
+
+    <script>
+      // var fire_names = <%= JSON.stringify(json.FireNames) %>
+      // var winery_data = <%= JSON.stringify(json.DamagedWineries) %>
+      // var deaths_data = <%= JSON.stringify(json.DeathLocations) %>
+      // var evacuation_data = <%= JSON.stringify(json.AllEvacuationCenters) %>
+      // var hospitals_data = <%= JSON.stringify(json.EvacuatedHospitals) %>
+      // var origins_data = <%= JSON.stringify(json.FireOrigins) %>
+    </script>
+
+    <script src="./map-leaflet-fullwidth.js?2" async></script>
+  </body>
+</html>

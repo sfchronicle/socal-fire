@@ -16,11 +16,6 @@ module.exports = function(grunt) {
 
     //specify starter files here - if you need additionally built JS, just add it.
     var seeds = {
-      "./src/js/victims.js": "build/victims_app.js",
-      "./src/js/map.js": "build/map_app.js",
-      "./src/js/map-leaflet.js": "build/map-leaflet_app.js",
-      "./src/js/timeline.js": "build/timeline_app.js",
-      "./src/js/slider.js": "build/slider_app.js",
       "./src/js/map-leaflet-fullwidth.js": "build/map-leaflet-fullwidth.js"
     };
 

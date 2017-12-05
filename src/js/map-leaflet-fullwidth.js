@@ -19,21 +19,38 @@ function formatDate(date,monSTR) {
 // setting parameters for the center of the map and initial zoom level
 // FIX THIS UP WHEN ADD BACK ZOOMING!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
 if (screen.width <= 480) {
-  var sf_lat = 38.6;
-  var sf_long = -122.4;
+  var sf_lat = 34.17;
+  var sf_long = -118.75;
   var zoom_deg = 8;
-  var max_zoom_deg = 8;//16
-  var min_zoom_deg = 8;//7
+  var max_zoom_deg = 16;
+  var min_zoom_deg = 7;
 
   var offset_top = 900;
   var bottomOffset = 100;
-
-} else {
-  var sf_lat = 38.4;
-  var sf_long = -123;
+} else if (screen.width <= 800) {
+  var sf_lat = 34.17;
+  var sf_long = -119.25;
   var zoom_deg = 8;
-  var max_zoom_deg = 8;//16
-  var min_zoom_deg = 8;//7
+  var max_zoom_deg = 16;
+  var min_zoom_deg = 7;
+
+  var offset_top = 900;
+  var bottomOffset = 100;
+} else if (screen.width <= 1300){
+  var sf_lat = 34.17;
+  var sf_long = -119.25;
+  var zoom_deg = 9;
+  var max_zoom_deg = 16
+  var min_zoom_deg = 7
+
+  var offset_top = 900;
+  var bottomOffset = 200;
+} else {
+  var sf_lat = 34.17;
+  var sf_long = -119.25;
+  var zoom_deg = 10;
+  var max_zoom_deg = 16
+  var min_zoom_deg = 7
 
   var offset_top = 900;
   var bottomOffset = 200;
@@ -69,9 +86,9 @@ var styleLayer = L.mapbox.styleLayer('mapbox://styles/emro/cj8oq9bxg8zfu2rs3uw1o
 
 // zoom control is on top right
 // ADD THIS BACK WHEN ADD BACK ZOOMING!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
-// L.control.zoom({
-//      position:'topright'
-// }).addTo(map);
+L.control.zoom({
+     position:'topright'
+}).addTo(map);
 
 // sizing evacuation and hospital icons
 var MapIcon = L.Icon.extend({
@@ -159,7 +176,7 @@ var drawIcons = function() {
 }
 
 // load all the icons (evacuations, hospitals, wineries, deaths)
-drawIcons();
+// drawIcons();
 
 var buttonSTR = "Oct. ";
 // when we have a variable number of days, use this ---->
@@ -169,111 +186,114 @@ var size = 11;
 var dateList = Object.keys(FireData);
 dateList.sort();
 
-var sortedFireData = [];
-for (i = 0; i < size; i++) {
-  var element = {};
-  var k = dateList[i];
-  element.key = k;
-  element.json = FireData[k];
-  sortedFireData.push(element);
-}
+// var sortedFireData = [];
+// for (i = 0; i < size; i++) {
+//   var element = {};
+//   var k = dateList[i];
+//   element.key = k;
+//   element.json = FireData[k];
+//   sortedFireData.push(element);
+// }
 
-for (var i=0; i<(size); i++){
-  if (i == (size-1)) {
-    // when we have a variable number of days, use this ---->
-    // buttonSTR += "<div class='day"+i+" button clickbutton nowbutton active' id='day"+i+"button'>Today</div>";
-    // when we cut off the days, use this ---->
-    buttonSTR += "<div class='day"+i+" button clickbutton calendarbutton active' id='day"+i+"button'>"+dateList[i].split("-")[2]+"</div>";
-  } else {
-    buttonSTR += "<div class='day"+i+" button clickbutton calendarbutton active' id='day"+i+"button'>"+dateList[i].split("-")[2]+"</div>";
-  }
-}
-document.getElementById("button-collection").innerHTML = buttonSTR;
+// for (var i=0; i<(size); i++){
+//   if (i == (size-1)) {
+//     // when we have a variable number of days, use this ---->
+//     // buttonSTR += "<div class='day"+i+" button clickbutton nowbutton active' id='day"+i+"button'>Today</div>";
+//     // when we cut off the days, use this ---->
+//     buttonSTR += "<div class='day"+i+" button clickbutton calendarbutton active' id='day"+i+"button'>"+dateList[i].split("-")[2]+"</div>";
+//   } else {
+//     buttonSTR += "<div class='day"+i+" button clickbutton calendarbutton active' id='day"+i+"button'>"+dateList[i].split("-")[2]+"</div>";
+//   }
+// }
+// document.getElementById("button-collection").innerHTML = buttonSTR;
 
-//calendar style
-// when we have a variable number of days, use this ---->
-var daystyle = {"color": "#F2A500","fill-opacity": 0.4,"weight": 3};
-var nowstyle = {"color": "#D94100","fill-opacity": 0.8,"weight": 3};
-// when we cut off the days, use this ---->
-var tempstyle;
-var colorsList = ["#FFCC1A","#FFBF0D","#FFB200","#F2A500","#E59800","#FF8800","#F27B00","#FF6721","#F25A14","#E54D07","#CC3400"]//"#D94100",
+// //calendar style
+// // when we have a variable number of days, use this ---->
+// var daystyle = {"color": "#F2A500","fill-opacity": 0.4,"weight": 3};
+// var nowstyle = {"color": "#D94100","fill-opacity": 0.8,"weight": 3};
+// // when we cut off the days, use this ---->
+// var tempstyle;
+// var colorsList = ["#FFCC1A","#FFBF0D","#FFB200","#F2A500","#E59800","#FF8800","#F27B00","#FF6721","#F25A14","#E54D07","#CC3400"]//"#D94100",
+//
+// // adding a layer for every day
+// var layers = [];
+// var layerstoggle = [];
+// for (var i=0; i<(size); i++){
+//   tempstyle = {"color": colorsList[i],"fill-opacity": 0.8,"weight": 3};
+//   if (i == (size-1)){
+//     // when we have a variable number of days, use this ---->
+//     // layers[i] = L.geoJSON(JSON.parse(sortedFireData[i]["json"]),{style: nowstyle}).addTo(map);
+//     // when we cut off the days, use this ---->
+//     layers[i] = L.geoJSON(JSON.parse(sortedFireData[i]["json"]),{style: tempstyle}).addTo(map);
+//   } else {
+//     // when we have a variable number of days, use this ---->
+//     // layers[i] = L.geoJSON(JSON.parse(sortedFireData[i]["json"]),{style: daystyle}).addTo(map);
+//     // when we cut off the days, use this ---->
+//     layers[i] = L.geoJSON(JSON.parse(sortedFireData[i]["json"]),{style: tempstyle}).addTo(map);
+//   }
+//   layerstoggle.push(1);
+// }
 
-// adding a layer for every day
-var layers = [];
-var layerstoggle = [];
-for (var i=0; i<(size); i++){
-  tempstyle = {"color": colorsList[i],"fill-opacity": 0.8,"weight": 3};
-  if (i == (size-1)){
-    // when we have a variable number of days, use this ---->
-    // layers[i] = L.geoJSON(JSON.parse(sortedFireData[i]["json"]),{style: nowstyle}).addTo(map);
-    // when we cut off the days, use this ---->
-    layers[i] = L.geoJSON(JSON.parse(sortedFireData[i]["json"]),{style: tempstyle}).addTo(map);
-  } else {
-    // when we have a variable number of days, use this ---->
-    // layers[i] = L.geoJSON(JSON.parse(sortedFireData[i]["json"]),{style: daystyle}).addTo(map);
-    // when we cut off the days, use this ---->
-    layers[i] = L.geoJSON(JSON.parse(sortedFireData[i]["json"]),{style: tempstyle}).addTo(map);
-  }
-  layerstoggle.push(1);
-}
+// // writing layers onto map for each day
+// var td;
+// for (var t = 0; t < size; t++){
+//   td = document.getElementById("day"+t+"button");
+//   if (typeof window.addEventListener === 'function'){
+//     (function (_td) {
+//       td.addEventListener('click', function(){
+//         var IDX = _td.classList[0].split("day")[1];
+//         if (layerstoggle[IDX] == 1) {
+//           map.removeLayer(layers[IDX]);
+//           layerstoggle[IDX] = 0;
+//           _td.classList.remove("active");
+//         } else {
+//           if (IDX == (size-1)){
+//             // when we have a variable number of days, use this ---->
+//             // layers[IDX] = L.geoJSON(JSON.parse(sortedFireData[IDX]["json"]),{style: nowstyle}).addTo(map);
+//             // when we cut off the days, use this ---->
+//             tempstyle = {"color": colorsList[IDX],"fill-opacity": 0.8,"weight": 3};
+//             layers[IDX] = L.geoJSON(JSON.parse(sortedFireData[IDX]["json"]),{style: tempstyle}).addTo(map);
+//           } else {
+//             // when we have a variable number of days, use this ---->
+//             // layers[IDX] = L.geoJSON(JSON.parse(sortedFireData[IDX]["json"]),{style: daystyle}).addTo(map);
+//             // when we cut off the days, use this ---->
+//             tempstyle = {"color": colorsList[IDX],"fill-opacity": 0.8,"weight": 3};
+//             layers[IDX] = L.geoJSON(JSON.parse(sortedFireData[IDX]["json"]),{style: tempstyle}).addTo(map);
+//           }
+//           layerstoggle[IDX] = 1;
+//           _td.classList.add("active");
+//         }
+//       });
+//     })(td);
+//   };
+// }
 
-// writing layers onto map for each day
-var td;
-for (var t = 0; t < size; t++){
-  td = document.getElementById("day"+t+"button");
-  if (typeof window.addEventListener === 'function'){
-    (function (_td) {
-      td.addEventListener('click', function(){
-        var IDX = _td.classList[0].split("day")[1];
-        if (layerstoggle[IDX] == 1) {
-          map.removeLayer(layers[IDX]);
-          layerstoggle[IDX] = 0;
-          _td.classList.remove("active");
-        } else {
-          if (IDX == (size-1)){
-            // when we have a variable number of days, use this ---->
-            // layers[IDX] = L.geoJSON(JSON.parse(sortedFireData[IDX]["json"]),{style: nowstyle}).addTo(map);
-            // when we cut off the days, use this ---->
-            tempstyle = {"color": colorsList[IDX],"fill-opacity": 0.8,"weight": 3};
-            layers[IDX] = L.geoJSON(JSON.parse(sortedFireData[IDX]["json"]),{style: tempstyle}).addTo(map);
-          } else {
-            // when we have a variable number of days, use this ---->
-            // layers[IDX] = L.geoJSON(JSON.parse(sortedFireData[IDX]["json"]),{style: daystyle}).addTo(map);
-            // when we cut off the days, use this ---->
-            tempstyle = {"color": colorsList[IDX],"fill-opacity": 0.8,"weight": 3};
-            layers[IDX] = L.geoJSON(JSON.parse(sortedFireData[IDX]["json"]),{style: tempstyle}).addTo(map);
-          }
-          layerstoggle[IDX] = 1;
-          _td.classList.add("active");
-        }
-      });
-    })(td);
-  };
-}
+// // these are variables for if we are showing the icons and the airquality layers
+// var pins_toggle = 1, pollution_toggle = 0;
+// var pollutionLayer, contourLayer;
+//
+// // hide and show icons based on button click
+// document.getElementById("iconsbutton").addEventListener("click",function() {
+//   // hide icons
+//   if (pins_toggle == 1) {
+//     for (var i = 0; i < markerArray.length; i++) {
+//       map.removeLayer(markerArray[i]);
+//     }
+//     this.classList.add("active");
+//     pins_toggle = 0;
+//   // show icons
+//   } else {
+//     for (var i = 0; i < markerArray.length; i++) {
+//       map.addLayer(markerArray[i]);
+//     }
+//     // drawIcons();
+//     this.classList.remove("active");
+//     pins_toggle = 1;
+//   }
+// });
 
-// these are variables for if we are showing the icons and the airquality layers
-var pins_toggle = 1, pollution_toggle = 0;
+var pollution_toggle = 0;
 var pollutionLayer, contourLayer;
-
-// hide and show icons based on button click
-document.getElementById("iconsbutton").addEventListener("click",function() {
-  // hide icons
-  if (pins_toggle == 1) {
-    for (var i = 0; i < markerArray.length; i++) {
-      map.removeLayer(markerArray[i]);
-    }
-    this.classList.add("active");
-    pins_toggle = 0;
-  // show icons
-  } else {
-    for (var i = 0; i < markerArray.length; i++) {
-      map.addLayer(markerArray[i]);
-    }
-    // drawIcons();
-    this.classList.remove("active");
-    pins_toggle = 1;
-  }
-});
 
 // show the about the data box
 document.getElementById("aboutthedata").addEventListener("click",function() {
@@ -301,7 +321,7 @@ document.getElementById("airquality").addEventListener("click",function() {
     this.classList.add("active");
 
     // obtain most recent dataset based on file on server
-    d3.text('http://extras.sfgate.com/editorial/wildfires/airquality_date.txt?', function(text) {
+    d3.text('http://extras.sfgate.com/editorial/wildfires/airquality_date.txt?2', function(text) {
       var urlpathPollution = "http://berkeleyearth.lbl.gov/air-quality/maps/hour/"+text.substring(0,6)+"/"+text+"/tiles/health/{z}/{x}/{y}.png";
       var urlpathContours = "http://berkeleyearth.lbl.gov/air-quality/maps/hour/"+text.substring(0,6)+"/"+text+"/tiles/contour/{z}/{x}/{y}.png";
 
@@ -440,41 +460,41 @@ var drawMap = function(fire_data) {
 }
 
 // creating Lat/Lon objects that d3 is expecting for map labels
-fire_names.forEach(function(d,idx) {
-  d.LatLng = new L.LatLng(d.Lat,
-              d.Lon);
-});
+// fire_names.forEach(function(d,idx) {
+//   d.LatLng = new L.LatLng(d.Lat,
+//               d.Lon);
+// });
 
-// appending labels layer to map
-var svg = d3.select("#map-leaflet").select("svg");
-var gLabels = svg.append("g");
-gLabels.attr("class","dotsLABELS")
-
-// creating the labels
-var labels = gLabels.selectAll("dotsLABELS")
-  .data(fire_names)
-  .enter()
-  .append("g");
-
-// adding circles to the map
-labels.append("text")
-    .style("font-size","18px")
-    .style("fill","#595959")
-    .text(function(d){
-      return d.Name+ " Fire";
-    })
-
-// function that zooms and pans the data when the map zooms and pans
-function updateLabels() {
-  labels.attr("transform",
-  function(d) {
-    return "translate("+
-      map.latLngToLayerPoint(d.LatLng).x +","+
-      map.latLngToLayerPoint(d.LatLng).y +")";
-    }
-  )
-}
-
-map.on("viewreset", updateLabels);
-map.on("zoom",updateLabels);
-updateLabels();
+// // appending labels layer to map
+// var svg = d3.select("#map-leaflet").select("svg");
+// var gLabels = svg.append("g");
+// gLabels.attr("class","dotsLABELS")
+//
+// // creating the labels
+// var labels = gLabels.selectAll("dotsLABELS")
+//   .data(fire_names)
+//   .enter()
+//   .append("g");
+//
+// // adding circles to the map
+// labels.append("text")
+//     .style("font-size","18px")
+//     .style("fill","#595959")
+//     .text(function(d){
+//       return d.Name+ " Fire";
+//     })
+//
+// // function that zooms and pans the data when the map zooms and pans
+// function updateLabels() {
+//   labels.attr("transform",
+//   function(d) {
+//     return "translate("+
+//       map.latLngToLayerPoint(d.LatLng).x +","+
+//       map.latLngToLayerPoint(d.LatLng).y +")";
+//     }
+//   )
+// }
+//
+// map.on("viewreset", updateLabels);
+// map.on("zoom",updateLabels);
+// updateLabels();

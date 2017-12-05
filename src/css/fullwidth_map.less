@@ -441,9 +441,13 @@ path {
       font-size:12px;
     }
   }
+  @media @tablet {
+    font-size: 14px;
+    padding: 30px 20px;
+  }
 
   @media @mobile {
-    padding: 20px 10px;
+    padding: 20px;
     margin-top: 0;
     padding-bottom: 50px;
     margin-bottom: 0;
@@ -544,7 +548,7 @@ a {
   line-height: 1.3;
 
   @media @map-width{
-    max-width:250px;
+    // max-width:250px;
     margin:0 auto;
     line-height:1.2;
   }
@@ -581,6 +585,10 @@ a {
   padding: 10px 20px 0 20px;
   line-height: 1.4;
 
+  @media @tablet {
+    max-width: 600px;
+  }
+
   @media @mobile{
     line-height:1.2;
     font-size:16px;
@@ -592,7 +600,7 @@ a {
   height: 100%;
   top: 0;
   left: 0px;
-  padding-top: 10px;
+  padding-top: 30px;
   max-width: 480px;
   z-index: 500;
   background: #fff;
@@ -606,6 +614,14 @@ a {
     padding-top:5px;
     max-width: none;
     background:#fff;
+  }
+  @media @tablet {
+    padding-bottom: 10px;
+    padding-top: 20px;
+  }
+  @media @mobile {
+    padding-bottom: 0;
+    padding-top: 10px;
   }
 }
 
