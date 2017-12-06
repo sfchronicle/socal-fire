@@ -10,6 +10,10 @@
   }
 }
 
+.mapboxgl-ctrl-compass {
+  display: none !important;
+}
+
 .overlay-aboutthedata {
   background: rgba(178, 178, 178, 0.4);
   width: 100%;
@@ -188,7 +192,7 @@ path {
   cursor: -webkit-grab !important;
 }
 
-@now: #8C0000;
+@now: #D94100;
 @sonoma: #75165B;
 @napa: #351B77;
 @hours12: #FF6721;
@@ -222,7 +226,7 @@ path {
 }
 
 path {
-  fill-opacity: 0.3 !important;
+  fill-opacity: 0.5 !important;
 }
 
 .dotsSVG {
@@ -280,106 +284,43 @@ path {
       color: white;
     }
   }
-  .day0 {
-    border: 2px solid @day0;
-    border-radius: 5px;
-    color: @day0;
-    &.active {
-      background: lighten(@day0,5%);
-      color: white;
-    }
-  }
-  .day1 {
-    border: 2px solid @day1;
-    border-radius: 5px;
-    color: @day1;
-    &.active {
-      background: lighten(@day1,5%);
-      color: white;
-    }
-  }
-  .day2 {
-    border: 2px solid @day2;
-    border-radius: 5px;
-    color: @day2;
-    &.active {
-      background: lighten(@day2,5%);
-      color: white;
-    }
-  }
-  .day3 {
-    border: 2px solid @day3;
-    border-radius: 5px;
-    color: @day3;
-    &.active {
-      background: lighten(@day3,5%);
-      color: white;
-    }
-  }
-  .day4 {
-    border: 2px solid @day4;
-    border-radius: 5px;
-    color: @day4;
-    &.active {
-      background: lighten(@day4,5%);
-      color: white;
-    }
-  }
-  .day5 {
-    border: 2px solid @day5;
-    border-radius: 5px;
-    color: @day5;
-    &.active {
-      background: lighten(@day5,5%);
-      color: white;
-    }
-  }
-  .day6 {
-    border: 2px solid @day6;
-    border-radius: 5px;
-    color: @day6;
-    &.active {
-      background: lighten(@day6,5%);
-      color: white;
-    }
-  }
-  .day7 {
-    border: 2px solid @day7;
-    border-radius: 5px;
-    color: @day7;
-    &.active {
-      background: lighten(@day7,5%);
-      color: white;
-    }
-  }
-  .day8 {
-    border: 2px solid @day8;
-    border-radius: 5px;
-    color: @day8;
-    &.active {
-      background: lighten(@day8,5%);
-      color: white;
-    }
-  }
-  .day9 {
-    border: 2px solid @day9;
-    border-radius: 5px;
-    color: @day9;
-    &.active {
-      background: lighten(@day9,5%);
-      color: white;
-    }
-  }
-  .day10 {
-    border: 2px solid @day10;
-    border-radius: 5px;
-    color: @day10;
-    &.active {
-      background: lighten(@day10,5%);
-      color: white;
-    }
-  }
-  // .calendarbutton {
+  // .day0 {
+  //   border: 2px solid @day0;
+  //   border-radius: 5px;
+  //   color: @day0;
+  //   &.active {
+  //     background: lighten(@day0,5%);
+  //     color: white;
+  //   }
+  // }
+  // .day1 {
+  //   border: 2px solid @day1;
+  //   border-radius: 5px;
+  //   color: @day1;
+  //   &.active {
+  //     background: lighten(@day1,5%);
+  //     color: white;
+  //   }
+  // }
+  // .day2 {
+  //   border: 2px solid @day2;
+  //   border-radius: 5px;
+  //   color: @day2;
+  //   &.active {
+  //     background: lighten(@day2,5%);
+  //     color: white;
+  //   }
+  // }
+  // .day3 {
+  //   border: 2px solid @day3;
+  //   border-radius: 5px;
+  //   color: @day3;
+  //   &.active {
+  //     background: lighten(@day3,5%);
+  //     color: white;
+  //   }
+  // }
+  // .day4 {
   //   border: 2px solid @day4;
   //   border-radius: 5px;
   //   color: @day4;
@@ -388,15 +329,78 @@ path {
   //     color: white;
   //   }
   // }
-  // .nowbutton {
-  //   border: 2px solid @day11;
+  // .day5 {
+  //   border: 2px solid @day5;
   //   border-radius: 5px;
-  //   color: @day11;
+  //   color: @day5;
   //   &.active {
-  //     background: lighten(@day11,5%);
+  //     background: lighten(@day5,5%);
   //     color: white;
   //   }
   // }
+  // .day6 {
+  //   border: 2px solid @day6;
+  //   border-radius: 5px;
+  //   color: @day6;
+  //   &.active {
+  //     background: lighten(@day6,5%);
+  //     color: white;
+  //   }
+  // }
+  // .day7 {
+  //   border: 2px solid @day7;
+  //   border-radius: 5px;
+  //   color: @day7;
+  //   &.active {
+  //     background: lighten(@day7,5%);
+  //     color: white;
+  //   }
+  // }
+  // .day8 {
+  //   border: 2px solid @day8;
+  //   border-radius: 5px;
+  //   color: @day8;
+  //   &.active {
+  //     background: lighten(@day8,5%);
+  //     color: white;
+  //   }
+  // }
+  // .day9 {
+  //   border: 2px solid @day9;
+  //   border-radius: 5px;
+  //   color: @day9;
+  //   &.active {
+  //     background: lighten(@day9,5%);
+  //     color: white;
+  //   }
+  // }
+  // .day10 {
+  //   border: 2px solid @day10;
+  //   border-radius: 5px;
+  //   color: @day10;
+  //   &.active {
+  //     background: lighten(@day10,5%);
+  //     color: white;
+  //   }
+  // }
+  .calendarbutton {
+    border: 2px solid @day3;
+    border-radius: 5px;
+    color: @day3;
+    &.active {
+      background: lighten(@day3,5%);
+      color: white;
+    }
+  }
+  .nowbutton {
+    border: 2px solid @now;
+    border-radius: 5px;
+    color: @now;
+    &.active {
+      background: lighten(@now,5%);
+      color: white;
+    }
+  }
   #airquality {
     border: 2px solid @airquality;
     border-radius: 5px;

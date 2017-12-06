@@ -17,7 +17,6 @@ function formatDate(date,monSTR) {
 }
 
 // setting parameters for the center of the map and initial zoom level
-// FIX THIS UP WHEN ADD BACK ZOOMING!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
 if (screen.width <= 480) {
   var sf_lat = 34.17;
   var sf_long = -118.75;
@@ -36,7 +35,7 @@ if (screen.width <= 480) {
 
   var offset_top = 900;
   var bottomOffset = 100;
-} else if (screen.width <= 1300){
+} else if (screen.width <= 1400){
   var sf_lat = 34.17;
   var sf_long = -119.25;
   var zoom_deg = 9;
@@ -56,22 +55,19 @@ if (screen.width <= 480) {
   var bottomOffset = 200;
 }
 
-// initialize map with center position and zoom levels
-var map = L.map("map-leaflet", {
-  minZoom: min_zoom_deg,
-  maxZoom: max_zoom_deg,
-  zoomControl: false,
-}).setView([sf_lat,sf_long], zoom_deg);
+// MAPBOX GL
+// mapboxgl.accessToken = 'pk.eyJ1IjoiZW1ybyIsImEiOiJjaXl2dXUzMGQwMDdsMzJuM2s1Nmx1M29yIn0._KtME1k8LIhloMyhMvvCDA';
+// var map = new mapboxgl.Map({
+//     container: 'map-leaflet',
+//     style: 'mapbox://styles/emro/cj8oq9bxg8zfu2rs3uw1ot59l',
+//     center: [sf_long, sf_lat],
+//     zoom: zoom_deg,
+//     minZoom: min_zoom_deg,
+//     maxZoom: max_zoom_deg,
+//     zoomControl: false,
+//     scrollWheelZoom: false
+// });
 
-// dragging and zooming controls
-map.scrollWheelZoom.disable();
-// map.dragging.disable();
-// map.touchZoom.disable();
-// map.doubleClickZoom.disable();
-// map.keyboard.disable();
-
-// initializing the svg layer
-L.svg().addTo(map);
 
 // add tiles to the map
 // var gl = L.mapboxGL({
@@ -80,216 +76,174 @@ L.svg().addTo(map);
 //     attribution: '© <a href="https://www.mapbox.com/map-feedback/">Mapbox</a>'
 // }).addTo(map);
 
+// map.addControl(new mapboxgl.NavigationControl());
+
+// initialize map with center position and zoom levels
+var map = L.map("map-leaflet", {
+  minZoom: min_zoom_deg,
+  maxZoom: max_zoom_deg,
+  zoomControl: false,
+  scrollWheelZoom: false
+}).setView([sf_lat,sf_long], zoom_deg);
+
+// initializing the svg layer
+L.svg().addTo(map);
+
 L.mapbox.accessToken = 'pk.eyJ1IjoiZW1ybyIsImEiOiJjaXl2dXUzMGQwMDdsMzJuM2s1Nmx1M29yIn0._KtME1k8LIhloMyhMvvCDA';
 var styleLayer = L.mapbox.styleLayer('mapbox://styles/emro/cj8oq9bxg8zfu2rs3uw1ot59l')
     .addTo(map);
 
 // zoom control is on top right
-// ADD THIS BACK WHEN ADD BACK ZOOMING!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
 L.control.zoom({
      position:'topright'
 }).addTo(map);
 
-// sizing evacuation and hospital icons
-var MapIcon = L.Icon.extend({
-    options: {
-        iconSize:     [20,20],
-        iconAnchor:   [10,10],
-    }
-});
-// sizing evacuation and hospital icons
-var TallMapIcon = L.Icon.extend({
-    options: {
-        iconSize:     [25,40],
-        iconAnchor:   [10,10],
-    }
-});
-// adding images for evacuations and hospitals
-var evacuationIcon = new MapIcon({iconUrl: './assets/graphics/evacuation_icon.png?'});
-var hospitalsIcon = new MapIcon({iconUrl: './assets/graphics/hospitalsEvacuated_icon.png?'});
-var fireIcon = new TallMapIcon({iconUrl: './assets/graphics/fire_icon2.png?'});
-
-// icon for deaths
-var purpleIcon = new L.Icon({
-  iconUrl: 'https://raw.githubusercontent.com/pointhi/leaflet-color-markers/master/img/marker-icon-violet.png',
-  // shadowUrl: 'https://cdnjs.cloudflare.com/ajax/libs/leaflet/0.7.7/images/marker-shadow.png',
-  iconSize: [20, 32],
-  iconAnchor: [12, 32],
-  popupAnchor: [-2, -30],
-  // shadowSize: [, 41]
-});
-
-// icon for damaged wineries
-var greenIcon = new L.Icon({
-  iconUrl: 'https://raw.githubusercontent.com/pointhi/leaflet-color-markers/master/img/marker-icon-green.png',
-  // shadowUrl: 'https://cdnjs.cloudflare.com/ajax/libs/leaflet/0.7.7/images/marker-shadow.png',
-  iconSize: [20, 32],
-  iconAnchor: [12, 32],
-  popupAnchor: [-2, -30],
-  // shadowSize: [, 41]
-});
-
-// we are going to list all the markers here so we can easily turn them all off and on
-var markerArray = new Array();
-
-// function to draw markers
-var drawIcons = function() {
-  evacuation_data.forEach(function(d){
-    var html_str = "<b>"+d.Name+"</b><br>"+d.Address;
-    if (d["Phone number"]) {
-      html_str += "<br>"+d["Phone number"];
-    }
-    if (d.Notes){
-      html_str += "<br>Note: "+d.Notes;
-    }
-    var tempmarker = L.marker([d.Lat, d.Lng], {icon: evacuationIcon}).addTo(map).bindPopup(html_str);
-    markerArray.push(tempmarker);
-  });
-
-  hospitals_data.forEach(function(d){
-    var html_str = "<b>"+d.Name+"</b>";
-    var tempmarker = L.marker([d.Latitude, d.Longitude], {icon: hospitalsIcon}).addTo(map).bindPopup(html_str);
-    markerArray.push(tempmarker);
-  });
-
-  winery_data.forEach(function(d){
-    var html_str = "<b>"+d.Name+"</b><br><i>"+d.Address+"</i><br><br>"+d.Description;
-    var tempmarker = L.marker([d.Lat, d.Lng], {icon: greenIcon}).addTo(map).bindPopup(html_str);
-    markerArray.push(tempmarker);
-  });
-
-  deaths_data.forEach(function(d){
-    if (d.Name) {
-      var html_str = d.StreetName+"<br>"+d.Count+" death(s): "+d.Name;
-    } else {
-      var html_str = d.StreetName+"<br>"+d.Count+" death(s)";
-    }
-    var tempmarker = L.marker([d.Lat, d.Lng],{icon: purpleIcon}).addTo(map).bindPopup(html_str);
-    markerArray.push(tempmarker);
-  });
-
-  origins_data.forEach(function(d){
-    var html_str = "<b>"+d.Fire+"</b><br><em>Started at "+d.TimeStarted+"</em><br><em>Burned <b>"+formatthousands(d.Acreage)+"</b> acres</em><br><em>Killed <b>"+d.Victims+"</b></em><br><br>"+d.Description;
-    var tempmarker = L.marker([d.Lat, d.Lon], {icon: fireIcon}).addTo(map).bindPopup(html_str);
-    markerArray.push(tempmarker);
-  });
-}
-
-// load all the icons (evacuations, hospitals, wineries, deaths)
-// drawIcons();
-
-var buttonSTR = "Oct. ";
+// PUT BACK WHEN WE ARE PAST DAY 1
+// var buttonSTR = "Dec. ";
+var buttonSTR = "";
 // when we have a variable number of days, use this ---->
-// var size = Object.keys(FireData).length;
+var size = Object.keys(FireData).length;
 // when we cut off the days, use this ---->
-var size = 11;
+// var size = 11;
 var dateList = Object.keys(FireData);
 dateList.sort();
 
-// var sortedFireData = [];
-// for (i = 0; i < size; i++) {
-//   var element = {};
-//   var k = dateList[i];
-//   element.key = k;
-//   element.json = FireData[k];
-//   sortedFireData.push(element);
-// }
+var sortedFireData = [];
+for (var i = 0; i < size; i++) {
+  var element = {};
+  var k = dateList[i];
+  element.key = k;
+  element.json = FireData[k];
+  sortedFireData.push(element);
+}
 
-// for (var i=0; i<(size); i++){
-//   if (i == (size-1)) {
-//     // when we have a variable number of days, use this ---->
-//     // buttonSTR += "<div class='day"+i+" button clickbutton nowbutton active' id='day"+i+"button'>Today</div>";
-//     // when we cut off the days, use this ---->
-//     buttonSTR += "<div class='day"+i+" button clickbutton calendarbutton active' id='day"+i+"button'>"+dateList[i].split("-")[2]+"</div>";
-//   } else {
-//     buttonSTR += "<div class='day"+i+" button clickbutton calendarbutton active' id='day"+i+"button'>"+dateList[i].split("-")[2]+"</div>";
-//   }
-// }
-// document.getElementById("button-collection").innerHTML = buttonSTR;
+for (var i=0; i<(size); i++){
+  if (i == (size-1)) {
+    // when we have a variable number of days, use this ---->
+    buttonSTR += "<div class='day"+i+" button clickbutton nowbutton active' id='day"+i+"button'>Today</div>";
+    // when we cut off the days, use this ---->
+    // buttonSTR += "<div class='day"+i+" button clickbutton calendarbutton active' id='day"+i+"button'>"+dateList[i].split("-")[2]+"</div>";
+  } else {
+    buttonSTR += "<div class='day"+i+" button clickbutton calendarbutton active' id='day"+i+"button'>"+dateList[i].split("-")[2]+"</div>";
+  }
+}
+document.getElementById("button-collection").innerHTML = buttonSTR;
 
-// //calendar style
-// // when we have a variable number of days, use this ---->
-// var daystyle = {"color": "#F2A500","fill-opacity": 0.4,"weight": 3};
-// var nowstyle = {"color": "#D94100","fill-opacity": 0.8,"weight": 3};
-// // when we cut off the days, use this ---->
+//calendar style
+// when we have a variable number of days, use this ---->
+var daystyle = {"color": "#F2A500","fill-opacity": 0.4,"weight": 2};
+var nowstyle = {"color": "#D94100","fill-opacity": 0.8,"weight": 2};
+// when we cut off the days, use this ---->
 // var tempstyle;
 // var colorsList = ["#FFCC1A","#FFBF0D","#FFB200","#F2A500","#E59800","#FF8800","#F27B00","#FF6721","#F25A14","#E54D07","#CC3400"]//"#D94100",
-//
-// // adding a layer for every day
-// var layers = [];
-// var layerstoggle = [];
-// for (var i=0; i<(size); i++){
-//   tempstyle = {"color": colorsList[i],"fill-opacity": 0.8,"weight": 3};
-//   if (i == (size-1)){
-//     // when we have a variable number of days, use this ---->
-//     // layers[i] = L.geoJSON(JSON.parse(sortedFireData[i]["json"]),{style: nowstyle}).addTo(map);
-//     // when we cut off the days, use this ---->
-//     layers[i] = L.geoJSON(JSON.parse(sortedFireData[i]["json"]),{style: tempstyle}).addTo(map);
-//   } else {
-//     // when we have a variable number of days, use this ---->
-//     // layers[i] = L.geoJSON(JSON.parse(sortedFireData[i]["json"]),{style: daystyle}).addTo(map);
-//     // when we cut off the days, use this ---->
-//     layers[i] = L.geoJSON(JSON.parse(sortedFireData[i]["json"]),{style: tempstyle}).addTo(map);
-//   }
-//   layerstoggle.push(1);
-// }
 
-// // writing layers onto map for each day
-// var td;
-// for (var t = 0; t < size; t++){
-//   td = document.getElementById("day"+t+"button");
-//   if (typeof window.addEventListener === 'function'){
-//     (function (_td) {
-//       td.addEventListener('click', function(){
-//         var IDX = _td.classList[0].split("day")[1];
-//         if (layerstoggle[IDX] == 1) {
-//           map.removeLayer(layers[IDX]);
-//           layerstoggle[IDX] = 0;
-//           _td.classList.remove("active");
-//         } else {
-//           if (IDX == (size-1)){
-//             // when we have a variable number of days, use this ---->
-//             // layers[IDX] = L.geoJSON(JSON.parse(sortedFireData[IDX]["json"]),{style: nowstyle}).addTo(map);
-//             // when we cut off the days, use this ---->
-//             tempstyle = {"color": colorsList[IDX],"fill-opacity": 0.8,"weight": 3};
-//             layers[IDX] = L.geoJSON(JSON.parse(sortedFireData[IDX]["json"]),{style: tempstyle}).addTo(map);
-//           } else {
-//             // when we have a variable number of days, use this ---->
-//             // layers[IDX] = L.geoJSON(JSON.parse(sortedFireData[IDX]["json"]),{style: daystyle}).addTo(map);
-//             // when we cut off the days, use this ---->
-//             tempstyle = {"color": colorsList[IDX],"fill-opacity": 0.8,"weight": 3};
-//             layers[IDX] = L.geoJSON(JSON.parse(sortedFireData[IDX]["json"]),{style: tempstyle}).addTo(map);
-//           }
-//           layerstoggle[IDX] = 1;
-//           _td.classList.add("active");
-//         }
-//       });
-//     })(td);
-//   };
-// }
+console.log(sortedFireData);
 
-// // these are variables for if we are showing the icons and the airquality layers
-// var pins_toggle = 1, pollution_toggle = 0;
-// var pollutionLayer, contourLayer;
-//
-// // hide and show icons based on button click
-// document.getElementById("iconsbutton").addEventListener("click",function() {
-//   // hide icons
-//   if (pins_toggle == 1) {
-//     for (var i = 0; i < markerArray.length; i++) {
-//       map.removeLayer(markerArray[i]);
-//     }
-//     this.classList.add("active");
-//     pins_toggle = 0;
-//   // show icons
-//   } else {
-//     for (var i = 0; i < markerArray.length; i++) {
-//       map.addLayer(markerArray[i]);
-//     }
-//     // drawIcons();
-//     this.classList.remove("active");
-//     pins_toggle = 1;
-//   }
+// for mapbox gl, need on load function
+// map.on('load', function () {
+  // adding a layer for every day
+  var layers = [];
+  var layerstoggle = [];
+  for (var i=0; i<(size); i++){
+    // tempstyle = {"color": colorsList[i],"fill-opacity": 0.8,"weight": 3};
+    if (i == (size-1)){
+      // mapbox-gl coding
+      // map.addSource('firedata', {
+      //   "type": "geojson",
+      //   "data": JSON.parse(sortedFireData[i]["json"])
+      // });
+      // layers[i] = map.addLayer({
+      //   'id': 'maplayer'+i,
+      //   'type': 'fill',
+      //   "source": "firedata",
+      //   'paint': {
+      //     'fill-color': '#D94100',
+      //     'fill-opacity': 0.4,
+      //     'fill-outline-color': 'red'
+      //   }
+      // });
+      // when we have a variable number of days, use this ---->
+      layers[i] = L.geoJSON(JSON.parse(sortedFireData[i]["json"]),{style: nowstyle}).addTo(map);
+      // when we cut off the days, use this ---->
+      // layers[i] = L.geoJSON(JSON.parse(sortedFireData[i]["json"]),{style: tempstyle}).addTo(map);
+    } else {
+      // mapbox-gl coding
+      // map.addSource('firedata', {
+      //   "type": "geojson",
+      //   "data": JSON.parse(sortedFireData[i]["json"])
+      // });
+      // layers[i] = map.addLayer({
+      //   'id': 'maplayer'+i,
+      //   'type': 'fill',
+      //   "source": "firedata",
+      //   'paint': {
+      //     'fill-color': '#F2A500',
+      //     'fill-opacity': 0.4,
+      //     'fill-outline-color': 'red'
+      //   }
+      // });
+      // when we have a variable number of days, use this ---->
+      layers[i] = L.geoJSON(JSON.parse(sortedFireData[i]["json"]),{style: daystyle}).addTo(map);
+      // when we cut off the days, use this ---->
+      // layers[i] = L.geoJSON(JSON.parse(sortedFireData[i]["json"]),{style: tempstyle}).addTo(map);
+    }
+    layerstoggle.push(1);
+  }
+
+
+  // writing layers onto map for each day
+  var td;
+  for (var t = 0; t < size; t++){
+    td = document.getElementById("day"+t+"button");
+    if (typeof window.addEventListener === 'function'){
+      (function (_td) {
+        td.addEventListener('click', function(){
+          var IDX = _td.classList[0].split("day")[1];
+          if (layerstoggle[IDX] == 1) {
+            // map.setLayoutProperty('maplayer'+IDX, 'visibility', 'none');
+            // not mapbox-gl
+            map.removeLayer(layers[IDX]);
+            layerstoggle[IDX] = 0;
+            _td.classList.remove("active");
+          } else {
+            if (IDX == (size-1)){
+              // mapbox-gl coding
+              // map.setLayoutProperty('maplayer'+IDX, 'visibility', 'visible');
+              // when we have a variable number of days, use this ---->
+              layers[IDX] = L.geoJSON(JSON.parse(sortedFireData[IDX]["json"]),{style: nowstyle}).addTo(map);
+              // when we cut off the days, use this ---->
+              // tempstyle = {"color": colorsList[IDX],"fill-opacity": 0.8,"weight": 3};
+              // layers[IDX] = L.geoJSON(JSON.parse(sortedFireData[IDX]["json"]),{style: tempstyle}).addTo(map);
+            } else {
+              // mapbox-gl coding
+              // map.addSource('firedata', {
+              //   "type": "geojson",
+              //   "data": JSON.parse(sortedFireData[i]["json"])
+              // });
+              // layers[i] = map.addLayer({
+              //   'id': 'maplayer'+i,
+              //   'type': 'fill',
+              //   "source": "firedata",
+              //   'paint': {
+              //     'fill-color': '#D94100',
+              //     'fill-opacity': 0.4,
+              //     'fill-outline-color': 'red'
+              //   }
+              // });
+              // when we have a variable number of days, use this ---->
+              layers[IDX] = L.geoJSON(JSON.parse(sortedFireData[IDX]["json"]),{style: daystyle}).addTo(map);
+              // when we cut off the days, use this ---->
+              // tempstyle = {"color": colorsList[IDX],"fill-opacity": 0.8,"weight": 3};
+              // layers[IDX] = L.geoJSON(JSON.parse(sortedFireData[IDX]["json"]),{style: tempstyle}).addTo(map);
+            }
+            layerstoggle[IDX] = 1;
+            _td.classList.add("active");
+          }
+        });
+      })(td);
+    };
+  }
+
 // });
 
 var pollution_toggle = 0;
@@ -326,6 +280,33 @@ document.getElementById("airquality").addEventListener("click",function() {
       var urlpathContours = "http://berkeleyearth.lbl.gov/air-quality/maps/hour/"+text.substring(0,6)+"/"+text+"/tiles/contour/{z}/{x}/{y}.png";
 
       console.log(urlpathPollution);
+
+      // add layers using mapbox-gl
+      // var mapAir = new mapboxgl.Map({
+      //     container: 'map-leaflet', // container id
+      //     style: {
+      //         "version": 8,
+      //         "sources": {
+      //             "simple-tiles": {
+      //                 "type": "raster",
+      //                 // point to our third-party tiles. Note that some examples
+      //                 // show a "url" property. This only applies to tilesets with
+      //                 // corresponding TileJSON (such as mapbox tiles).
+      //                 "url": urlpathPollution,
+      //                 "tileSize": 256
+      //             }
+      //         },
+      //         "layers": [{
+      //             "id": "simple-tiles",
+      //             "type": "raster",
+      //             "source": "simple-tiles",
+      //             // "minzoom": 0,
+      //             // "maxzoom": 22
+      //         }]
+      //     }
+      //     // center: [-74.50, 40], // starting position
+      //     // zoom: 2 // starting zoom
+      // });
 
       // add layer with colors
       pollutionLayer = L.tileLayer(urlpathPollution,{transparent: true,opacity: 0.7})
@@ -415,6 +396,10 @@ var drawMap = function(fire_data) {
   console.log("drawing dots");
 
   d3.select("svg").selectAll("circle").remove();
+  //mapbox-gl version
+  // var container = map.getCanvasContainer();
+  // var svg = d3.select(container).select("svg");
+  //normal mapbox
   var svg = d3.select("#map-leaflet").select("svg");
   svg.attr("class","dotsSVG")
   var g = svg.append("g");
