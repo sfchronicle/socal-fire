@@ -56,29 +56,6 @@ if (screen.width <= 480) {
   var bottomOffset = 200;
 }
 
-// // MAPBOX GL
-// mapboxgl.accessToken = 'pk.eyJ1IjoiZW1ybyIsImEiOiJjaXl2dXUzMGQwMDdsMzJuM2s1Nmx1M29yIn0._KtME1k8LIhloMyhMvvCDA';
-// var map = new mapboxgl.Map({
-//     container: 'map-leaflet',
-//     style: 'mapbox://styles/emro/cj8oq9bxg8zfu2rs3uw1ot59l',
-//     center: [sf_long, sf_lat],
-//     zoom: zoom_deg,
-//     minZoom: min_zoom_deg,
-//     maxZoom: max_zoom_deg,
-//     zoomControl: false,
-//     scrollWheelZoom: false
-// });
-//
-//
-// // add tiles to the map
-// var gl = L.mapboxGL({
-//     accessToken: 'pk.eyJ1IjoiZW1ybyIsImEiOiJjaXl2dXUzMGQwMDdsMzJuM2s1Nmx1M29yIn0._KtME1k8LIhloMyhMvvCDA',
-//     style: 'mapbox://styles/emro/cj8oq9bxg8zfu2rs3uw1ot59l',
-//     attribution: '© <a href="https://www.mapbox.com/map-feedback/">Mapbox</a>'
-// }).addTo(map);
-
-// map.addControl(new mapboxgl.NavigationControl());
-
 // initialize map with center position and zoom levels
 var map = L.map("map-leaflet", {
   minZoom: min_zoom_deg,
@@ -153,41 +130,11 @@ console.log(sortedFireData);
   for (var i=0; i<(size); i++){
     // tempstyle = {"color": colorsList[i],"fill-opacity": 0.8,"weight": 3};
     if (i == (size-1)){
-      // mapbox-gl coding
-      // map.addSource('firedata', {
-      //   "type": "geojson",
-      //   "data": JSON.parse(sortedFireData[i]["json"])
-      // });
-      // layers[i] = map.addLayer({
-      //   'id': 'maplayer'+i,
-      //   'type': 'fill',
-      //   "source": "firedata",
-      //   'paint': {
-      //     'fill-color': '#D94100',
-      //     'fill-opacity': 0.4,
-      //     'fill-outline-color': 'red'
-      //   }
-      // });
       // when we have a variable number of days, use this ---->
       layers[i] = L.geoJSON(JSON.parse(sortedFireData[i]["json"]),{style: nowstyle}).addTo(map);
       // when we cut off the days, use this ---->
       // layers[i] = L.geoJSON(JSON.parse(sortedFireData[i]["json"]),{style: tempstyle}).addTo(map);
     } else {
-      // mapbox-gl coding
-      // map.addSource('firedata', {
-      //   "type": "geojson",
-      //   "data": JSON.parse(sortedFireData[i]["json"])
-      // });
-      // layers[i] = map.addLayer({
-      //   'id': 'maplayer'+i,
-      //   'type': 'fill',
-      //   "source": "firedata",
-      //   'paint': {
-      //     'fill-color': '#F2A500',
-      //     'fill-opacity': 0.4,
-      //     'fill-outline-color': 'red'
-      //   }
-      // });
       // when we have a variable number of days, use this ---->
       layers[i] = L.geoJSON(JSON.parse(sortedFireData[i]["json"]),{style: daystyle}).addTo(map);
       // when we cut off the days, use this ---->
@@ -213,29 +160,12 @@ console.log(sortedFireData);
             _td.classList.remove("active");
           } else {
             if (IDX == (size-1)){
-              // mapbox-gl coding
-              // map.setLayoutProperty('maplayer'+IDX, 'visibility', 'visible');
               // when we have a variable number of days, use this ---->
               layers[IDX] = L.geoJSON(JSON.parse(sortedFireData[IDX]["json"]),{style: nowstyle}).addTo(map);
               // when we cut off the days, use this ---->
               // tempstyle = {"color": colorsList[IDX],"fill-opacity": 0.8,"weight": 3};
               // layers[IDX] = L.geoJSON(JSON.parse(sortedFireData[IDX]["json"]),{style: tempstyle}).addTo(map);
             } else {
-              // mapbox-gl coding
-              // map.addSource('firedata', {
-              //   "type": "geojson",
-              //   "data": JSON.parse(sortedFireData[i]["json"])
-              // });
-              // layers[i] = map.addLayer({
-              //   'id': 'maplayer'+i,
-              //   'type': 'fill',
-              //   "source": "firedata",
-              //   'paint': {
-              //     'fill-color': '#D94100',
-              //     'fill-opacity': 0.4,
-              //     'fill-outline-color': 'red'
-              //   }
-              // });
               // when we have a variable number of days, use this ---->
               layers[IDX] = L.geoJSON(JSON.parse(sortedFireData[IDX]["json"]),{style: daystyle}).addTo(map);
               // when we cut off the days, use this ---->
@@ -284,35 +214,6 @@ document.getElementById("airquality").addEventListener("click",function() {
     d3.text('http://extras.sfgate.com/editorial/wildfires/airquality_date.txt?2', function(text) {
       var urlpathPollution = "http://berkeleyearth.lbl.gov/air-quality/maps/hour/"+text.substring(0,6)+"/"+text+"/tiles/health/{z}/{x}/{y}.png";
       var urlpathContours = "http://berkeleyearth.lbl.gov/air-quality/maps/hour/"+text.substring(0,6)+"/"+text+"/tiles/contour/{z}/{x}/{y}.png";
-
-      console.log(urlpathPollution);
-
-      // add layers using mapbox-gl
-      // var mapAir = new mapboxgl.Map({
-      //     container: 'map-leaflet', // container id
-      //     style: {
-      //         "version": 8,
-      //         "sources": {
-      //             "simple-tiles": {
-      //                 "type": "raster",
-      //                 // point to our third-party tiles. Note that some examples
-      //                 // show a "url" property. This only applies to tilesets with
-      //                 // corresponding TileJSON (such as mapbox tiles).
-      //                 "url": urlpathPollution,
-      //                 "tileSize": 256
-      //             }
-      //         },
-      //         "layers": [{
-      //             "id": "simple-tiles",
-      //             "type": "raster",
-      //             "source": "simple-tiles",
-      //             // "minzoom": 0,
-      //             // "maxzoom": 22
-      //         }]
-      //     }
-      //     // center: [-74.50, 40], // starting position
-      //     // zoom: 2 // starting zoom
-      // });
 
       // add layer with colors
       pollutionLayer = L.tileLayer(urlpathPollution,{transparent: true,opacity: 0.7})
