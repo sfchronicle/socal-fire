@@ -357,6 +357,8 @@ fire_names.forEach(function(d,idx) {
     d.LatLng = new L.LatLng(+d.Lat+0.05,+d.Lon+0.05);
   } else if (d.Fire == "Creek Fire"){
     d.LatLng = new L.LatLng(+d.Lat+0.04,+d.Lon+0.04);
+  } else if (d.Fire == "Skirball Fire"){
+    d.LatLng = new L.LatLng(+d.Lat+0.015,+d.Lon+0.015);
   } else {
     d.LatLng = new L.LatLng(+d.Lat,+d.Lon);
   }
