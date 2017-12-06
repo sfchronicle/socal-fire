@@ -1,5 +1,6 @@
 require("./lib/social"); //Do not delete
 var d3 = require('d3');
+require("./lib/leaflet-mapbox-gl");
 
 // format numbers
 var formatthousands = d3.format(",");
@@ -55,7 +56,7 @@ if (screen.width <= 480) {
   var bottomOffset = 200;
 }
 
-// MAPBOX GL
+// // MAPBOX GL
 // mapboxgl.accessToken = 'pk.eyJ1IjoiZW1ybyIsImEiOiJjaXl2dXUzMGQwMDdsMzJuM2s1Nmx1M29yIn0._KtME1k8LIhloMyhMvvCDA';
 // var map = new mapboxgl.Map({
 //     container: 'map-leaflet',
@@ -67,9 +68,9 @@ if (screen.width <= 480) {
 //     zoomControl: false,
 //     scrollWheelZoom: false
 // });
-
-
-// add tiles to the map
+//
+//
+// // add tiles to the map
 // var gl = L.mapboxGL({
 //     accessToken: 'pk.eyJ1IjoiZW1ybyIsImEiOiJjaXl2dXUzMGQwMDdsMzJuM2s1Nmx1M29yIn0._KtME1k8LIhloMyhMvvCDA',
 //     style: 'mapbox://styles/emro/cj8oq9bxg8zfu2rs3uw1ot59l',
@@ -89,9 +90,14 @@ var map = L.map("map-leaflet", {
 // initializing the svg layer
 L.svg().addTo(map);
 
-L.mapbox.accessToken = 'pk.eyJ1IjoiZW1ybyIsImEiOiJjaXl2dXUzMGQwMDdsMzJuM2s1Nmx1M29yIn0._KtME1k8LIhloMyhMvvCDA';
-var styleLayer = L.mapbox.styleLayer('mapbox://styles/emro/cj8oq9bxg8zfu2rs3uw1ot59l')
-    .addTo(map);
+// L.mapbox.accessToken = 'pk.eyJ1IjoiZW1ybyIsImEiOiJjaXl2dXUzMGQwMDdsMzJuM2s1Nmx1M29yIn0._KtME1k8LIhloMyhMvvCDA';
+// var styleLayer = L.mapbox.styleLayer('mapbox://styles/emro/cj8oq9bxg8zfu2rs3uw1ot59l')
+//     .addTo(map);
+
+var gl = L.mapboxGL({
+    accessToken: 'pk.eyJ1IjoiZW1ybyIsImEiOiJjaXl2dXUzMGQwMDdsMzJuM2s1Nmx1M29yIn0._KtME1k8LIhloMyhMvvCDA',
+    style: 'mapbox://styles/emro/cj8oq9bxg8zfu2rs3uw1ot59l'
+}).addTo(map);
 
 // zoom control is on top right
 L.control.zoom({
@@ -99,8 +105,8 @@ L.control.zoom({
 }).addTo(map);
 
 // PUT BACK WHEN WE ARE PAST DAY 1
-// var buttonSTR = "Dec. ";
-var buttonSTR = "";
+var buttonSTR = "Dec. ";
+// var buttonSTR = "";
 // when we have a variable number of days, use this ---->
 var size = Object.keys(FireData).length;
 // when we cut off the days, use this ---->
