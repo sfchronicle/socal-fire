@@ -352,41 +352,48 @@ var drawMap = function(fire_data) {
 }
 
 // creating Lat/Lon objects that d3 is expecting for map labels
-// fire_names.forEach(function(d,idx) {
-//   d.LatLng = new L.LatLng(d.Lat,
-//               d.Lon);
-// });
+fire_names.forEach(function(d,idx) {
+  if (d.Fire == "Thomas Fire"){
+    d.LatLng = new L.LatLng(+d.Lat+0.05,+d.Lon+0.05);
+  } else if (d.Fire == "Creek Fire"){
+    d.LatLng = new L.LatLng(+d.Lat+0.04,+d.Lon+0.04);
+  } else {
+    d.LatLng = new L.LatLng(+d.Lat,+d.Lon);
+  }
+});
 
-// // appending labels layer to map
-// var svg = d3.select("#map-leaflet").select("svg");
-// var gLabels = svg.append("g");
-// gLabels.attr("class","dotsLABELS")
-//
-// // creating the labels
-// var labels = gLabels.selectAll("dotsLABELS")
-//   .data(fire_names)
-//   .enter()
-//   .append("g");
-//
-// // adding circles to the map
-// labels.append("text")
-//     .style("font-size","18px")
-//     .style("fill","#595959")
-//     .text(function(d){
-//       return d.Name+ " Fire";
-//     })
-//
-// // function that zooms and pans the data when the map zooms and pans
-// function updateLabels() {
-//   labels.attr("transform",
-//   function(d) {
-//     return "translate("+
-//       map.latLngToLayerPoint(d.LatLng).x +","+
-//       map.latLngToLayerPoint(d.LatLng).y +")";
-//     }
-//   )
-// }
-//
-// map.on("viewreset", updateLabels);
-// map.on("zoom",updateLabels);
-// updateLabels();
+console.log(fire_names);
+
+// appending labels layer to map
+var svg = d3.select("#map-leaflet").select("svg");
+var gLabels = svg.append("g");
+gLabels.attr("class","dotsLABELS")
+
+// creating the labels
+var labels = gLabels.selectAll("dotsLABELS")
+  .data(fire_names)
+  .enter()
+  .append("g");
+
+// adding circles to the map
+labels.append("text")
+    .style("font-size","14px")
+    .style("fill","#0C0C0C")
+    .text(function(d){
+      return d.Fire;
+    })
+
+// function that zooms and pans the data when the map zooms and pans
+function updateLabels() {
+  labels.attr("transform",
+  function(d) {
+    return "translate("+
+      map.latLngToLayerPoint(d.LatLng).x +","+
+      map.latLngToLayerPoint(d.LatLng).y +")";
+    }
+  )
+}
+
+map.on("viewreset", updateLabels);
+map.on("zoom",updateLabels);
+updateLabels();
