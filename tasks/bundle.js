@@ -16,7 +16,8 @@ module.exports = function(grunt) {
 
     //specify starter files here - if you need additionally built JS, just add it.
     var seeds = {
-      "./src/js/map-leaflet-fullwidth.js": "build/map-leaflet-fullwidth.js"
+      "./src/js/map-leaflet-fullwidth.js": "build/map-leaflet-fullwidth.js",
+      "./src/js/map-leaflet-embed.js": "build/map-leaflet-embed.js"
     };
 
     async.forEachOf(seeds, function(dest, src, c) {

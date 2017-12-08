@@ -3,6 +3,11 @@
 @import "fonts";
 @import "sfchronicle";
 
+// .entire-container {
+//   max-width: 800px;
+//   margin: auto;
+// }
+
 .smallbreak {
   height: 5px;
   @media @mobile {
@@ -131,12 +136,12 @@
   .blue-swath2 {background: #65A775;}
   .blue-swath3 {background: lighten(#65A775,10%);}
   .blue-swath4 {background: #D8C77B;}
-  @media @map-width {
+  // @media @map-width {
     position: absolute;
     z-index: 3000;
     bottom: 20px;
     right: 45px;
-  }
+  // }
   @media @mobile {
     right: 25px;
   }
@@ -172,12 +177,12 @@
  left: 0;
  top: 0;
 
- @media @map-width{
+ // @media @map-width{
   position: relative;
     height: 450px;
     width: 90%;
     margin: 0 auto;
- }
+ // }
 
 }
 
@@ -431,21 +436,21 @@ path {
   font-family: @med-graphics;
   max-width: 100%;
   text-align: left;
-  padding: 10px 20px 10px 20px;
+  padding: 20px;
   font-size: 14px;
   line-height: 1.4;
 
-  @media @map-width{
+  // @media @map-width{
     display:none;
-  }
+  // }
 
   &.mobile{
     display:none;
 
-    @media @map-width{
+    // @media @map-width{
       display:block;
       font-size:14px;
-    }
+    // }
     @media @mini-mobile {
       font-size:12px;
     }
@@ -515,7 +520,7 @@ a {
 .legend-container {
   text-align: center;
   font-size: 15px;
-  padding: 0 20px;
+  padding: 5px 0;
 
   img {
     max-width: 20px;
@@ -533,7 +538,7 @@ a {
       }
     }
   }
-  padding: 20px 0;
+  // padding: 20px 0;
   max-width: 600px;
   margin: auto;
   vertical-align: center;
@@ -605,29 +610,29 @@ a {
 }
 
 .map-info-box {
-  position: fixed;
-  height: 100%;
-  top: 0;
-  left: 0px;
-  padding-top: 30px;
-  max-width: 480px;
-  z-index: 500;
+  // position: fixed;
+  // height: 100%;
+  // top: 0;
+  // left: 0px;
+  // padding-top: 30px;
+  // max-width: 480px;
+  // z-index: 500;
   background: #fff;
-  box-shadow:1px 2px 2px 0px #ccc;
+  // box-shadow:1px 2px 2px 0px #ccc;
   font-family: @block-graphics;
-  overflow: scroll;
+  // overflow: scroll;
 
-  @media @map-width{
+  // @media @map-width{
     position: static;
     width: 100%;
     padding-top:5px;
     max-width: none;
     background:#fff;
-  }
-  @media @tablet {
+  // }
+  // @media @tablet {
     padding-bottom: 10px;
     padding-top: 20px;
-  }
+  // }
   @media @mobile {
     padding-bottom: 0;
     padding-top: 10px;

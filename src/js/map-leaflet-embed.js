@@ -19,6 +19,7 @@ function formatDate(date,monSTR) {
 
 // setting parameters for the center of the map and initial zoom level
 if (screen.width <= 480) {
+  console.log("mobile");
   var sf_lat = 34.17;
   var sf_long = -118.75;
   var zoom_deg = 8;
@@ -28,6 +29,7 @@ if (screen.width <= 480) {
   var offset_top = 900;
   var bottomOffset = 100;
 } else if (screen.width <= 800) {
+  console.log("tablet");
   var sf_lat = 34.17;
   var sf_long = -119.25;
   var zoom_deg = 8;
@@ -37,8 +39,9 @@ if (screen.width <= 480) {
   var offset_top = 900;
   var bottomOffset = 100;
 } else if (screen.width <= 1400){
+  console.log("laptop");
   var sf_lat = 34.17;
-  var sf_long = -119.25;
+  var sf_long = -118.75;
   var zoom_deg = 9;
   var max_zoom_deg = 16
   var min_zoom_deg = 7
@@ -46,6 +49,7 @@ if (screen.width <= 480) {
   var offset_top = 900;
   var bottomOffset = 200;
 } else {
+  console.log("desktop");
   var sf_lat = 34.17;
   var sf_long = -119.25;
   var zoom_deg = 10;
