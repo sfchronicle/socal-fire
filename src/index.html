@@ -6,7 +6,7 @@
     <meta name="viewport" content="width=device-width,initial-scale=1">
     <meta name="__sync_contentCategory" content="free">
     <meta http-equiv="refresh" content="7200">
-    <link rel="stylesheet" type="text/css" href="./fullwidth_style.css?5">
+    <link rel="stylesheet" type="text/css" href="./fullwidth_style.css?9">
     <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css">
 
     <!-- Leaflet -->
@@ -14,14 +14,16 @@
     <script src="https://unpkg.com/leaflet@1.0.3/dist/leaflet.js"></script>
 
     <!-- Mapbox GL -->
-    <link href="https://api.tiles.mapbox.com/mapbox-gl-js/v0.35.1/mapbox-gl.css" rel='stylesheet' />
-    <script src="https://api.tiles.mapbox.com/mapbox-gl-js/v0.35.1/mapbox-gl.js"></script>
+    <!-- <link href="https://api.tiles.mapbox.com/mapbox-gl-js/v0.35.1/mapbox-gl.css" rel='stylesheet' />
+    <script src="https://api.tiles.mapbox.com/mapbox-gl-js/v0.35.1/mapbox-gl.js"></script> -->
 
     <%= t.include("partials/_paywall.html") %>
     <%= t.include("partials/_head.html") %>
   </head>
 
   <body>
+
+    <%= t.include("partials/_nav.html") %>
 
     <div class="overlay-aboutthedata" id="aboutthedata-overlay">
       <div class="aboutthedata-box" id="aboutthedata-box">
@@ -45,12 +47,11 @@
           </a>
         </div>
 
-        <div class="headline">Interactive map:<div> Southern California wildfires</div></div>
-        <%= t.include("partials/_fullwidthmap-social.html") %>
-        <div class="deck">Pushed by the Santa Ana winds, a ferocious Ventura County wildfire spread rapidly Tuesday, while another blaze burned near Los Angeles city limits. See current hot spots and air quality.</div>
+        <div class="headline desktop">Tracking the Southern California fires</div>
+        <div class="headline mobile">Interactive map:<div> Southern California wildfires</div></div>
 
         <div class="recirculate-links">
-          <div class="re-link"><a href="http://www.sfchronicle.com/bayarea/article/Ventura-County-fire-grows-to-96-000-acres-shuts-12412895.php" target="_blank"><i class="fa fa-external-link" aria-hidden="true"></i> Read the story</a></div>
+          <div class="re-link"><a href="http://www.sfchronicle.com/news/world/article/Homes-horses-burn-in-newest-California-wildfire-12415182.php" target="_blank"><i class="fa fa-external-link" aria-hidden="true"></i> Read the story</a></div>
           <div class="re-link"><a href="http://www.sfchronicle.com/survival-guide/" target="_blank"><i class="fa fa-external-link" aria-hidden="true"></i> Disaster survival guide</a></div>
         </div>
 
@@ -59,15 +60,13 @@
           <div class="legend-element death-icon"><img src="https://raw.githubusercontent.com/pointhi/leaflet-color-markers/master/img/marker-icon-red.png"></img> Fire information</div>
         </div>
 
-        <!-- <div class="instructions"><i class="fa fa-hand-o-right" aria-hidden="true"></i>Click on the icons and explore the buttons below for more information.</div> -->
-
         <div class="button-container">
           <div class="button-desc">Fire perimeters:</div>
           <div id="button-collection"></div>
         </div>
 
         <div class="button-container">
-          <div class="button" id="airquality">See up-to-date air quality</div>
+          <div class="button" id="airquality">See air quality</div>
         </div>
 
         <div class="credits-box">
@@ -115,6 +114,6 @@
       var fire_names = <%= JSON.stringify(json.SoCalFireNames) %>
     </script>
 
-    <script src="./map-leaflet-fullwidth.js?8" async></script>
+    <script src="./map-leaflet-fullwidth.js?13" async></script>
   </body>
 </html>

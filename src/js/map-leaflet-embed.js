@@ -20,9 +20,9 @@ function formatDate(date,monSTR) {
 // setting parameters for the center of the map and initial zoom level
 if (screen.width <= 480) {
   console.log("mobile");
-  var sf_lat = 34.17;
-  var sf_long = -118.75;
-  var zoom_deg = 8;
+  var sf_lat = 33.47;
+  var sf_long = -117.95;
+  var zoom_deg = 7;
   var max_zoom_deg = 16;
   var min_zoom_deg = 7;
 
@@ -30,9 +30,9 @@ if (screen.width <= 480) {
   var bottomOffset = 100;
 } else if (screen.width <= 800) {
   console.log("tablet");
-  var sf_lat = 34.17;
-  var sf_long = -119.25;
-  var zoom_deg = 8;
+  var sf_lat = 33.67;
+  var sf_long = -118.25;
+  var zoom_deg = 7;
   var max_zoom_deg = 16;
   var min_zoom_deg = 7;
 
@@ -40,9 +40,9 @@ if (screen.width <= 480) {
   var bottomOffset = 100;
 } else if (screen.width <= 1400){
   console.log("laptop");
-  var sf_lat = 34.17;
+  var sf_lat = 33.87;
   var sf_long = -118.75;
-  var zoom_deg = 9;
+  var zoom_deg = 8;
   var max_zoom_deg = 16
   var min_zoom_deg = 7
 
@@ -75,22 +75,20 @@ L.svg().addTo(map);
 // var styleLayer = L.mapbox.styleLayer('mapbox://styles/emro/cj8oq9bxg8zfu2rs3uw1ot59l')
 //     .addTo(map);
 
-// var CartoDB_Positron = L.tileLayer('https://cartodb-basemaps-{s}.global.ssl.fastly.net/light_all/{z}/{x}/{y}.png', {
-// 	attribution: '&copy; <a href="http://www.openstreetmap.org/copyright">OpenStreetMap</a> &copy; <a href="http://cartodb.com/attributions">CartoDB</a>',
-// 	subdomains: 'abcd',
-// 	maxZoom: 19
-// }).addTo(map);
-
 // var OpenStreetMap_HOT = L.tileLayer('https://{s}.tile.openstreetmap.fr/hot/{z}/{x}/{y}.png', {
 // 	maxZoom: 19,
 // 	attribution: '&copy; <a href="http://www.openstreetmap.org/copyright">OpenStreetMap</a>, Tiles courtesy of <a href="http://hot.openstreetmap.org/" target="_blank">Humanitarian OpenStreetMap Team</a>'
 // }).addTo(map);
 
-
-var gl = L.mapboxGL({
-    accessToken: 'pk.eyJ1IjoiZW1ybyIsImEiOiJjaXl2dXUzMGQwMDdsMzJuM2s1Nmx1M29yIn0._KtME1k8LIhloMyhMvvCDA',
-    style: 'mapbox://styles/emro/cj8oq9bxg8zfu2rs3uw1ot59l'
+var OpenMapSurfer_Roads = L.tileLayer('https://korona.geog.uni-heidelberg.de/tiles/roads/x={x}&y={y}&z={z}', {
+	maxZoom: 20,
+	attribution: 'Imagery from <a href="http://giscience.uni-hd.de/">GIScience Research Group @ University of Heidelberg</a> &mdash; Map data &copy; <a href="http://www.openstreetmap.org/copyright">OpenStreetMap</a>'
 }).addTo(map);
+
+// var gl = L.mapboxGL({
+//     accessToken: 'pk.eyJ1IjoiZW1ybyIsImEiOiJjaXl2dXUzMGQwMDdsMzJuM2s1Nmx1M29yIn0._KtME1k8LIhloMyhMvvCDA',
+//     style: 'mapbox://styles/emro/cj8oq9bxg8zfu2rs3uw1ot59l'
+// }).addTo(map);
 
 // zoom control is on top right
 L.control.zoom({

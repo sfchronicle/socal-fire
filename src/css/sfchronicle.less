@@ -270,7 +270,10 @@ text {
   width: 100%;
   z-index: 99;
   left: 0;
-  height: 37px;
+  height: 35px;
+  @media @map-width {
+    display: none;
+  }
 }
 
 .link {
@@ -306,6 +309,7 @@ text {
   cursor: pointer;
   margin: 0 0 0 10px;
   vertical-align:0;
+  margin-top: 3px;
   img {
     opacity: 1;
     height: 20px;

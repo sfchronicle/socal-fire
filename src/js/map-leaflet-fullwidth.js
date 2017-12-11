@@ -19,38 +19,38 @@ function formatDate(date,monSTR) {
 
 // setting parameters for the center of the map and initial zoom level
 if (screen.width <= 480) {
-  var sf_lat = 34.17;
-  var sf_long = -118.75;
-  var zoom_deg = 8;
-  var max_zoom_deg = 16;
-  var min_zoom_deg = 7;
+  var sf_lat = 33.4;
+  var sf_long = -118.0;
+  var zoom_deg = 7;
+  var max_zoom_deg = 15;
+  var min_zoom_deg = 5;
 
   var offset_top = 900;
   var bottomOffset = 100;
 } else if (screen.width <= 800) {
-  var sf_lat = 34.17;
-  var sf_long = -119.25;
+  var sf_lat = 33.47;
+  var sf_long = -118.25;
   var zoom_deg = 8;
-  var max_zoom_deg = 16;
-  var min_zoom_deg = 7;
+  var max_zoom_deg = 15;
+  var min_zoom_deg = 5;
 
   var offset_top = 900;
   var bottomOffset = 100;
 } else if (screen.width <= 1400){
-  var sf_lat = 34.17;
+  var sf_lat = 33.6;
   var sf_long = -119.25;
-  var zoom_deg = 9;
-  var max_zoom_deg = 16
-  var min_zoom_deg = 7
+  var zoom_deg = 8;
+  var max_zoom_deg = 15;
+  var min_zoom_deg = 5;
 
   var offset_top = 900;
   var bottomOffset = 200;
 } else {
-  var sf_lat = 34.17;
-  var sf_long = -119.25;
-  var zoom_deg = 10;
-  var max_zoom_deg = 16
-  var min_zoom_deg = 7
+  var sf_lat = 33.5;
+  var sf_long = -118.25;
+  var zoom_deg = 9;
+  var max_zoom_deg = 15;
+  var min_zoom_deg = 5;
 
   var offset_top = 900;
   var bottomOffset = 200;
@@ -67,30 +67,22 @@ var map = L.map("map-leaflet", {
 // initializing the svg layer
 L.svg().addTo(map);
 
-// L.mapbox.accessToken = 'pk.eyJ1IjoiZW1ybyIsImEiOiJjaXl2dXUzMGQwMDdsMzJuM2s1Nmx1M29yIn0._KtME1k8LIhloMyhMvvCDA';
-// var styleLayer = L.mapbox.styleLayer('mapbox://styles/emro/cj8oq9bxg8zfu2rs3uw1ot59l')
-//     .addTo(map);
-
-// var CartoDB_Positron = L.tileLayer('https://cartodb-basemaps-{s}.global.ssl.fastly.net/light_all/{z}/{x}/{y}.png', {
-// 	attribution: '&copy; <a href="http://www.openstreetmap.org/copyright">OpenStreetMap</a> &copy; <a href="http://cartodb.com/attributions">CartoDB</a>',
-// 	subdomains: 'abcd',
-// 	maxZoom: 19
-// }).addTo(map);
-
-// var OpenStreetMap_HOT = L.tileLayer('https://{s}.tile.openstreetmap.fr/hot/{z}/{x}/{y}.png', {
-// 	maxZoom: 19,
-// 	attribution: '&copy; <a href="http://www.openstreetmap.org/copyright">OpenStreetMap</a>, Tiles courtesy of <a href="http://hot.openstreetmap.org/" target="_blank">Humanitarian OpenStreetMap Team</a>'
-// }).addTo(map);
-
-
-var gl = L.mapboxGL({
-    accessToken: 'pk.eyJ1IjoiZW1ybyIsImEiOiJjaXl2dXUzMGQwMDdsMzJuM2s1Nmx1M29yIn0._KtME1k8LIhloMyhMvvCDA',
-    style: 'mapbox://styles/emro/cj8oq9bxg8zfu2rs3uw1ot59l'
+var Stamen_Terrain = L.tileLayer('https://stamen-tiles-{s}.a.ssl.fastly.net/terrain/{z}/{x}/{y}.{ext}', {
+	attribution: 'Map tiles by <a href="http://stamen.com">Stamen Design</a>, <a href="http://creativecommons.org/licenses/by/3.0">CC BY 3.0</a> &mdash; Map data &copy; <a href="http://www.openstreetmap.org/copyright">OpenStreetMap</a>',
+	subdomains: 'abcd',
+	minZoom: 0,
+	maxZoom: 18,
+	ext: 'png'
 }).addTo(map);
+
+// var gl = L.mapboxGL({
+//     accessToken: 'pk.eyJ1IjoiZW1ybyIsImEiOiJjaXl2dXUzMGQwMDdsMzJuM2s1Nmx1M29yIn0._KtME1k8LIhloMyhMvvCDA',
+//     style: 'mapbox://styles/emro/cj8oq9bxg8zfu2rs3uw1ot59l'
+// }).addTo(map);
 
 // zoom control is on top right
 L.control.zoom({
-     position:'topright'
+     position:'bottomright'
 }).addTo(map);
 
 // PUT BACK WHEN WE ARE PAST DAY 1
@@ -256,7 +248,7 @@ document.getElementById("airquality").addEventListener("click",function() {
 });
 
 // data from Calfire about containment and acreage
-var containmentDataURL = "http://extras.sfgate.com/editorial/wildfires/calfire.json?2";
+var containmentDataURL = "http://extras.sfgate.com/editorial/wildfires/calfire.json?3";
 
 d3.json(containmentDataURL,function(containment_data){
 
