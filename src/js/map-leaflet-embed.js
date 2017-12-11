@@ -23,8 +23,8 @@ if (screen.width <= 480) {
   var sf_lat = 33.47;
   var sf_long = -117.95;
   var zoom_deg = 7;
-  var max_zoom_deg = 16;
-  var min_zoom_deg = 7;
+  var max_zoom_deg = 15;
+  var min_zoom_deg = 5;
 
   var offset_top = 900;
   var bottomOffset = 100;
@@ -33,8 +33,8 @@ if (screen.width <= 480) {
   var sf_lat = 33.67;
   var sf_long = -118.25;
   var zoom_deg = 7;
-  var max_zoom_deg = 16;
-  var min_zoom_deg = 7;
+  var max_zoom_deg = 15;
+  var min_zoom_deg = 5;
 
   var offset_top = 900;
   var bottomOffset = 100;
@@ -43,8 +43,8 @@ if (screen.width <= 480) {
   var sf_lat = 33.87;
   var sf_long = -118.75;
   var zoom_deg = 8;
-  var max_zoom_deg = 16
-  var min_zoom_deg = 7
+  var max_zoom_deg = 15;
+  var min_zoom_deg = 5;
 
   var offset_top = 900;
   var bottomOffset = 200;
@@ -53,8 +53,8 @@ if (screen.width <= 480) {
   var sf_lat = 34.17;
   var sf_long = -119.25;
   var zoom_deg = 10;
-  var max_zoom_deg = 16
-  var min_zoom_deg = 7
+  var max_zoom_deg = 15;
+  var min_zoom_deg = 5;
 
   var offset_top = 900;
   var bottomOffset = 200;
@@ -71,18 +71,12 @@ var map = L.map("map-leaflet", {
 // initializing the svg layer
 L.svg().addTo(map);
 
-// L.mapbox.accessToken = 'pk.eyJ1IjoiZW1ybyIsImEiOiJjaXl2dXUzMGQwMDdsMzJuM2s1Nmx1M29yIn0._KtME1k8LIhloMyhMvvCDA';
-// var styleLayer = L.mapbox.styleLayer('mapbox://styles/emro/cj8oq9bxg8zfu2rs3uw1ot59l')
-//     .addTo(map);
-
-// var OpenStreetMap_HOT = L.tileLayer('https://{s}.tile.openstreetmap.fr/hot/{z}/{x}/{y}.png', {
-// 	maxZoom: 19,
-// 	attribution: '&copy; <a href="http://www.openstreetmap.org/copyright">OpenStreetMap</a>, Tiles courtesy of <a href="http://hot.openstreetmap.org/" target="_blank">Humanitarian OpenStreetMap Team</a>'
-// }).addTo(map);
-
-var OpenMapSurfer_Roads = L.tileLayer('https://korona.geog.uni-heidelberg.de/tiles/roads/x={x}&y={y}&z={z}', {
-	maxZoom: 20,
-	attribution: 'Imagery from <a href="http://giscience.uni-hd.de/">GIScience Research Group @ University of Heidelberg</a> &mdash; Map data &copy; <a href="http://www.openstreetmap.org/copyright">OpenStreetMap</a>'
+var Stamen_Terrain = L.tileLayer('https://stamen-tiles-{s}.a.ssl.fastly.net/terrain/{z}/{x}/{y}.{ext}', {
+	attribution: 'Map tiles by <a href="http://stamen.com">Stamen Design</a>, <a href="http://creativecommons.org/licenses/by/3.0">CC BY 3.0</a> &mdash; Map data &copy; <a href="http://www.openstreetmap.org/copyright">OpenStreetMap</a>',
+	subdomains: 'abcd',
+	// minZoom: 0,
+	// maxZoom: 18,
+	ext: 'png'
 }).addTo(map);
 
 // var gl = L.mapboxGL({
