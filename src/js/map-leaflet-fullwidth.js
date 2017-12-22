@@ -19,38 +19,38 @@ function formatDate(date,monSTR) {
 
 // setting parameters for the center of the map and initial zoom level
 if (screen.width <= 480) {
-  var sf_lat = 33.4;
-  var sf_long = -118.0;
-  var zoom_deg = 7;
-  var max_zoom_deg = 15;
-  var min_zoom_deg = 5;
+  var sf_lat = 34.2;
+  var sf_long = -119.0;
+  var zoom_deg = 8;
+  var max_zoom_deg = 16;
+  var min_zoom_deg = 4;
 
   var offset_top = 900;
   var bottomOffset = 100;
 } else if (screen.width <= 800) {
-  var sf_lat = 33.47;
-  var sf_long = -118.25;
-  var zoom_deg = 8;
-  var max_zoom_deg = 15;
-  var min_zoom_deg = 5;
+  var sf_lat = 34.2;
+  var sf_long = -119;
+  var zoom_deg = 9;
+  var max_zoom_deg = 16;
+  var min_zoom_deg = 4;
 
   var offset_top = 900;
   var bottomOffset = 100;
 } else if (screen.width <= 1400){
-  var sf_lat = 33.6;
+  var sf_lat = 34.2;
   var sf_long = -119.25;
-  var zoom_deg = 8;
-  var max_zoom_deg = 15;
-  var min_zoom_deg = 5;
+  var zoom_deg = 9;
+  var max_zoom_deg = 16;
+  var min_zoom_deg = 4;
 
   var offset_top = 900;
   var bottomOffset = 200;
 } else {
-  var sf_lat = 33.5;
-  var sf_long = -118.25;
-  var zoom_deg = 9;
-  var max_zoom_deg = 15;
-  var min_zoom_deg = 5;
+  var sf_lat = 34.2;
+  var sf_long = -119.25;
+  var zoom_deg = 10;
+  var max_zoom_deg = 16;
+  var min_zoom_deg = 4;
 
   var offset_top = 900;
   var bottomOffset = 200;
@@ -61,24 +61,30 @@ var map = L.map("map-leaflet", {
   minZoom: min_zoom_deg,
   maxZoom: max_zoom_deg,
   zoomControl: false,
-  scrollWheelZoom: false
+  scrollWheelZoom: false,
+  attributionControl: false
 }).setView([sf_lat,sf_long], zoom_deg);
 
 // initializing the svg layer
 L.svg().addTo(map);
 
-var Stamen_Terrain = L.tileLayer('https://stamen-tiles-{s}.a.ssl.fastly.net/terrain/{z}/{x}/{y}.{ext}', {
-	attribution: 'Map tiles by <a href="http://stamen.com">Stamen Design</a>, <a href="http://creativecommons.org/licenses/by/3.0">CC BY 3.0</a> &mdash; Map data &copy; <a href="http://www.openstreetmap.org/copyright">OpenStreetMap</a>',
-	subdomains: 'abcd',
-	// minZoom: 0,
-	// maxZoom: 18,
-	ext: 'png'
+// var Stamen_Terrain = L.tileLayer('https://stamen-tiles-{s}.a.ssl.fastly.net/terrain/{z}/{x}/{y}.{ext}', {
+// 	attribution: 'Map tiles by <a href="http://stamen.com">Stamen Design</a>, <a href="http://creativecommons.org/licenses/by/3.0">CC BY 3.0</a> &mdash; Map data &copy; <a href="http://www.openstreetmap.org/copyright">OpenStreetMap</a>',
+// 	subdomains: 'abcd',
+// 	// minZoom: 0,
+// 	// maxZoom: 18,
+// 	ext: 'png'
+// }).addTo(map);
+
+var gl = L.mapboxGL({
+    accessToken: 'pk.eyJ1IjoiZW1ybyIsImEiOiJjaXl2dXUzMGQwMDdsMzJuM2s1Nmx1M29yIn0._KtME1k8LIhloMyhMvvCDA',
+    style: 'mapbox://styles/emro/cjbib4t5e089k2sm7j3xygp50'
 }).addTo(map);
 
-// var gl = L.mapboxGL({
-//     accessToken: 'pk.eyJ1IjoiZW1ybyIsImEiOiJjaXl2dXUzMGQwMDdsMzJuM2s1Nmx1M29yIn0._KtME1k8LIhloMyhMvvCDA',
-//     style: 'mapbox://styles/emro/cj8oq9bxg8zfu2rs3uw1ot59l'
-// }).addTo(map);
+var attribution = L.control.attribution();
+attribution.setPrefix('');
+attribution.addAttribution('Map data: <a href="http://openstreetmap.org/copyright" target="_blank">© OpenStreetMap</a> <a href="https://www.mapbox.com/about/maps/" target="_blank">© Mapbox</a> | <a href="https://www.mapbox.com/map-feedback/" target="_blank" class="mapbox-improve-map">Improve this map</a>');
+attribution.addTo(map);
 
 // zoom control is on top right
 L.control.zoom({
