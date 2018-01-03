@@ -95,9 +95,9 @@ L.control.zoom({
 var buttonSTR = "Dec. ";
 // var buttonSTR = "";
 // when we have a variable number of days, use this ---->
-var size = Object.keys(FireData).length;
+// var size = Object.keys(FireData).length;
 // when we cut off the days, use this ---->
-// var size = 11;
+var size = 17;
 var dateList = Object.keys(FireData);
 dateList.sort();
 
@@ -113,9 +113,9 @@ for (var i = 0; i < size; i++) {
 for (var i=0; i<(size); i++){
   if (i == (size-1)) {
     // when we have a variable number of days, use this ---->
-    buttonSTR += "<div class='day"+i+" button clickbutton nowbutton active' id='day"+i+"button'>Today</div>";
+    // buttonSTR += "<div class='day"+i+" button clickbutton nowbutton active' id='day"+i+"button'>Today</div>";
     // when we cut off the days, use this ---->
-    // buttonSTR += "<div class='day"+i+" button clickbutton calendarbutton active' id='day"+i+"button'>"+dateList[i].split("-")[2]+"</div>";
+    buttonSTR += "<div class='day"+i+" button clickbutton calendarbutton active' id='day"+i+"button'>"+dateList[i].split("-")[2]+"</div>";
   } else {
     buttonSTR += "<div class='day"+i+" button clickbutton calendarbutton active' id='day"+i+"button'>"+dateList[i].split("-")[2]+"</div>";
   }
@@ -124,11 +124,12 @@ document.getElementById("button-collection").innerHTML = buttonSTR;
 
 //calendar style
 // when we have a variable number of days, use this ---->
-var daystyle = {"color": "#F2A500","fill-opacity": 0.4,"weight": 2};
-var nowstyle = {"color": "#D94100","fill-opacity": 0.8,"weight": 2};
+// var daystyle = {"color": "#F2A500","fill-opacity": 0.4,"weight": 2};
+// var nowstyle = {"color": "#D94100","fill-opacity": 0.8,"weight": 2};
 // when we cut off the days, use this ---->
-// var tempstyle;
-// var colorsList = ["#FFCC1A","#FFBF0D","#FFB200","#F2A500","#E59800","#FF8800","#F27B00","#FF6721","#F25A14","#E54D07","#CC3400"]//"#D94100",
+var tempstyle;
+var colorsList = ["#FFCC1A","#FFBF0D","#FFB200","#F2A500","#E59800","#FF8800","#F27B00","#FF6721","#F25A14","#E54D07","#CC3400", "#AA4523", "#8C7051", "#715245", "#63463A", "#493026", "#281B15"]//"#D94100",
+
 
 console.log(sortedFireData);
 
@@ -138,17 +139,17 @@ console.log(sortedFireData);
   var layers = [];
   var layerstoggle = [];
   for (var i=0; i<(size); i++){
-    // tempstyle = {"color": colorsList[i],"fill-opacity": 0.8,"weight": 3};
+    tempstyle = {"color": colorsList[i],"fill-opacity": 0.8,"weight": 3};
     if (i == (size-1)){
       // when we have a variable number of days, use this ---->
-      layers[i] = L.geoJSON(JSON.parse(sortedFireData[i]["json"]),{style: nowstyle}).addTo(map);
+      // layers[i] = L.geoJSON(JSON.parse(sortedFireData[i]["json"]),{style: nowstyle}).addTo(map);
       // when we cut off the days, use this ---->
-      // layers[i] = L.geoJSON(JSON.parse(sortedFireData[i]["json"]),{style: tempstyle}).addTo(map);
+      layers[i] = L.geoJSON(JSON.parse(sortedFireData[i]["json"]),{style: tempstyle}).addTo(map);
     } else {
       // when we have a variable number of days, use this ---->
-      layers[i] = L.geoJSON(JSON.parse(sortedFireData[i]["json"]),{style: daystyle}).addTo(map);
+      // layers[i] = L.geoJSON(JSON.parse(sortedFireData[i]["json"]),{style: daystyle}).addTo(map);
       // when we cut off the days, use this ---->
-      // layers[i] = L.geoJSON(JSON.parse(sortedFireData[i]["json"]),{style: tempstyle}).addTo(map);
+      layers[i] = L.geoJSON(JSON.parse(sortedFireData[i]["json"]),{style: tempstyle}).addTo(map);
     }
     layerstoggle.push(1);
   }
@@ -171,16 +172,16 @@ console.log(sortedFireData);
           } else {
             if (IDX == (size-1)){
               // when we have a variable number of days, use this ---->
-              layers[IDX] = L.geoJSON(JSON.parse(sortedFireData[IDX]["json"]),{style: nowstyle}).addTo(map);
+              // layers[IDX] = L.geoJSON(JSON.parse(sortedFireData[IDX]["json"]),{style: nowstyle}).addTo(map);
               // when we cut off the days, use this ---->
-              // tempstyle = {"color": colorsList[IDX],"fill-opacity": 0.8,"weight": 3};
-              // layers[IDX] = L.geoJSON(JSON.parse(sortedFireData[IDX]["json"]),{style: tempstyle}).addTo(map);
+              tempstyle = {"color": colorsList[IDX],"fill-opacity": 0.8,"weight": 3};
+              layers[IDX] = L.geoJSON(JSON.parse(sortedFireData[IDX]["json"]),{style: tempstyle}).addTo(map);
             } else {
               // when we have a variable number of days, use this ---->
-              layers[IDX] = L.geoJSON(JSON.parse(sortedFireData[IDX]["json"]),{style: daystyle}).addTo(map);
+              // layers[IDX] = L.geoJSON(JSON.parse(sortedFireData[IDX]["json"]),{style: daystyle}).addTo(map);
               // when we cut off the days, use this ---->
-              // tempstyle = {"color": colorsList[IDX],"fill-opacity": 0.8,"weight": 3};
-              // layers[IDX] = L.geoJSON(JSON.parse(sortedFireData[IDX]["json"]),{style: tempstyle}).addTo(map);
+              tempstyle = {"color": colorsList[IDX],"fill-opacity": 0.8,"weight": 3};
+              layers[IDX] = L.geoJSON(JSON.parse(sortedFireData[IDX]["json"]),{style: tempstyle}).addTo(map);
             }
             layerstoggle[IDX] = 1;
             _td.classList.add("active");
@@ -253,25 +254,41 @@ document.getElementById("airquality").addEventListener("click",function() {
   }
 });
 
+// THIS DATA IS NOW OUT OF DATE ---------------------------------------------------------------------------------------------------------
 // data from Calfire about containment and acreage
-var containmentDataURL = "http://extras.sfgate.com/editorial/wildfires/calfire.json?3";
+// var containmentDataURL = "http://extras.sfgate.com/editorial/wildfires/calfire.json?3";
+//
+// d3.json(containmentDataURL,function(containment_data){
+//
+//   var redIcon = new L.Icon({
+//     iconUrl: 'https://raw.githubusercontent.com/pointhi/leaflet-color-markers/master/img/marker-icon-red.png',
+//     // shadowUrl: 'https://cdnjs.cloudflare.com/ajax/libs/leaflet/0.7.7/images/marker-shadow.png',
+//     iconSize: [20, 32],
+//     iconAnchor: [12, 32],
+//     popupAnchor: [-2, -30],
+//     // shadowSize: [, 41]
+//   });
+//
+//   containment_data.data.forEach(function(d){
+//     var html_str = "<b>"+d.name+"</b><br>"+d.info+"<br>Last updated: "+d.updateTime;
+//     var tempmarker = L.marker([d.lat, d.lon], {icon: redIcon}).addTo(map).bindPopup(html_str);
+//   });
+//
+// });
+// THIS DATA IS NOW OUT OF DATE ---------------------------------------------------------------------------------------------------------
 
-d3.json(containmentDataURL,function(containment_data){
+var redIcon = new L.Icon({
+  iconUrl: 'https://raw.githubusercontent.com/pointhi/leaflet-color-markers/master/img/marker-icon-red.png',
+  // shadowUrl: 'https://cdnjs.cloudflare.com/ajax/libs/leaflet/0.7.7/images/marker-shadow.png',
+  iconSize: [20, 32],
+  iconAnchor: [12, 32],
+  popupAnchor: [-2, -30],
+  // shadowSize: [, 41]
+});
 
-  var redIcon = new L.Icon({
-    iconUrl: 'https://raw.githubusercontent.com/pointhi/leaflet-color-markers/master/img/marker-icon-red.png',
-    // shadowUrl: 'https://cdnjs.cloudflare.com/ajax/libs/leaflet/0.7.7/images/marker-shadow.png',
-    iconSize: [20, 32],
-    iconAnchor: [12, 32],
-    popupAnchor: [-2, -30],
-    // shadowSize: [, 41]
-  });
-
-  containment_data.data.forEach(function(d){
-    var html_str = "<b>"+d.name+"</b><br>"+d.info+"<br>Last updated: "+d.updateTime;
-    var tempmarker = L.marker([d.lat, d.lon], {icon: redIcon}).addTo(map).bindPopup(html_str);
-  });
-
+fire_names.forEach(function(d){
+  var html_str = "<b>"+d.Fire+"</b><br>Acreage burned: "+d.Acreage+"<br>Property damage: "+d.Damage+"<br>Start time: "+d.Start;
+  var tempmarker = L.marker([+d.Lat, +d.Lon], {icon: redIcon}).addTo(map).bindPopup(html_str);
 });
 
 // data for current fire
